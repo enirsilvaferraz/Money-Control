@@ -1,16 +1,15 @@
 package com.system.moneycontrol.di
 
-import android.app.Application
 import com.system.moneycontrol.MyApplication
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module(subcomponents = arrayOf(MainActivityComponent::class))
-class AppModule {
+@Module
+class AppModule(val application: MyApplication) {
 
     @Provides
     @Singleton
-    internal fun provideContext(application: MyApplication) = application
+    internal fun provideContext(): MyApplication = application
 
 }

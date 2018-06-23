@@ -1,20 +1,18 @@
 package com.system.moneycontrol
 
-import android.app.Activity
 import android.app.Application
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import javax.inject.Inject
+import com.system.moneycontrol.di.AppComponent
+import com.system.moneycontrol.di.AppModule
+import com.system.moneycontrol.di.DaggerAppComponent
 
-class MyApplication : Application(), HasActivityInjector {
+class MyApplication : Application() {
 
-    @Inject
-    public lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
-
-    override fun activityInjector() = activityDispatchingAndroidInjector
+    val component: AppComponent by lazy {
+        DaggerAppComponent.builder().appModule(AppModule(this)).build();
+    }
 
     override fun onCreate() {
         super.onCreate()
-       // DaggerAppComponent.builder().application(this).build().inject(this);
+        component.inject(this)
     }
 }

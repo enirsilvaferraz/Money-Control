@@ -2,11 +2,11 @@ package com.system.moneycontrol.ui.main
 
 interface MainContract {
 
-    interface View{
-
+    interface View {
+        fun showToast()
     }
 
-    interface Presenter{
-
+    interface Presenter {
+        fun init()
     }
 }

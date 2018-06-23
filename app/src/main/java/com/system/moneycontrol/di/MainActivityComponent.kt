@@ -2,11 +2,9 @@ package com.system.moneycontrol.di
 
 import com.system.moneycontrol.ui.main.MainActivity
 import dagger.Subcomponent
-import dagger.android.AndroidInjector
 
 @Subcomponent(modules = arrayOf(MainActivityModule::class))
-interface MainActivityComponent : AndroidInjector<MainActivity> {
+interface MainActivityComponent {
 
-    @Subcomponent.Builder
-    abstract class Builder : AndroidInjector.Builder<MainActivity>()
+    fun inject(activity: MainActivity)
 }

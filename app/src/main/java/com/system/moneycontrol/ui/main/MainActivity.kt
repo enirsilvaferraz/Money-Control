@@ -2,30 +2,24 @@ package com.system.moneycontrol.ui.main
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import com.system.moneycontrol.R
+import com.system.moneycontrol.MyApplication
+import com.system.moneycontrol.di.MainActivityModule
 import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
-
+import com.system.moneycontrol.R
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
-    @Inject
-    public lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+class MainActivity : AppCompatActivity() {
 
-    override fun supportFragmentInjector() = fragmentDispatchingAndroidInjector
+   val component by lazy { (getApplication() as MyApplication).component.plus(MainActivityModule(this)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        AndroidInjection.inject(this)
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        component.inject(this)
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
