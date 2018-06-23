@@ -2,24 +2,16 @@ package com.system.moneycontrol.ui.main
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
-import com.system.moneycontrol.MyApplication
-import com.system.moneycontrol.di.MainActivityModule
-import dagger.android.AndroidInjection
 import com.system.moneycontrol.R
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
-
-class MainActivity : AppCompatActivity() {
-
-  // val component by lazy { (getApplication() as MyApplication).component.plus(MainActivityModule(this)) }
+class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-    //    component.inject(this)
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->

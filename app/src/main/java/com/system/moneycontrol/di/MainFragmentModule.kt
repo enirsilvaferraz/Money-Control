@@ -7,11 +7,17 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class MainFragmentModule(val view: MainFragment) {
+abstract class MainFragmentModule() {
 
-    @Provides
-    fun provideView(): MainContract.View = view
+    @Module
+    companion object {
 
-    @Provides
-    fun providePresenter(): MainContract.Presenter = MainPresenter(view)
+        @JvmStatic
+        @Provides
+        fun provideView(view: MainFragment): MainContract.View = view
+
+        @JvmStatic
+        @Provides
+        fun providePresenter(view: MainContract.View): MainContract.Presenter = MainPresenter(view)
+    }
 }
