@@ -1,16 +1,16 @@
 package com.system.moneycontrol.di
 
-import com.system.moneycontrol.ui.main.MainActivity
-import com.system.moneycontrol.ui.main.MainFragment
+import com.system.moneycontrol.ui.home.HomeActivity
+import com.system.moneycontrol.ui.home.HomeFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class ActivitiesBindingModule {
 
-    @ContributesAndroidInjector(modules = [MainActivityModule::class])
-    abstract fun mainActivity(): MainActivity
+    @ContributesAndroidInjector(modules = [HomeActivityModule::class])
+    abstract fun homeActivity(): HomeActivity
 
-    @ContributesAndroidInjector(modules = [MainFragmentModule::class])
-    abstract fun mainFragment(): MainFragment
+    @ContributesAndroidInjector(modules = [HomeFragmentModule::class])
+    abstract fun homeFragment(): HomeFragment
 }

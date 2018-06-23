@@ -1,13 +1,13 @@
-package com.system.moneycontrol.ui.main
+package com.system.moneycontrol.model.repositories
 
 import android.util.Log
 import com.google.firebase.firestore.CollectionReference
-import com.system.moneycontrol.entities.Transaction
+import com.system.moneycontrol.model.entities.Transaction
 import javax.inject.Inject
 
-class TransactionRepository @Inject constructor(val collection: CollectionReference) : MainContract.Repository {
+class TransactionRepository @Inject constructor(val collection: CollectionReference) {
 
-    override fun getList(year: Int, month: Int, function: (List<Transaction>) -> Unit) {
+    fun getList(year: Int, month: Int, function: (List<Transaction>) -> Unit) {
 
         collection.document(year.toString()).collection(month.toString()).get()
                 .addOnCompleteListener { task ->

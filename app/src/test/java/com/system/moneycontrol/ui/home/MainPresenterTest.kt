@@ -1,4 +1,4 @@
-package com.system.moneycontrol.ui.main
+package com.system.moneycontrol.ui.home
 
 import org.junit.Test
 import javax.inject.Inject
@@ -6,7 +6,7 @@ import javax.inject.Inject
 class MainPresenterTest {
 
     @Inject
-    lateinit var presenter: MainContract.Presenter
+    lateinit var presenter: HomeContract.Presenter
 
     @Test
     fun testToast() {
