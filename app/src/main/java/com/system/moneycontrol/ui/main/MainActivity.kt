@@ -13,13 +13,13 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-   val component by lazy { (getApplication() as MyApplication).component.plus(MainActivityModule(this)) }
+  // val component by lazy { (getApplication() as MyApplication).component.plus(MainActivityModule(this)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        component.inject(this)
+    //    component.inject(this)
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->

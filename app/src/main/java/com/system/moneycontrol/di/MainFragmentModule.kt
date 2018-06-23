@@ -10,7 +10,7 @@ import dagger.Provides
 class MainFragmentModule(val view: MainFragment) {
 
     @Provides
-    fun provideView() = view
+    fun provideView(): MainContract.View = view
 
     @Provides
     fun providePresenter(): MainContract.Presenter = MainPresenter(view)

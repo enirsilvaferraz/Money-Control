@@ -8,7 +8,7 @@ import com.system.moneycontrol.di.DaggerAppComponent
 class MyApplication : Application() {
 
     val component: AppComponent by lazy {
-        DaggerAppComponent.builder().appModule(AppModule(this)).build();
+        DaggerAppComponent.builder().build();
     }
 
     override fun onCreate() {
