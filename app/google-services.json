@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "254199483388",
+    "firebase_url": "https://money-control-cad3b.firebaseio.com",
+    "project_id": "money-control-cad3b",
+    "storage_bucket": "money-control-cad3b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254199483388:android:9af5569442c398d6",
+        "android_client_info": {
+          "package_name": "com.system.moneycontrol"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254199483388-mfeekon41eiv9jr5as230ncadencvagh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.system.moneycontrol",
+            "certificate_hash": "e29af3648984adcc827e5c47dc1594b763c86d87"
+          }
+        },
+        {
+          "client_id": "254199483388-uth7c67evml422jhossjpv7us2955cem.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAztlBbpXUqn0P_fWqwrhzXo6KgnQstbUc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254199483388-uth7c67evml422jhossjpv7us2955cem.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
