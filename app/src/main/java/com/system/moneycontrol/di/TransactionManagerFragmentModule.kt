@@ -11,20 +11,20 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class TransactionManagerFragmentModule() {
+open class TransactionManagerFragmentModule {
 
     @Provides
-    fun provideView(view: TransactionManagerFragment): TransactionManagerContract.View = view
+    open fun provideView(view: TransactionManagerFragment): TransactionManagerContract.View = view
 
     @Provides
-    fun providePresenter(view: TransactionManagerContract.View, business: TransactionManagerContract.Business): TransactionManagerContract.Presenter = TransactionManagerPresenter(view, business)
+    open fun providePresenter(view: TransactionManagerContract.View, business: TransactionManagerContract.Business): TransactionManagerContract.Presenter = TransactionManagerPresenter(view, business)
 
     @Provides
-    fun provideBusiness(repository: TransactionRepository): TransactionManagerContract.Business = TransactionManagerBusiness(repository)
+    open fun provideBusiness(repository: TransactionRepository): TransactionManagerContract.Business = TransactionManagerBusiness(repository)
 
     @Provides
-    fun provideRepository(collection: CollectionReference): TransactionRepository = TransactionRepository(collection)
+    open fun provideRepository(collection: CollectionReference): TransactionRepository = TransactionRepository(collection)
 
     @Provides
-    fun provideFirebaseTransaction(): CollectionReference = FirebaseFirestore.getInstance().collection("transactions")
+    open fun provideFirebaseTransaction(): CollectionReference = FirebaseFirestore.getInstance().collection("transactions")
 }
