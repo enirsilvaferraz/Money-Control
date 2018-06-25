@@ -14,5 +14,5 @@ abstract class HomeActivityModule {
     abstract fun activity(activity: HomeActivity): Activity
 
     @ContributesAndroidInjector(modules = [HomeFragmentModule::class])
-    abstract fun homeFragment(): HomeFragment
+    abstract fun fragment(): HomeFragment
 }
