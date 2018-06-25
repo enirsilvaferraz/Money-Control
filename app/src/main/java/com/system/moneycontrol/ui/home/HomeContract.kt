@@ -11,8 +11,4 @@ interface HomeContract {
     interface Presenter {
         fun init()
     }
-
-    interface Business {
-        fun getList(function: (List<Transaction>) -> Unit)
-    }
 }

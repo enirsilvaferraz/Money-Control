@@ -27,8 +27,8 @@ open class TransactionRepository @Inject constructor(val collection: CollectionR
 
     fun save(model: Transaction, onSuccess: (Transaction) -> Unit, onFailure: (Exception) -> Unit) {
 
-        val year = SimpleDateFormat("yyyy", Locale.ENGLISH).format(model.paymentData)
-        val month = SimpleDateFormat("MM", Locale.ENGLISH).format(model.paymentData)
+        val year = SimpleDateFormat("yyyy", Locale.ENGLISH).format(model.paymentDate)
+        val month = SimpleDateFormat("MM", Locale.ENGLISH).format(model.paymentDate)
 
         collection.document(year).collection(month).add(model.toMapper())
                 .addOnSuccessListener {
@@ -45,8 +45,8 @@ open class TransactionRepository @Inject constructor(val collection: CollectionR
 
     open fun delete(model: Transaction, onSuccess: (Transaction) -> Unit, onFailure: (Exception) -> Unit) {
 
-        val year = SimpleDateFormat("yyyy", Locale.ENGLISH).format(model.paymentData)
-        val month = SimpleDateFormat("MM", Locale.ENGLISH).format(model.paymentData)
+        val year = SimpleDateFormat("yyyy", Locale.ENGLISH).format(model.paymentDate)
+        val month = SimpleDateFormat("MM", Locale.ENGLISH).format(model.paymentDate)
 
         collection.document(year).collection(month).document(model.key!!).delete()
                 .addOnSuccessListener {

@@ -6,7 +6,7 @@ import java.util.*
 data class Transaction(
 
         var key: String?,
-        var paymentData: Date?,
+        var paymentDate: Date?,
         var moneySpent: Double?,
         var tag: Tag?,
         var description: String?
@@ -17,7 +17,7 @@ data class Transaction(
 
     fun toMapper(): Mapper = Mapper(
             key!!,
-            SimpleDateFormat("yyyyMMdd", Locale.ENGLISH).format(paymentData),
+            SimpleDateFormat("yyyyMMdd", Locale.ENGLISH).format(paymentDate),
             moneySpent!!,
             tag.toString(),
             description
@@ -26,7 +26,7 @@ data class Transaction(
     class Mapper(
 
             var key: String,
-            var paymentData: String,
+            var paymentDate: String,
             var moneySpent: Double,
             var tag: String,
             var description: String?
@@ -37,7 +37,7 @@ data class Transaction(
 
         fun toModel(): Transaction = Transaction(
                 key,
-                SimpleDateFormat("yyyyMMdd", Locale.ENGLISH).parse(paymentData),
+                SimpleDateFormat("yyyyMMdd", Locale.ENGLISH).parse(paymentDate),
                 moneySpent,
                 Tag(tag, null),
                 description

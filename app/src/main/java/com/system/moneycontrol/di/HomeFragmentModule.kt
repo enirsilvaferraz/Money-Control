@@ -17,13 +17,7 @@ class HomeFragmentModule() {
     fun provideView(view: HomeFragment): HomeContract.View = view
 
     @Provides
-    fun providePresenter(view: HomeContract.View, business: HomeContract.Business): HomeContract.Presenter = HomePresenter(view, business)
-
-    @Provides
-    fun provideBusiness(repository: TransactionRepository): HomeContract.Business = HomeBusiness(repository)
-
-    @Provides
-    fun provideRepository(collection: CollectionReference): TransactionRepository = TransactionRepository(collection)
+    fun providePresenter(view: HomeContract.View, business: HomeBusiness): HomeContract.Presenter = HomePresenter(view, business)
 
     @Provides
     fun provideFirebaseTransaction(): CollectionReference = FirebaseFirestore.getInstance().collection("transactions")

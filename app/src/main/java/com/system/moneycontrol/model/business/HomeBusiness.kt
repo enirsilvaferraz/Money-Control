@@ -6,9 +6,9 @@ import com.system.moneycontrol.ui.home.HomeContract
 import javax.inject.Inject
 
 
-class HomeBusiness @Inject constructor(val repository: TransactionRepository) : HomeContract.Business {
+class HomeBusiness @Inject constructor(val repository: TransactionRepository)  {
 
-    override fun getList(function: (List<Transaction>) -> Unit) {
+    fun getList(function: (List<Transaction>) -> Unit) {
         repository.getList(2018, 6) { it: List<Transaction> ->
             function.invoke(it)
         }

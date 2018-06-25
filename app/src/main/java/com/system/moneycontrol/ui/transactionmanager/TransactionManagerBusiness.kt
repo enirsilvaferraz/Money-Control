@@ -8,7 +8,7 @@ open class TransactionManagerBusiness @Inject constructor(val repository: Transa
 
     override fun validateFields(model: Transaction): Boolean {
         return !model.key.isNullOrBlank() &&
-                model.paymentData != null &&
+                model.paymentDate != null &&
                 model.moneySpent != null && model.moneySpent!! > 0.0 &&
                 model.tag != null && !model.tag!!.key.isNullOrBlank()
     }
