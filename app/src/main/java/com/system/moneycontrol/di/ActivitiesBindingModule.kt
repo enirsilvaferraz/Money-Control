@@ -10,8 +10,8 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivitiesBindingModule {
 
-    @ContributesAndroidInjector(modules = [HomeFragmentModule::class])
-    abstract fun homeFragment(): HomeFragment
+    @ContributesAndroidInjector(modules = [HomeActivityModule::class])
+    abstract fun homeActivity(): HomeActivity
 
     @ContributesAndroidInjector(modules = [TransactionManagerFragmentModule::class])
     abstract fun transactionManagerFragment(): TransactionManagerFragment
