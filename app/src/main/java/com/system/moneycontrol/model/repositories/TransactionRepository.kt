@@ -43,17 +43,17 @@ open class TransactionRepository @Inject constructor(val collection: CollectionR
 
     }
 
-    open fun delete(model: Transaction, onSuccess: (Transaction) -> Unit, onFailure: (Exception) -> Unit) {
+    open fun delete(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
         val year = SimpleDateFormat("yyyy", Locale.ENGLISH).format(model.paymentDate)
         val month = SimpleDateFormat("MM", Locale.ENGLISH).format(model.paymentDate)
 
         collection.document(year).collection(month).document(model.key!!).delete()
                 .addOnSuccessListener {
-                    onSuccess.invoke(model)
+                    onSuccess?.invoke(model)
                 }
                 .addOnFailureListener {
-                    onFailure.invoke(it)
+                    onFailure?.invoke(it)
                 }
     }
 }

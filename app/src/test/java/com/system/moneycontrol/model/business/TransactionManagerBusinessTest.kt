@@ -8,11 +8,8 @@ import com.system.moneycontrol.ui.transactionmanager.TransactionManagerBusiness
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers
-import org.mockito.InjectMocks
-import org.mockito.Mock
+import org.mockito.*
 import org.mockito.Mockito.doAnswer
-import org.mockito.Spy
 import org.mockito.junit.MockitoJUnitRunner
 import java.util.*
 
@@ -61,8 +58,7 @@ class TransactionManagerBusinessTest {
         Assert.assertEquals(true, business.validateFields(Transaction(mockValidKey, mockValidDate, mockValidValue, mockValidTag, String())))
     }
 
-    @Deprecated("Esse método deveria falhar. Não pode-se usar o any() pq ele retorna nulo e o parametro é não aceita nulo")
-    //@Test
+    @Test
     fun delete_testingListeners_success() {
 
         val model = Transaction(mockValidKey, mockValidDate, mockValidValue, mockValidTag, String())
@@ -73,13 +69,12 @@ class TransactionManagerBusinessTest {
         doAnswer {
             val function = it.arguments[1] as (Transaction) -> Unit
             function.invoke(it.arguments[0] as Transaction)
-        }.whenever(repository).delete(ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any())
+        }.whenever(repository).delete(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
 
         business.delete(model, onSuccess, onFailure)
     }
 
-    @Deprecated("Esse método deveria falhar. Não pode-se usar o any() pq ele retorna nulo e o parametro é não aceita nulo")
-    //@Test
+    @Test
     fun delete_testingListeners_someFailure() {
 
         val exception = Exception()
@@ -91,8 +86,10 @@ class TransactionManagerBusinessTest {
         doAnswer {
             val function = it.arguments[2] as (Exception) -> Unit
             function.invoke(exception)
-        }.whenever(repository).delete(ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any())
+        }.whenever(repository).delete(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
 
         business.delete(model, onSuccess, onFailure)
     }
+
+    private fun <T> any(type: Class<T>): T = Mockito.any<T>(type)
 }
