@@ -3,17 +3,21 @@ package com.system.moneycontrol.model.entities
 import java.text.SimpleDateFormat
 import java.util.*
 
-data class Transaction(
+class Transaction() {
 
-        var key: String?,
-        var paymentDate: Date?,
-        var moneySpent: Double?,
-        var tag: Tag?,
-        var description: String?
+    var key: String? = null
+    lateinit var paymentDate: Date
+    var moneySpent: Double = 0.0
+    lateinit var tag: Tag
+    var description: String? = null
 
-) {
-
-    constructor() : this(null, null, null, null, null)
+    constructor(key: String?, paymentDate: Date, moneySpent: Double, tag: Tag, description: String?) : this() {
+        this.key = key
+        this.paymentDate = paymentDate
+        this.moneySpent = moneySpent
+        this.tag = tag
+        this.description = description
+    }
 
     fun toMapper(): Mapper = Mapper(
             key!!,

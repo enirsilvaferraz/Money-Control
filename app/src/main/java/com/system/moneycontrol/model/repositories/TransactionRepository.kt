@@ -25,22 +25,22 @@ open class TransactionRepository @Inject constructor(val collection: CollectionR
                 }
     }
 
-    fun save(model: Transaction, onSuccess: (Transaction) -> Unit, onFailure: (Exception) -> Unit) {
+    fun save(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
         val year = SimpleDateFormat("yyyy", Locale.ENGLISH).format(model.paymentDate)
         val month = SimpleDateFormat("MM", Locale.ENGLISH).format(model.paymentDate)
 
         collection.document(year).collection(month).add(model.toMapper())
                 .addOnSuccessListener {
-                    onSuccess.invoke(it.get().result.toObject(Transaction.Mapper::class.java).toModel())
+                    onSuccess?.invoke(it.get().result.toObject(Transaction.Mapper::class.java).toModel())
                 }
                 .addOnFailureListener {
-                    onFailure.invoke(it)
+                    onFailure?.invoke(it)
                 }
     }
 
     fun save() {
-
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     open fun delete(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
@@ -55,5 +55,9 @@ open class TransactionRepository @Inject constructor(val collection: CollectionR
                 .addOnFailureListener {
                     onFailure?.invoke(it)
                 }
+    }
+
+    fun update(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
