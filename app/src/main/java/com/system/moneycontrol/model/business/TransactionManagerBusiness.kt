@@ -1,5 +1,6 @@
-package com.system.moneycontrol.ui.transactionmanager
+package com.system.moneycontrol.model.business
 
+import com.system.moneycontrol.infrastructure.Constants
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.model.repositories.TransactionRepository
@@ -8,42 +9,44 @@ import javax.inject.Inject
 
 open class TransactionManagerBusiness @Inject constructor(val repository: TransactionRepository) {
 
-    fun validateFields(model: Transaction): Boolean {
-        return !model.key.isNullOrBlank() &&
-                model.paymentDate != null &&
-                model.moneySpent != null && model.moneySpent!! > 0.0 &&
-                model.tag != null && !model.tag!!.key.isNullOrBlank()
+    private fun validateFields(model: Transaction): Boolean {
+        return !model.key.isBlank() && model.moneySpent > 0.0
     }
-
 
     fun save(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
-        when (processSave(model)) {
+        if (validateFields(model)) when (processSave(model)) {
 
-            SaveType.SAVE_NEW -> {
+            SaveType.SAVE_NEW ->
+
                 repository.save(model, onSuccess, onFailure)
-            }
 
-            SaveType.UPDATE ->{
+            SaveType.UPDATE ->
+
                 repository.update(model, onSuccess, onFailure)
-            }
 
-            SaveType.UPDATE_ANOTHER_MONTH ->{
+            SaveType.UPDATE_ANOTHER_MONTH ->
+
                 repository.save(model, {
-                    model.paymentDate = model.paymentDateOlder
-                    repository.delete(model, onSuccess, onFailure)
+
+                    val copy = it.copy()
+                    copy.paymentDate = model.paymentDateOlder
+                    delete(copy, {
+                        onSuccess?.invoke(model)
+                    }, onFailure)
+
                 }, onFailure)
-            }
         }
+        else onFailure?.invoke(IllegalArgumentException())
     }
 
     fun delete(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
         repository.delete(model, onSuccess, onFailure)
     }
 
-    fun processSave(transaction: Transaction): SaveType {
+    private fun processSave(transaction: Transaction): SaveType {
 
-        if (transaction.key.isNullOrBlank()) {
+        if (Constants.LASY_STRING.equals(transaction.key)) {
             return SaveType.SAVE_NEW
 
         } else if (MyUtils.getDate(transaction.paymentDateOlder, Calendar.YEAR) == MyUtils.getDate(transaction.paymentDate, Calendar.YEAR) &&

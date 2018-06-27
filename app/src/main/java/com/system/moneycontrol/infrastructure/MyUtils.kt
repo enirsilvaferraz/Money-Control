@@ -1,5 +1,6 @@
 package com.system.moneycontrol.infrastructure
 
+import java.text.SimpleDateFormat
 import java.util.*
 
 object MyUtils {
@@ -14,5 +15,13 @@ object MyUtils {
         val instance = Calendar.getInstance()
         instance.time = date
         return instance.get(field)
+    }
+
+    fun getDate(date: String, pattern: String): Date {
+        return SimpleDateFormat(pattern, Locale.ENGLISH).parse(date)
+    }
+
+    fun getDate(date: Date, pattern: String): String {
+        return SimpleDateFormat(pattern, Locale.ENGLISH).format(date)
     }
 }

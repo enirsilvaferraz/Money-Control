@@ -3,6 +3,7 @@ package com.system.moneycontrol.model.repositories
 import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 import com.system.moneycontrol.model.entities.Transaction
+import com.system.moneycontrol.model.mappers.TransactionMapper
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -12,12 +13,12 @@ import javax.inject.Inject
  */
 open class TransactionRepository @Inject constructor(val collection: CollectionReference) {
 
-    fun getList(year: Int, month: Int, function: (List<Transaction>) -> Unit) {
+    open fun getList(year: Int, month: Int, function: (List<Transaction>) -> Unit) {
 
         collection.document(year.toString()).collection(month.toString()).get()
                 .addOnCompleteListener { task ->
                     function.invoke(task.result.documents.map {
-                        it.toObject(Transaction.Mapper::class.java).toModel()
+                        it.toObject(TransactionMapper::class.java).toModel()
                     })
                 }
                 .addOnFailureListener {
@@ -25,22 +26,18 @@ open class TransactionRepository @Inject constructor(val collection: CollectionR
                 }
     }
 
-    fun save(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
+    open fun save(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
         val year = SimpleDateFormat("yyyy", Locale.ENGLISH).format(model.paymentDate)
         val month = SimpleDateFormat("MM", Locale.ENGLISH).format(model.paymentDate)
 
         collection.document(year).collection(month).add(model.toMapper())
                 .addOnSuccessListener {
-                    onSuccess?.invoke(it.get().result.toObject(Transaction.Mapper::class.java).toModel())
+                    onSuccess?.invoke(it.get().result.toObject(TransactionMapper::class.java).toModel())
                 }
                 .addOnFailureListener {
                     onFailure?.invoke(it)
                 }
-    }
-
-    fun save() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     open fun delete(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
@@ -48,7 +45,7 @@ open class TransactionRepository @Inject constructor(val collection: CollectionR
         val year = SimpleDateFormat("yyyy", Locale.ENGLISH).format(model.paymentDate)
         val month = SimpleDateFormat("MM", Locale.ENGLISH).format(model.paymentDate)
 
-        collection.document(year).collection(month).document(model.key!!).delete()
+        collection.document(year).collection(month).document(model.key).delete()
                 .addOnSuccessListener {
                     onSuccess?.invoke(model)
                 }
@@ -57,7 +54,7 @@ open class TransactionRepository @Inject constructor(val collection: CollectionR
                 }
     }
 
-    fun update(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
+    open fun update(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
