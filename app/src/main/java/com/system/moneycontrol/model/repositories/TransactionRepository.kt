@@ -1,11 +1,9 @@
 package com.system.moneycontrol.model.repositories
 
-import android.util.Log
 import com.google.firebase.firestore.CollectionReference
+import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.model.mappers.TransactionMapper
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -13,25 +11,24 @@ import javax.inject.Inject
  */
 open class TransactionRepository @Inject constructor(val collection: CollectionReference) {
 
-    open fun getList(year: Int, month: Int, function: (List<Transaction>) -> Unit) {
+    open fun getList(year: Int, month: Int, onSuccess: ((List<Transaction>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
         collection.document(year.toString()).collection(month.toString()).get()
                 .addOnCompleteListener { task ->
-                    function.invoke(task.result.documents.map {
+                    onSuccess?.invoke(task.result.documents.map {
                         it.toObject(TransactionMapper::class.java).toModel()
                     })
                 }
                 .addOnFailureListener {
-                    Log.i("TAG", "Falha!")
+                    onFailure?.invoke(it)
                 }
     }
 
     open fun save(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
-        val year = SimpleDateFormat("yyyy", Locale.ENGLISH).format(model.paymentDate)
-        val month = SimpleDateFormat("MM", Locale.ENGLISH).format(model.paymentDate)
+        model.newKey()
 
-        collection.document(year).collection(month).add(model.toMapper())
+        collection.document(getYear(model)).collection(getMonth(model)).add(model.toMapper())
                 .addOnSuccessListener {
                     onSuccess?.invoke(it.get().result.toObject(TransactionMapper::class.java).toModel())
                 }
@@ -42,10 +39,7 @@ open class TransactionRepository @Inject constructor(val collection: CollectionR
 
     open fun delete(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
-        val year = SimpleDateFormat("yyyy", Locale.ENGLISH).format(model.paymentDate)
-        val month = SimpleDateFormat("MM", Locale.ENGLISH).format(model.paymentDate)
-
-        collection.document(year).collection(month).document(model.key).delete()
+        collection.document(getYear(model)).collection(getMonth(model)).document(model.key).delete()
                 .addOnSuccessListener {
                     onSuccess?.invoke(model)
                 }
@@ -55,6 +49,17 @@ open class TransactionRepository @Inject constructor(val collection: CollectionR
     }
 
     open fun update(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        collection.document(getYear(model)).collection(getMonth(model)).add(model.toMapper())
+                .addOnSuccessListener {
+                    onSuccess?.invoke(it.get().result.toObject(TransactionMapper::class.java).toModel())
+                }
+                .addOnFailureListener {
+                    onFailure?.invoke(it)
+                }
     }
+
+    private fun getMonth(model: Transaction) = MyUtils.getDate(model.paymentDate, "MM")
+
+    private fun getYear(model: Transaction) = MyUtils.getDate(model.paymentDate, "yyyy")
 }

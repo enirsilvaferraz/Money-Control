@@ -9,13 +9,9 @@ import javax.inject.Inject
 
 open class TransactionManagerBusiness @Inject constructor(val repository: TransactionRepository) {
 
-    private fun validateFields(model: Transaction): Boolean {
-        return !model.key.isBlank() && model.moneySpent > 0.0
-    }
-
     fun save(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
-        if (validateFields(model)) when (processSave(model)) {
+        when (processSave(model)) {
 
             SaveType.SAVE_NEW ->
 
@@ -37,7 +33,6 @@ open class TransactionManagerBusiness @Inject constructor(val repository: Transa
 
                 }, onFailure)
         }
-        else onFailure?.invoke(IllegalArgumentException())
     }
 
     fun delete(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {

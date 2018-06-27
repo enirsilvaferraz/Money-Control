@@ -68,41 +68,6 @@ class TransactionManagerBusinessTest {
     }
 
     @Test
-    fun save_validatingKey_invalid() {
-        val transaction = Transaction(String(), mockValidDate, mockValidDate, mockValidValue, mockValidTag, String())
-        business.save(transaction, assertFalse(), { Assert.assertTrue(it is IllegalArgumentException) })
-
-        verify(repository, never()).save(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
-        verify(repository, never()).delete(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
-        verify(repository, never()).update(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
-    }
-
-    @Test
-    fun save_validatingMoneySpent_invalid() {
-        var transaction = Transaction(mockValidKey, mockValidDate, mockValidDate, 0.0, mockValidTag, String())
-        business.save(transaction, assertFalse(), { Assert.assertTrue(it is IllegalArgumentException) })
-
-        transaction = Transaction(mockValidKey, mockValidDate, mockValidDate, -0.01, mockValidTag, String())
-        business.save(transaction, assertFalse(), { Assert.assertTrue(it is IllegalArgumentException) })
-
-        verify(repository, never()).save(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
-        verify(repository, never()).delete(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
-        verify(repository, never()).update(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
-    }
-
-    @Test
-    fun save_newValue_failure() {
-        val exception = Exception()
-        val transaction = Transaction("", mockValidDate, mockValidDate, mockValidValue, mockValidTag, String())
-
-        business.save(transaction, assertFalse(), { Assert.assertTrue(it is IllegalArgumentException) })
-
-        verify(repository, never()).save(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
-        verify(repository, never()).delete(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
-        verify(repository, never()).update(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
-    }
-
-    @Test
     fun save_updateValue_success() {
         val transaction = Transaction(mockValidKey, mockValidDate, mockValidDate, mockValidValue, mockValidTag, String())
         doAnswer(execSuccess()).whenever(repository).update(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())

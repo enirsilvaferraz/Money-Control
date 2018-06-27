@@ -13,6 +13,10 @@ data class Transaction(
         var description: String?
 ) {
 
+    fun newKey() {
+        key = "${MyUtils.getDate(paymentDate, "yyyyMMddHHmm")}-${tag.key}"
+    }
+
     fun toMapper(): TransactionMapper = TransactionMapper(
             key,
             MyUtils.getDate(paymentDate, "yyyyMMdd"),
