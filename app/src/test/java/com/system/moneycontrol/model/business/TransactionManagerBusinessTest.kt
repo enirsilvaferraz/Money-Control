@@ -17,7 +17,6 @@ import org.mockito.Mockito.doAnswer
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.junit.MockitoJUnitRunner
 
-
 @RunWith(MockitoJUnitRunner::class)
 class TransactionManagerBusinessTest {
 

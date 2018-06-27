@@ -19,7 +19,7 @@ data class Transaction(
 
     fun toMapper(): TransactionMapper = TransactionMapper(
             key,
-            MyUtils.getDate(paymentDate, "yyyyMMdd"),
+            MyUtils.getDate(paymentDate, "yyyyMMddHHmm"),
             moneySpent,
             tag.key,
             description
