@@ -4,6 +4,7 @@ import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import com.system.moneycontrol.BaseTest
 import com.system.moneycontrol.infrastructure.Constants
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.entities.Tag
@@ -12,13 +13,16 @@ import com.system.moneycontrol.model.repositories.TransactionRepository
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.*
+import org.mockito.ArgumentMatchers
+import org.mockito.InjectMocks
+import org.mockito.Mock
 import org.mockito.Mockito.doAnswer
+import org.mockito.Spy
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class TransactionManagerBusinessTest {
+class TransactionManagerBusinessTest : BaseTest() {
 
     private val mockValidKey = "KEY"
     private val mockValidTag = Tag("KEY", String())
@@ -32,8 +36,6 @@ class TransactionManagerBusinessTest {
     @Spy
     @InjectMocks
     lateinit var business: TransactionManagerBusiness
-
-    private fun <T> any(type: Class<T>): T = Mockito.any<T>(type)
 
     @Test
     fun delete_testingListeners_success() {

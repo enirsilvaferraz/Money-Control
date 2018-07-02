@@ -1,6 +1,7 @@
 package com.system.moneycontrol.ui.transactionmanager
 
 import com.nhaarman.mockitokotlin2.*
+import com.system.moneycontrol.BaseTest
 import com.system.moneycontrol.model.business.TagBusiness
 import com.system.moneycontrol.model.business.TransactionManagerBusiness
 import com.system.moneycontrol.model.entities.Tag
@@ -14,7 +15,7 @@ import org.mockito.invocation.InvocationOnMock
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class TransactionManagerPresenterTest {
+class TransactionManagerPresenterTest : BaseTest() {
 
     @Mock
     lateinit var transactionBusiness: TransactionManagerBusiness
@@ -27,12 +28,12 @@ class TransactionManagerPresenterTest {
 
     @Spy
     @InjectMocks
-    lateinit var presenter: TransactionManagerContract.Presenter
+    lateinit var presenter: TransactionManagerPresenter
 
     @Test
     fun init_getTags_empty() {
         val list = ArrayList<Tag>()
-        doAnswer(execSuccess(list)).whenever(tagBusiness.getAll(ArgumentMatchers.any(), ArgumentMatchers.any()))
+        doAnswer(execSuccess(list)).whenever(tagBusiness).getAll(ArgumentMatchers.any(), ArgumentMatchers.any())
 
         presenter.init()
         verify(view, never()).configureTags(list)
@@ -44,7 +45,7 @@ class TransactionManagerPresenterTest {
         val list = ArrayList<Tag>()
         list.add(Tag("Key1", "Name1"))
         list.add(Tag("Key2", "Name2"))
-        doAnswer(execSuccess(list)).whenever(tagBusiness.getAll(ArgumentMatchers.any(), ArgumentMatchers.any()))
+        doAnswer(execSuccess(list)).whenever(tagBusiness).getAll(ArgumentMatchers.any(), ArgumentMatchers.any())
 
         presenter.init()
         verify(view, times(1)).configureTags(list)
@@ -54,11 +55,26 @@ class TransactionManagerPresenterTest {
     @Test
     fun init_getTags_error() {
         val exception = Exception()
-        doAnswer(execFailure(exception)).whenever(tagBusiness.getAll(ArgumentMatchers.any(), ArgumentMatchers.any()))
+        doAnswer(execFailure(exception)).whenever(tagBusiness).getAll(ArgumentMatchers.any(), ArgumentMatchers.any())
 
         presenter.init()
         verify(view, never()).configureTags(ArrayList())
         verify(view, times(1)).showError(exception.message!!)
+    }
+
+    @Test
+    fun save_callSave_success(){
+
+    }
+
+    @Test
+    fun save_callSave_failure(){
+
+    }
+
+    @Test
+    fun cancel_clickButtom_success(){
+
     }
 
     @Suppress("UNCHECKED_CAST")

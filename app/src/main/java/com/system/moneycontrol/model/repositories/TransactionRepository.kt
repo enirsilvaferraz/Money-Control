@@ -9,9 +9,9 @@ import javax.inject.Inject
 /**
  * @param collection: Firebase Firestore (transactions)
  */
-open class TransactionRepository @Inject constructor(val collection: CollectionReference) {
+class TransactionRepository @Inject constructor(val collection: CollectionReference) {
 
-    open fun getList(year: Int, month: Int, onSuccess: ((List<Transaction>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
+    fun getList(year: Int, month: Int, onSuccess: ((List<Transaction>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
         collection.document(year.toString()).collection(month.toString()).get()
                 .addOnCompleteListener { task ->
@@ -24,7 +24,7 @@ open class TransactionRepository @Inject constructor(val collection: CollectionR
                 }
     }
 
-    open fun save(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
+    fun save(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
         model.newKey()
 
@@ -37,7 +37,7 @@ open class TransactionRepository @Inject constructor(val collection: CollectionR
                 }
     }
 
-    open fun delete(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
+    fun delete(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
         collection.document(getYear(model)).collection(getMonth(model)).document(model.key).delete()
                 .addOnSuccessListener {
@@ -48,7 +48,7 @@ open class TransactionRepository @Inject constructor(val collection: CollectionR
                 }
     }
 
-    open fun update(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
+    fun update(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
         collection.document(getYear(model)).collection(getMonth(model)).add(model.toMapper())
                 .addOnSuccessListener {

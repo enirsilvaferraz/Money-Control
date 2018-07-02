@@ -7,7 +7,7 @@ import com.system.moneycontrol.model.repositories.TransactionRepository
 import java.util.*
 import javax.inject.Inject
 
-open class TransactionManagerBusiness @Inject constructor(val repository: TransactionRepository) {
+class TransactionManagerBusiness @Inject constructor(val repository: TransactionRepository) {
 
     fun save(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
