@@ -2,7 +2,13 @@ package com.system.moneycontrol.ui.tagmanager
 
 interface TagManagerContract {
 
-    interface View
+    interface View {
+        fun showMessage(message: String)
+    }
 
-    interface Presenter
+    interface Presenter {
+        fun save()
+        fun getAll()
+        fun delete()
+    }
 }

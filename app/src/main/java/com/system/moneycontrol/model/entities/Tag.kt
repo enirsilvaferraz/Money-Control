@@ -4,5 +4,5 @@ import com.system.moneycontrol.model.mappers.TagMapper
 
 data class Tag(var key: String, var name: String) {
 
-    fun toMapper() = TagMapper(key, name)
+    fun toMapper() = TagMapper(name)
 }

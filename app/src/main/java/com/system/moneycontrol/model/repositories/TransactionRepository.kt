@@ -1,15 +1,17 @@
 package com.system.moneycontrol.model.repositories
 
 import com.google.firebase.firestore.CollectionReference
+import com.system.moneycontrol.di.ConstantsDI
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.model.mappers.TransactionMapper
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * @param collection: Firebase Firestore (transactions)
  */
-class TransactionRepository @Inject constructor(val collection: CollectionReference) {
+class TransactionRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TRANSACTION)val collection: CollectionReference) {
 
     fun getList(year: Int, month: Int, onSuccess: ((List<Transaction>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
