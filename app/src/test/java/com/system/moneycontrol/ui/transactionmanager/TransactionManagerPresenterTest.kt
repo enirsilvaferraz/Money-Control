@@ -11,7 +11,6 @@ import org.mockito.ArgumentMatchers
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Spy
-import org.mockito.invocation.InvocationOnMock
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -63,23 +62,17 @@ class TransactionManagerPresenterTest : BaseTest() {
     }
 
     @Test
-    fun save_callSave_success(){
+    fun save_callSave_success() {
 
     }
 
     @Test
-    fun save_callSave_failure(){
+    fun save_callSave_failure() {
 
     }
 
     @Test
-    fun cancel_clickButtom_success(){
+    fun cancel_clickButtom_success() {
 
     }
-
-    @Suppress("UNCHECKED_CAST")
-    private fun execSuccess(list: List<Tag>): (InvocationOnMock) -> Unit = { (it.arguments[0] as (List<Tag>) -> Unit).invoke(list) }
-
-    @Suppress("UNCHECKED_CAST")
-    private fun execFailure(exception: Exception): (InvocationOnMock) -> Unit = { (it.arguments[2] as (Exception) -> Unit).invoke(exception) }
 }

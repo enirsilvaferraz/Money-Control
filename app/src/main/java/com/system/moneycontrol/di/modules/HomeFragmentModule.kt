@@ -1,4 +1,4 @@
-package com.system.moneycontrol.di
+package com.system.moneycontrol.di.modules
 
 import com.system.moneycontrol.ui.home.HomeContract
 import com.system.moneycontrol.ui.home.HomeFragment
@@ -7,7 +7,7 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-abstract class HomeFragmentModule() {
+abstract class HomeFragmentModule {
 
     @Binds
     abstract fun provideView(view: HomeFragment): HomeContract.View

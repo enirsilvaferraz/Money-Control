@@ -1,4 +1,4 @@
-package com.system.moneycontrol.di
+package com.system.moneycontrol.di.modules
 
 import com.system.moneycontrol.ui.transactionmanager.TransactionManagerContract
 import com.system.moneycontrol.ui.transactionmanager.TransactionManagerFragment

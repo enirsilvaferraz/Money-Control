@@ -10,18 +10,13 @@ import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.model.repositories.TransactionRepository
-import org.junit.Assert
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.doAnswer
 import org.mockito.Spy
-import org.mockito.invocation.InvocationOnMock
-import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
 class TransactionManagerBusinessTest : BaseTest() {
 
     private val mockValidKey = "KEY"
@@ -39,7 +34,7 @@ class TransactionManagerBusinessTest : BaseTest() {
 
     @Test
     fun delete_testingListeners_success() {
-        doAnswer(execSuccess()).whenever(repository).delete(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
+        doAnswer(execSuccess(mockValidTransaction)).whenever(repository).delete(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
 
         business.delete(mockValidTransaction, assertTrue(mockValidTransaction), assertFalse())
 
@@ -59,7 +54,7 @@ class TransactionManagerBusinessTest : BaseTest() {
     @Test
     fun save_newValue_success() {
         val transaction = Transaction(Constants.LASY_STRING, mockValidDate, mockValidDate, mockValidValue, mockValidTag, String())
-        doAnswer(execSuccess()).whenever(repository).save(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
+        doAnswer(execSuccess(transaction)).whenever(repository).save(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
 
         business.save(transaction, assertTrue(transaction), assertFalse())
 
@@ -71,7 +66,7 @@ class TransactionManagerBusinessTest : BaseTest() {
     @Test
     fun save_updateValue_success() {
         val transaction = Transaction(mockValidKey, mockValidDate, mockValidDate, mockValidValue, mockValidTag, String())
-        doAnswer(execSuccess()).whenever(repository).update(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
+        doAnswer(execSuccess(transaction)).whenever(repository).update(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
 
         business.save(transaction, assertTrue(transaction), assertFalse())
 
@@ -84,8 +79,8 @@ class TransactionManagerBusinessTest : BaseTest() {
     fun save_updateAnotherValue_success() {
         val actual = MyUtils.getDate(2018, 6, 1, 0, 0)
         val transaction = Transaction(mockValidKey, actual, mockValidDate, mockValidValue, mockValidTag, String())
-        doAnswer(execSuccess()).whenever(repository).save(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
-        doAnswer(execSuccess()).whenever(repository).delete(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
+        doAnswer(execSuccess(transaction)).whenever(repository).save(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
+        doAnswer(execSuccess(transaction)).whenever(repository).delete(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
 
         business.save(transaction, assertTrue(transaction), assertFalse())
 
@@ -94,13 +89,7 @@ class TransactionManagerBusinessTest : BaseTest() {
         verify(repository, never()).update(any(Transaction::class.java), ArgumentMatchers.any(), ArgumentMatchers.any())
     }
 
-    @Suppress("UNCHECKED_CAST")
-    private fun execSuccess(): (InvocationOnMock) -> Unit = { (it.arguments[1] as (Transaction) -> Unit).invoke(it.arguments[0] as Transaction) }
-
-    @Suppress("UNCHECKED_CAST")
-    private fun execFailure(exception: Exception): (InvocationOnMock) -> Unit = { (it.arguments[2] as (Exception) -> Unit).invoke(exception) }
-
-    private fun assertTrue(anyobject: Any): (Any) -> Unit = { Assert.assertTrue(anyobject.equals(it)) }
-
-    private fun assertFalse(): (Any) -> Unit = { Assert.fail() }
+//    private fun assertTrue(anyobject: Any): (Any) -> Unit = { Assert.assertTrue(anyobject.equals(it)) }
+//
+//    private fun assertFalse(): (Any) -> Unit = { Assert.fail() }
 }

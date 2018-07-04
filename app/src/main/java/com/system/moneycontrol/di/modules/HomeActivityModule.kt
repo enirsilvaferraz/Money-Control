@@ -1,4 +1,4 @@
-package com.system.moneycontrol.di
+package com.system.moneycontrol.di.modules
 
 import android.app.Activity
 import com.system.moneycontrol.ui.home.HomeActivity
