@@ -1,10 +1,10 @@
 package com.system.moneycontrol.ui.tagmanager
 
-import com.system.moneycontrol.model.business.TagBusiness
+import com.system.moneycontrol.model.business.TagManagerBusiness
 import com.system.moneycontrol.model.entities.Tag
 import javax.inject.Inject
 
-class TagManagerPresenter @Inject constructor(val view: TagManagerFragment, val business: TagBusiness) : TagManagerContract.Presenter {
+class TagManagerPresenter @Inject constructor(val view: TagManagerFragment, val business: TagManagerBusiness) : TagManagerContract.Presenter {
 
     override fun delete() {
 

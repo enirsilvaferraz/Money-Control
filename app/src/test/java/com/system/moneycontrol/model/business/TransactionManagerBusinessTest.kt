@@ -2,7 +2,7 @@ package com.system.moneycontrol.model.business
 
 import com.nhaarman.mockitokotlin2.*
 import com.system.moneycontrol.BaseTest
-import com.system.moneycontrol.infrastructure.ConstantsTest
+import com.system.moneycontrol.infrastruture.ConstantsTest
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
