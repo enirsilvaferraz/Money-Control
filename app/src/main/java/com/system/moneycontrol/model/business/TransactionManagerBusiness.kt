@@ -25,11 +25,7 @@ class TransactionManagerBusiness @Inject constructor(val repository: Transaction
 
                 repository.save(model, {
 
-                    val copy = it.copy()
-                    copy.paymentDate = model.paymentDateOlder
-                    delete(copy, {
-                        onSuccess?.invoke(model)
-                    }, onFailure)
+                    delete(it.copy(paymentDate = model.paymentDateOlder), onSuccess, onFailure)
 
                 }, onFailure)
         }
@@ -41,7 +37,7 @@ class TransactionManagerBusiness @Inject constructor(val repository: Transaction
 
     private fun processSave(transaction: Transaction): SaveType {
 
-        if (Constants.LASY_STRING.equals(transaction.key)) {
+        if (transaction.key.isBlank()) {
             return SaveType.SAVE_NEW
 
         } else if (MyUtils.getDate(transaction.paymentDateOlder, Calendar.YEAR) == MyUtils.getDate(transaction.paymentDate, Calendar.YEAR) &&

@@ -1,5 +1,6 @@
 package com.system.moneycontrol.model.business
 
+import com.nhaarman.mockitokotlin2.*
 import com.system.moneycontrol.BaseTest
 import com.system.moneycontrol.infrastructure.ConstantsTest
 import com.system.moneycontrol.model.entities.Tag
@@ -18,38 +19,40 @@ class TagBusinessTest : BaseTest() {
     @InjectMocks
     lateinit var business: TagBusiness
 
-    val mockValid = Tag(ConstantsTest.VALID_KEY, ConstantsTest.VALID_STRING)
+    val mockSaveValid = Tag("", ConstantsTest.VALID_STRING)
+    val mockUpdateValid = Tag(ConstantsTest.VALID_KEY, ConstantsTest.VALID_STRING)
 
     @Test
     fun save_savingNewValue_success() {
-        business.save(mockValid, assertTrue(mockValid), assertFalse())
+
+        business.save(mockSaveValid, mock(), mock())
+
+        verify(repository, times(1)).save(any(), any(), any())
+        verify(repository, never()).update(any(), any(), any())
     }
 
     @Test
     fun save_savingUpdate_success() {
-    }
 
-    @Test
-    fun save_savingFailure_failure() {
-    }
+        business.save(mockUpdateValid, mock(), mock())
 
-    @Test
-    fun getAll_noData_emptyList() {
+        verify(repository, never()).save(any(), any(), any())
+        verify(repository, times(1)).update(any(), any(), any())
     }
 
     @Test
     fun getAll_multiData_list() {
-    }
 
-    @Test
-    fun getAll_gettingWithError_failure() {
+        business.getAll(mock(), mock())
+
+        verify(repository, times(1)).getList(any(), any())
     }
 
     @Test
     fun delete_deletingData_success() {
-    }
 
-    @Test
-    fun delete_deletingData_failure() {
+        business.delete(mockUpdateValid, mock(), mock())
+
+        verify(repository, times(1)).delete(any(), any(), any())
     }
 }
