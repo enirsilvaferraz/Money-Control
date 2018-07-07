@@ -1,8 +1,10 @@
 package com.system.moneycontrol.ui.home
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import com.system.moneycontrol.R
 import com.system.moneycontrol.ui.transactionmanager.TransactionManagerActivity
@@ -15,14 +17,20 @@ class HomeActivity : DaggerAppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
 
-            start()
-        }
+//        AlertDialog.Builder(this, android.R.style.Theme_Material_Light_Dialog_Alert).create().show()
+
+        val singleChoiceItems = arrayOf("1", "2", "3", "4", "5", "6")
+        val itemSelected = -1
+
+        AlertDialog.Builder(this, R.style.AppTheme_Dialog)
+                .setTitle("Select the number")
+                .setSingleChoiceItems(singleChoiceItems, itemSelected, DialogInterface.OnClickListener { dialogInterface, selectedIndex ->
+                    dialogInterface.dismiss()
+                })
+                .create()
+                .show()
     }
 
     private fun start() {
