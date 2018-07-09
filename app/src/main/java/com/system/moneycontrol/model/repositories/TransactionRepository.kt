@@ -18,7 +18,7 @@ class TransactionRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TRA
         collection.document(year.toString()).collection(month.toString()).get()
                 .addOnCompleteListener { task ->
                     onSuccess?.invoke(task.result.documents.map {
-                        it.toObject(TransactionMapper::class.java).toModel()
+                        it.toObject(TransactionMapper::class.java)!!.toModel(it.id)
                     })
                 }
                 .addOnFailureListener {
@@ -28,11 +28,9 @@ class TransactionRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TRA
 
     fun save(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
-        model.newKey()
-
         collection.document(getYear(model)).collection(getMonth(model)).add(model.toMapper())
                 .addOnSuccessListener {
-                    onSuccess?.invoke(it.get().result.toObject(TransactionMapper::class.java).toModel())
+                    onSuccess?.invoke(it.get().result.toObject(TransactionMapper::class.java)!!.toModel(it.id))
                 }
                 .addOnFailureListener {
                     onFailure?.invoke(it)
@@ -54,7 +52,7 @@ class TransactionRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TRA
 
         collection.document(getYear(model)).collection(getMonth(model)).add(model.toMapper())
                 .addOnSuccessListener {
-                    onSuccess?.invoke(it.get().result.toObject(TransactionMapper::class.java).toModel())
+                    onSuccess?.invoke(it.get().result.toObject(TransactionMapper::class.java)!!.toModel(it.id))
                 }
                 .addOnFailureListener {
                     onFailure?.invoke(it)

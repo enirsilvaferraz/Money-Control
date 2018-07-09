@@ -17,7 +17,7 @@ class TagRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TAG) val co
         collection.get()
                 .addOnCompleteListener { task ->
                     onSuccess?.invoke(task.result.documents.map {
-                        it.toObject(TagMapper::class.java).toModel(it.id)
+                        it.toObject(TagMapper::class.java)!!.toModel(it.id)
                     })
                 }
                 .addOnFailureListener {

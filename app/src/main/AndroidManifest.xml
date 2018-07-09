@@ -10,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".ui.home.HomeActivity"
             android:label="@string/title_activity_main"
@@ -22,20 +23,12 @@
             </intent-filter>
 
         </activity>
+
         <activity
             android:name=".ui.transactionmanager.TransactionManagerActivity"
             android:label="@string/title_activity_transaction_manager"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ui.tagmanager.TagManagerActivity"
-            android:label="@string/title_activity_tag_manager"
-            android:theme="@style/AppTheme.NoActionBar">
 
-        </activity>
-        <activity
-            android:name=".ui.taglist.TagListActivity"
-            android:label="@string/title_activity_tag_list"
-            android:theme="@style/AppTheme.Dialog"></activity>
     </application>
 
 </manifest>

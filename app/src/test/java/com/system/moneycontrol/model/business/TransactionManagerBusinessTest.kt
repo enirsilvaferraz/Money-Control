@@ -58,6 +58,7 @@ class TransactionManagerBusinessTest : BaseTest() {
         verify(repository, times(1)).update(any(), any(), any())
     }
 
+    @Suppress("UNCHECKED_CAST")
     @Test
     fun save_updateAnotherValue_success() {
 
