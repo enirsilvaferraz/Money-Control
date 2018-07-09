@@ -30,7 +30,19 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-    override fun showToast(it: List<Transaction>) {
+    override fun configureList(transactions: List<Transaction>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showEmptyState() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showError(message: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    fun showToast(it: List<Transaction>) {
 
         val flowers = arrayListOf<String>()
         it.mapTo(flowers) { it.paymentDate.toString() }
