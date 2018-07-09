@@ -9,8 +9,6 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 open class BaseTest {
 
-    fun <T> any(type: Class<T>): T = Mockito.any<T>(type)
-
     @Suppress("UNCHECKED_CAST")
     fun <T> execSuccess(response: T): (InvocationOnMock) -> Unit = { (it.arguments[1] as (T) -> Unit).invoke(response) }
 
