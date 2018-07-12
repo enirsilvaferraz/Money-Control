@@ -24,4 +24,6 @@ object MyUtils {
     fun getDate(date: Date, pattern: String): String {
         return SimpleDateFormat(pattern, Locale.ENGLISH).format(date)
     }
+
+    fun getDate(field: Int) = Calendar.getInstance().get(field)
 }

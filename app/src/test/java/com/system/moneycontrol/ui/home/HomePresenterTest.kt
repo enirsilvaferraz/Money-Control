@@ -7,10 +7,13 @@ import com.system.moneycontrol.model.business.HomeBusiness
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Spy
+import org.mockito.junit.MockitoJUnitRunner
 
+@RunWith(MockitoJUnitRunner::class)
 class HomePresenterTest : BaseTest() {
 
     private val transaction = Transaction(ConstantsTest.VALID_KEY, ConstantsTest.VALID_DATE,
@@ -25,21 +28,15 @@ class HomePresenterTest : BaseTest() {
 
     @Spy
     @InjectMocks
-    lateinit var presenter: HomeContract.Presenter
+    lateinit var presenter: HomePresenter
 
     @Suppress("UNCHECKED_CAST")
     @Test
     fun init_getTransactions_listTransactions() {
 
-        val transactions = arrayListOf<Transaction>().apply {
-            add(transaction.copy())
-            add(transaction.copy())
-            add(transaction.copy())
-        }
-
         doAnswer {
-            (it.arguments[2] as (List<Transaction>) -> Unit).invoke(transactions)
-        }.whenever(business).getTransactions(ConstantsTest.ANY_INT, ConstantsTest.ANY_INT, any(), any())
+            (it.arguments[2] as (List<Transaction>) -> Unit).invoke(mock())
+        }.whenever(business).getTransactions(any(), any(), any(), any())
 
         presenter.init()
 
@@ -54,7 +51,7 @@ class HomePresenterTest : BaseTest() {
 
         doAnswer {
             (it.arguments[2] as (List<Transaction>) -> Unit).invoke(arrayListOf())
-        }.whenever(business).getTransactions(ConstantsTest.ANY_INT, ConstantsTest.ANY_INT, any(), any())
+        }.whenever(business).getTransactions(any(), any(), any(), any())
 
         presenter.init()
 
@@ -68,8 +65,8 @@ class HomePresenterTest : BaseTest() {
     fun init_getTransactions_showError() {
 
         doAnswer {
-            (it.arguments[3] as (Exception) -> Unit).invoke(Exception())
-        }.whenever(business).getTransactions(ConstantsTest.ANY_INT, ConstantsTest.ANY_INT, any(), any())
+            (it.arguments[3] as (Exception) -> Unit).invoke(Exception(""))
+        }.whenever(business).getTransactions(any(), any(), any(), any())
 
         presenter.init()
 
