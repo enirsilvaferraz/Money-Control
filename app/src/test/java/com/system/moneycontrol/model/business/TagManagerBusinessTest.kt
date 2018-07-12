@@ -1,16 +1,18 @@
 package com.system.moneycontrol.model.business
 
 import com.nhaarman.mockitokotlin2.*
-import com.system.moneycontrol.BaseTest
 import com.system.moneycontrol.infrastruture.ConstantsTest
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.repositories.TagRepository
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Spy
+import org.mockito.junit.MockitoJUnitRunner
 
-class TagManagerBusinessTest : BaseTest() {
+@RunWith(MockitoJUnitRunner::class)
+class TagManagerBusinessTest {
 
     @Mock
     lateinit var repository: TagRepository

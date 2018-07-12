@@ -1,10 +1,7 @@
 package com.system.moneycontrol.ui.home
 
 import com.nhaarman.mockitokotlin2.*
-import com.system.moneycontrol.BaseTest
-import com.system.moneycontrol.infrastruture.ConstantsTest
 import com.system.moneycontrol.model.business.HomeBusiness
-import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -14,11 +11,7 @@ import org.mockito.Spy
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class HomePresenterTest : BaseTest() {
-
-    private val transaction = Transaction(ConstantsTest.VALID_KEY, ConstantsTest.VALID_DATE,
-            ConstantsTest.VALID_DATE, ConstantsTest.VALID_DOUBLE,
-            Tag(ConstantsTest.VALID_KEY, ConstantsTest.VALID_STRING), ConstantsTest.VALID_STRING)
+class HomePresenterTest {
 
     @Mock
     lateinit var business: HomeBusiness

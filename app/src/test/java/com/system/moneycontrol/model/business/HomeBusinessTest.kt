@@ -1,7 +1,6 @@
 package com.system.moneycontrol.model.business
 
 import com.nhaarman.mockitokotlin2.*
-import com.system.moneycontrol.BaseTest
 import com.system.moneycontrol.infrastruture.ConstantsTest
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
@@ -9,14 +8,14 @@ import com.system.moneycontrol.model.repositories.TagRepository
 import com.system.moneycontrol.model.repositories.TransactionRepository
 import junit.framework.Assert
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Spy
+import org.mockito.junit.MockitoJUnitRunner
 
-class HomeBusinessTest : BaseTest() {
-
-    private val transaction = Transaction(ConstantsTest.VALID_KEY, ConstantsTest.VALID_DATE,
-            ConstantsTest.VALID_DATE, ConstantsTest.VALID_DOUBLE, Tag("", ConstantsTest.VALID_STRING), ConstantsTest.VALID_STRING)
+@RunWith(MockitoJUnitRunner::class)
+class HomeBusinessTest {
 
     @Mock
     lateinit var repTag: TagRepository
@@ -92,6 +91,10 @@ class HomeBusinessTest : BaseTest() {
 
     @Test
     fun getTransactions_getReturn_listTransactions() {
+
+        val transaction = Transaction(ConstantsTest.VALID_KEY, ConstantsTest.VALID_DATE,
+                ConstantsTest.VALID_DATE, ConstantsTest.VALID_DOUBLE, Tag("",
+                ConstantsTest.VALID_STRING), ConstantsTest.VALID_STRING)
 
         val transactions = arrayListOf<Transaction>().apply {
             add(transaction.copy(tag = Tag("1", ConstantsTest.VALID_STRING)))

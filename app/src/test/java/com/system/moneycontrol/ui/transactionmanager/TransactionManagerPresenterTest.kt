@@ -1,7 +1,6 @@
 package com.system.moneycontrol.ui.transactionmanager
 
 import com.nhaarman.mockitokotlin2.*
-import com.system.moneycontrol.BaseTest
 import com.system.moneycontrol.model.business.TagManagerBusiness
 import com.system.moneycontrol.model.business.TransactionManagerBusiness
 import com.system.moneycontrol.model.entities.Tag
@@ -14,7 +13,7 @@ import org.mockito.Spy
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class TransactionManagerPresenterTest : BaseTest() {
+class TransactionManagerPresenterTest {
 
     @Mock
     lateinit var transactionBusiness: TransactionManagerBusiness
