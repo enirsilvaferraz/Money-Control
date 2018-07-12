@@ -1,6 +1,7 @@
 package com.system.moneycontrol.ui.home
 
 import com.nhaarman.mockitokotlin2.*
+import com.system.moneycontrol.BaseTest
 import com.system.moneycontrol.infrastruture.ConstantsTest
 import com.system.moneycontrol.model.business.HomeBusiness
 import com.system.moneycontrol.model.entities.Tag
@@ -10,7 +11,7 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Spy
 
-class HomePresenterTest {
+class HomePresenterTest : BaseTest() {
 
     private val transaction = Transaction(ConstantsTest.VALID_KEY, ConstantsTest.VALID_DATE,
             ConstantsTest.VALID_DATE, ConstantsTest.VALID_DOUBLE,

@@ -25,4 +25,13 @@ class TransactionManagerFragment : DaggerFragment(), TransactionManagerContract.
     override fun showError(message: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun showSuccess(message: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun closeWindow() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 }
