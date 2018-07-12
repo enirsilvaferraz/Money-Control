@@ -6,6 +6,29 @@
     <string name="title_activity_tag_manager">TagManagerActivity</string>
     <string name="title_activity_tag_list">TagListActivity</string>
 
+    <string name="system_action_cancel">Cancel</string>
+    <string name="system_action_done">Done</string>
+    <string name="system_empty_field">--</string>
+    <string name="system_error_required_field">\'%1$s\' is required.</string>
+    <string name="system_error_not_allowed_field">\'%1$s\' is not allowed for this value.</string>
+    <string name="system_message_saved">%1$s saved!</string>
+    <string name="system_message_deleted">%1$s deleted!</string>
+
     <string name="system_actions_more_actions">More actions</string>
+
+    <string name="transaction_payment_type">Payment Type</string>
+    <string name="transaction_price">Price</string>
+    <string name="transaction_refund">Refund</string>
+    <string name="transaction_payment_date">Payment Date</string>
+    <string name="transaction_purchase_date">Purchase Date</string>
+    <string name="transaction_content">Content</string>
+    <string name="transaction_tag">Tag</string>
+    <string name="transaction_filter_title">Transaction Filter</string>
+    <string name="transaction_manager_title">Transaction Manager</string>
+    <string name="transaction_payment_date_start">Payment Date Start</string>
+    <string name="transaction_payment_date_end">Payment Date End</string>
+    <string name="transaction_parcels">Parcels</string>
+    <string name="transaction_already_paid">Already Paid</string>
+    <string name="transaction">Transaction</string>
 
 </resources>

@@ -19,4 +19,27 @@
 
     <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert"/>
 
+    <style name="AppTheme.Card">
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/ripple</item>
+    </style>
+
+    <style name="AppTheme.Card.Section" parent="AppTheme.Card">
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingStart">24dp</item>
+    </style>
+
+    <style name="AppTheme.TextView" parent="Base.TextAppearance.AppCompat.Body1" />
+
+    <style name="AppTheme.Card.TextView.Secundary" parent="AppTheme.TextView">
+        <item name="android:textColor">@color/secondary_text</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="AppTheme.Card.TextView.Primary" parent="AppTheme.TextView">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>
