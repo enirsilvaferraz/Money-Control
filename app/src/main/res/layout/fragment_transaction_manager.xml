@@ -76,7 +76,7 @@
                     android:text="@string/transaction_payment_date" />
 
                 <TextView
-                    android:id="@+id/paymentDateC"
+                    android:id="@+id/paymentDate"
                     style="@style/AppTheme.Card.TextView.Secundary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
