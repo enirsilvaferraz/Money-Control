@@ -13,11 +13,11 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class TransactionManagerActivityTest {
 
-    @Rule
+    @get:Rule
     var mActivityRule: ActivityTestRule<TransactionManagerActivity> = ActivityTestRule(TransactionManagerActivity::class.java)
 
     @Test
-    fun init() {
+    fun init_emptyFields() {
 
         Espresso.onView(ViewMatchers.withId(R.id.paymentType))
                 .check(ViewAssertions.matches(ViewMatchers.withText(R.string.system_empty_field)))
