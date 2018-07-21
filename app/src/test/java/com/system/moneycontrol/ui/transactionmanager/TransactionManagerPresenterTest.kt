@@ -38,7 +38,7 @@ class TransactionManagerPresenterTest {
 
         presenter.init()
         verify(tagBusiness, times(1)).getAll(any(), any())
-        verify(view, never()).configureTags(any())
+        verify(view, never()).showTagDialog(any())
         verify(view, never()).showError(any())
     }
 
@@ -56,7 +56,7 @@ class TransactionManagerPresenterTest {
 
         presenter.init()
         verify(tagBusiness, times(1)).getAll(any(), any())
-        verify(view, times(1)).configureTags(any())
+        verify(view, times(1)).showTagDialog(any())
         verify(view, never()).showError(any())
     }
 
@@ -70,7 +70,7 @@ class TransactionManagerPresenterTest {
 
         presenter.init()
         verify(tagBusiness, times(1)).getAll(any(), any())
-        verify(view, never()).configureTags(any())
+        verify(view, never()).showTagDialog(any())
         verify(view, times(1)).showError(any())
     }
 

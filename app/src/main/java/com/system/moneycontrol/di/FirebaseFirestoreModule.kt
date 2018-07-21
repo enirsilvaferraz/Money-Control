@@ -19,6 +19,10 @@ class FirebaseFirestoreModule {
     @Provides
     fun provideFirebaseTag(): CollectionReference = getFirestoreInstance().collection("tags")
 
+    @Named(ConstantsDI.FIRESTORE_PAYMENTTYPE)
+    @Provides
+    fun provideFirebasePaymentType(): CollectionReference = getFirestoreInstance().collection("paymentTypes")
+
     private fun getFirestoreInstance(): FirebaseFirestore {
         val instance = FirebaseFirestore.getInstance()
         instance.firestoreSettings = FirebaseFirestoreSettings.Builder()

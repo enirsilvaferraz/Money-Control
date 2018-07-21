@@ -2,19 +2,21 @@ package com.system.moneycontrol.model.mappers
 
 import com.system.moneycontrol.infrastructure.Constants
 import com.system.moneycontrol.infrastructure.MyUtils
+import com.system.moneycontrol.model.entities.PaymentType
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
 
-class TransactionMapper(var paymentDate: String, var moneySpent: Double, var tag: String, var description: String?) {
+class TransactionMapper(var paymentDate: String, var moneySpent: Double, var tag: String, var paymentType: String, var description: String?) {
 
-    constructor() : this(Constants.LASY_STRING, 0.0, Constants.LASY_STRING, null)
+    constructor() : this(Constants.LASY_STRING, 0.0, Constants.LASY_STRING, Constants.LASY_STRING, null)
 
-    fun toModel(key:String): Transaction = Transaction(
+    fun toModel(key: String): Transaction = Transaction(
             key,
             MyUtils.getDate(paymentDate, "yyyy-MM-dd"),
             MyUtils.getDate(paymentDate, "yyyy-MM-dd"),
             moneySpent,
             Tag(tag, Constants.LASY_STRING),
+            PaymentType(paymentType, Constants.LASY_STRING),
             description
     )
 }
