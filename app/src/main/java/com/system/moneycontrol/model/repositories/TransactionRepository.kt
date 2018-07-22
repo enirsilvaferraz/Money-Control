@@ -11,7 +11,9 @@ import javax.inject.Named
 /**
  * @param collection: Firebase Firestore (transactions)
  */
-class TransactionRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TRANSACTION)val collection: CollectionReference) {
+class TransactionRepository @Inject constructor(
+        @Named(ConstantsDI.FIRESTORE_TRANSACTION) private val collection: CollectionReference,
+        var myUtils: MyUtils) {
 
     fun getList(year: Int, month: Int, onSuccess: ((List<Transaction>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
@@ -39,7 +41,7 @@ class TransactionRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TRA
 
     fun delete(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
-        collection.document(getYear(model)).collection(getMonth(model)).document(model.key).delete()
+        collection.document(getYear(model)).collection(getMonth(model)).document(model.key!!).delete()
                 .addOnSuccessListener {
                     onSuccess?.invoke(model)
                 }
@@ -59,7 +61,7 @@ class TransactionRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TRA
                 }
     }
 
-    private fun getMonth(model: Transaction) = MyUtils.getDate(model.paymentDate, "MM")
+    private fun getMonth(model: Transaction) = myUtils.getDate(model.paymentDate!!, "MM")
 
-    private fun getYear(model: Transaction) = MyUtils.getDate(model.paymentDate, "yyyy")
+    private fun getYear(model: Transaction) = myUtils.getDate(model.paymentDate!!, "yyyy")
 }

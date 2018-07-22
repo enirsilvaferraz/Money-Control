@@ -38,7 +38,7 @@ class TransactionManagerPresenterTest {
 
         presenter.init()
         verify(tagBusiness, times(1)).getAll(any(), any())
-        verify(view, never()).showTagDialog(any())
+        verify(view, never()).showTagDialog(any(), any())
         verify(view, never()).showError(any())
     }
 
@@ -56,7 +56,7 @@ class TransactionManagerPresenterTest {
 
         presenter.init()
         verify(tagBusiness, times(1)).getAll(any(), any())
-        verify(view, times(1)).showTagDialog(any())
+        verify(view, times(1)).showTagDialog(any(), any())
         verify(view, never()).showError(any())
     }
 
@@ -70,7 +70,7 @@ class TransactionManagerPresenterTest {
 
         presenter.init()
         verify(tagBusiness, times(1)).getAll(any(), any())
-        verify(view, never()).showTagDialog(any())
+        verify(view, never()).showTagDialog(any(), any())
         verify(view, times(1)).showError(any())
     }
 
@@ -82,7 +82,7 @@ class TransactionManagerPresenterTest {
             (it.arguments[1] as (Transaction) -> Unit).invoke(it.arguments[0] as Transaction)
         }.whenever(transactionBusiness).save(any(), any(), any())
 
-        presenter.save(mock())
+        presenter.save()
         verify(transactionBusiness, times(1)).save(any(), any(), any())
         verify(view, times(1)).showSuccess("Transaction registred!")
         verify(view, never()).showError("")
@@ -97,7 +97,7 @@ class TransactionManagerPresenterTest {
             (it.arguments[2] as (Exception) -> Unit).invoke(Exception(""))
         }.whenever(transactionBusiness).save(any(), any(), any())
 
-        presenter.save(mock())
+        presenter.save()
         verify(transactionBusiness, times(1)).save(any(), any(), any())
         verify(view, never()).showSuccess("Transaction registred!")
         verify(view, times(1)).showError(any())

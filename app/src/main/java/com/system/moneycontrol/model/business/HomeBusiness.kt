@@ -21,7 +21,7 @@ class HomeBusiness @Inject constructor(val repTransaction: TransactionRepository
     fun formatResultTransactions(transactions: List<Transaction>, tags: List<Tag>): List<Transaction> {
 
         transactions.forEach { transaction ->
-            transaction.tag.name = tags.filter { it.key == transaction.tag.key }[0].name
+            transaction.tag!!.name = tags.filter { it.key == transaction.tag!!.key }[0].name
         }
         return transactions
     }

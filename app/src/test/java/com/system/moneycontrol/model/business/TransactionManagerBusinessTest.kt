@@ -3,6 +3,7 @@ package com.system.moneycontrol.model.business
 import com.nhaarman.mockitokotlin2.*
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.infrastruture.ConstantsTest
+import com.system.moneycontrol.model.entities.PaymentType
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.model.repositories.TransactionRepository
@@ -19,11 +20,13 @@ class TransactionManagerBusinessTest {
 
     private val tag = Tag(ConstantsTest.VALID_KEY, ConstantsTest.VALID_STRING)
 
-    private val transactionUpdate = Transaction(ConstantsTest.VALID_KEY, ConstantsTest.VALID_DATE,
-            ConstantsTest.VALID_DATE, ConstantsTest.VALID_DOUBLE, tag, ConstantsTest.VALID_STRING)
+    val transactionUpdate = Transaction(ConstantsTest.VALID_KEY, ConstantsTest.VALID_DATE,
+            ConstantsTest.VALID_DATE, ConstantsTest.VALID_DATE, ConstantsTest.VALID_DOUBLE, ConstantsTest.VALID_DOUBLE,
+            Tag("", ConstantsTest.VALID_STRING), PaymentType("", ConstantsTest.VALID_STRING), ConstantsTest.VALID_STRING)
 
-    private val transactionNew = Transaction("", ConstantsTest.VALID_DATE,
-            ConstantsTest.VALID_DATE, ConstantsTest.VALID_DOUBLE, tag, ConstantsTest.VALID_STRING)
+    val transactionNew = Transaction("", ConstantsTest.VALID_DATE,
+            ConstantsTest.VALID_DATE, ConstantsTest.VALID_DATE, ConstantsTest.VALID_DOUBLE, ConstantsTest.VALID_DOUBLE,
+            Tag("", ConstantsTest.VALID_STRING), PaymentType("", ConstantsTest.VALID_STRING), ConstantsTest.VALID_STRING)
 
     @Mock
     lateinit var repository: TransactionRepository
@@ -64,7 +67,7 @@ class TransactionManagerBusinessTest {
     @Test
     fun save_updateAnotherValue_success() {
 
-        val transaction = transactionUpdate.copy(paymentDate = MyUtils.getDate(2018, 6, 1, 0, 0))
+        val transaction = transactionUpdate.copy(paymentDate = MyUtils().getDate(2018, 6, 1, 0, 0))
 
         doAnswer {
             (it.arguments[1] as (Transaction) -> Unit).invoke(it.arguments[0] as Transaction)

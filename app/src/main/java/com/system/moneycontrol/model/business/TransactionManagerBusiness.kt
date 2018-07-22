@@ -6,7 +6,9 @@ import com.system.moneycontrol.model.repositories.TransactionRepository
 import java.util.*
 import javax.inject.Inject
 
-class TransactionManagerBusiness @Inject constructor(val repository: TransactionRepository) {
+class TransactionManagerBusiness @Inject constructor(
+        val repository: TransactionRepository,
+        var myUtils: MyUtils) {
 
     fun save(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
@@ -36,15 +38,17 @@ class TransactionManagerBusiness @Inject constructor(val repository: Transaction
 
     private fun processSave(transaction: Transaction): SaveType {
 
-        if (transaction.key.isBlank()) {
+        if (transaction.key.isNullOrBlank()) {
             return SaveType.SAVE_NEW
 
-        } else if (MyUtils.getDate(transaction.paymentDateOlder, Calendar.YEAR) == MyUtils.getDate(transaction.paymentDate, Calendar.YEAR) &&
-                MyUtils.getDate(transaction.paymentDateOlder, Calendar.MONTH) == MyUtils.getDate(transaction.paymentDate, Calendar.MONTH)) {
-            return SaveType.UPDATE
-
         } else {
-            return SaveType.UPDATE_ANOTHER_MONTH
+            if (myUtils.getDate(transaction.paymentDateOlder!!, Calendar.YEAR) == myUtils.getDate(transaction.paymentDate!!, Calendar.YEAR) &&
+                    myUtils.getDate(transaction.paymentDateOlder!!, Calendar.MONTH) == myUtils.getDate(transaction.paymentDate!!, Calendar.MONTH)) {
+                return SaveType.UPDATE
+
+            } else {
+                return SaveType.UPDATE_ANOTHER_MONTH
+            }
         }
     }
 

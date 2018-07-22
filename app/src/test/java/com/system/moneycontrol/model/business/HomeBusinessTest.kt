@@ -2,6 +2,7 @@ package com.system.moneycontrol.model.business
 
 import com.nhaarman.mockitokotlin2.*
 import com.system.moneycontrol.infrastruture.ConstantsTest
+import com.system.moneycontrol.model.entities.PaymentType
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.model.repositories.TagRepository
@@ -93,8 +94,8 @@ class HomeBusinessTest {
     fun getTransactions_getReturn_listTransactions() {
 
         val transaction = Transaction(ConstantsTest.VALID_KEY, ConstantsTest.VALID_DATE,
-                ConstantsTest.VALID_DATE, ConstantsTest.VALID_DOUBLE, Tag("",
-                ConstantsTest.VALID_STRING), ConstantsTest.VALID_STRING)
+                ConstantsTest.VALID_DATE, ConstantsTest.VALID_DATE, ConstantsTest.VALID_DOUBLE, ConstantsTest.VALID_DOUBLE,
+                Tag("", ConstantsTest.VALID_STRING), PaymentType("", ConstantsTest.VALID_STRING), ConstantsTest.VALID_STRING)
 
         val transactions = arrayListOf<Transaction>().apply {
             add(transaction.copy(tag = Tag("1", ConstantsTest.VALID_STRING)))
@@ -110,14 +111,14 @@ class HomeBusinessTest {
 
         val list = business.formatResultTransactions(transactions, tags)
 
-        Assert.assertEquals("1", list[0].tag.key)
-        Assert.assertEquals("Name 1", list[0].tag.name)
+        Assert.assertEquals("1", list[0].tag!!.key)
+        Assert.assertEquals("Name 1", list[0].tag!!.name)
 
-        Assert.assertEquals("2", list[1].tag.key)
-        Assert.assertEquals("Name 2", list[1].tag.name)
+        Assert.assertEquals("2", list[1].tag!!.key)
+        Assert.assertEquals("Name 2", list[1].tag!!.name)
 
-        Assert.assertEquals("3", list[2].tag.key)
-        Assert.assertEquals("Name 3", list[2].tag.name)
+        Assert.assertEquals("3", list[2].tag!!.key)
+        Assert.assertEquals("Name 3", list[2].tag!!.name)
     }
 
     @Test
