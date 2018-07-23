@@ -21,6 +21,10 @@ class MyUtils @Inject constructor() {
         return instance.get(field)
     }
 
+    fun getDate(field: Int): Int {
+        return Calendar.getInstance().get(field)
+    }
+
     fun getDate(date: String, pattern: String): Date {
         return SimpleDateFormat(pattern, Locale.ENGLISH).parse(date)
     }

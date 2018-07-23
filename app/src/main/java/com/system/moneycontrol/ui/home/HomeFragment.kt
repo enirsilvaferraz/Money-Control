@@ -21,13 +21,13 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
     @Inject
     lateinit var presenter: HomeContract.Presenter
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_home, container, false)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.init()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun configureList(transactions: List<Transaction>) {

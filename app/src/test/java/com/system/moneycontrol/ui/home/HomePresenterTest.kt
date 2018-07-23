@@ -1,8 +1,11 @@
 package com.system.moneycontrol.ui.home
 
 import com.nhaarman.mockitokotlin2.*
+import com.system.moneycontrol.infrastruture.ConstantsTest
 import com.system.moneycontrol.model.business.HomeBusiness
+import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
@@ -12,6 +15,10 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class HomePresenterTest {
+
+    private val transaction = Transaction(ConstantsTest.VALID_KEY, ConstantsTest.VALID_DATE,
+            ConstantsTest.VALID_DATE, ConstantsTest.VALID_DOUBLE,
+            Tag(ConstantsTest.VALID_KEY, ConstantsTest.VALID_STRING), ConstantsTest.VALID_STRING)
 
     @Mock
     lateinit var business: HomeBusiness
@@ -27,8 +34,14 @@ class HomePresenterTest {
     @Test
     fun init_getTransactions_listTransactions() {
 
+        val transactions = arrayListOf<Transaction>().apply {
+            add(transaction.copy())
+            add(transaction.copy())
+            add(transaction.copy())
+        }
+
         doAnswer {
-            (it.arguments[2] as (List<Transaction>) -> Unit).invoke(mock())
+            (it.arguments[2] as (List<Transaction>) -> Unit).invoke(transactions)
         }.whenever(business).getTransactions(any(), any(), any(), any())
 
         presenter.init()
