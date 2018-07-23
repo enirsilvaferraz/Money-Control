@@ -9,8 +9,8 @@ class HomePresenter @Inject constructor(val view: HomeContract.View, val busines
 
     override fun init() {
 
-        val year = MyUtils.getDate(Calendar.YEAR)
-        val month = MyUtils.getDate(Calendar.MONTH)
+        val year = MyUtils().getDate(Calendar.YEAR)
+        val month = MyUtils().getDate(Calendar.MONTH)
 
         business.getTransactions(year, month, {
             if (it.isNotEmpty()) {
