@@ -19,28 +19,38 @@ import javax.inject.Inject
  */
 class TransactionManagerFragment : DaggerFragment(), TransactionManagerContract.View {
 
-    val myViewUtils: MyViewUtils = MyViewUtils(context)
-
     @Inject
     lateinit var presenter: TransactionManagerContract.Presenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_transaction_manager, container, false)
 
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        tagTransactionContainer.setOnClickListener { presenter.onTagClick() }
+        paymentTypeContainer.setOnClickListener { presenter.onPaymentTypeClick() }
+        purchaseDateContainer.setOnClickListener { presenter.onPurchaseDateClick() }
+        paymentDateContainer.setOnClickListener { presenter.onPaymentDateClick() }
+        priceContainer.setOnClickListener { presenter.onPriceClick() }
+        refundContainer.setOnClickListener { presenter.onRefundClick() }
+        contentContainer.setOnClickListener { presenter.onContentClick() }
+    }
+
     override fun showTagDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {
-        myViewUtils.showListDialog("Select the tag description", list, callback)
+        MyViewUtils(context).showListDialog("Select the tag description", list, callback)
     }
 
     override fun showPaymentTypeDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {
-        myViewUtils.showListDialog("Select the payment type", list, callback)
+        MyViewUtils(context).showListDialog("Select the payment type", list, callback)
     }
 
     override fun showPurchaseDateDialog(purchaseDate: Date?, callback: (Date) -> Unit) {
-        myViewUtils.showDatePicker(purchaseDate, callback)
+        MyViewUtils(context).showDatePicker(purchaseDate, callback)
     }
 
     override fun showPaymentDateDialog(paymentDate: Date?, callback: (Date) -> Unit) {
-        myViewUtils.showDatePicker(paymentDate, callback)
+        MyViewUtils(context).showDatePicker(paymentDate, callback)
     }
 
     override fun showPriceDialog(price: Double?, callback: (Double) -> Unit) {
@@ -51,8 +61,12 @@ class TransactionManagerFragment : DaggerFragment(), TransactionManagerContract.
         CustomNumberPickerDialog().show(fragmentManager, refund, callback)
     }
 
-    override fun setTag(tagString: String) {
+    override fun showContentDialog(description: String?, callback: (String) -> Unit) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setTag(tagString: String) {
+        tagTransaction.text = tagString
     }
 
     override fun setPaymentType(paymentTypeString: String) {
@@ -73,6 +87,10 @@ class TransactionManagerFragment : DaggerFragment(), TransactionManagerContract.
 
     override fun setRefund(refundString: String) {
         refund.text = refundString
+    }
+
+    override fun setContent(description: String) {
+        content.text = description
     }
 
     override fun showError(message: String) {

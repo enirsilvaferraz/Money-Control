@@ -12,15 +12,17 @@ interface TransactionManagerContract {
         fun showPaymentDateDialog(paymentDate: Date?, callback: (Date) -> Unit)
         fun showPriceDialog(price: Double?, callback: (Double) -> Unit)
         fun showRefundDialog(refund: Double?, callback: (Double) -> Unit)
-        fun showError(message: String)
-        fun showSuccess(message: String)
-        fun closeWindow()
+        fun showContentDialog(description: String?, callback: (String) -> Unit)
         fun setTag(tagString: String)
         fun setPaymentType(paymentTypeString: String)
         fun setPurchaseDate(purchaseDateString: String)
         fun setPaymentDate(paymentDateString: String)
         fun setPrice(priceString: String)
         fun setRefund(refundString: String)
+        fun setContent(description: String)
+        fun showError(message: String)
+        fun showSuccess(message: String)
+        fun closeWindow()
     }
 
     interface Presenter {
@@ -33,5 +35,6 @@ interface TransactionManagerContract {
         fun onPaymentDateClick()
         fun onPriceClick()
         fun onRefundClick()
+        fun onContentClick()
     }
 }

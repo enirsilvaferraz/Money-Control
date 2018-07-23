@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_scroll"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.transactionmanager.TransactionManagerFragment"
     tools:showIn="@layout/activity_transaction_manager">
 
     <ScrollView
-        android:id="@+id/container_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -15,6 +16,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/tagTransactionContainer"
+                style="@style/AppTheme.Card.Section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/AppTheme.Card.TextView.Primary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/transaction_tag" />
+
+                <TextView
+                    android:id="@+id/tagTransaction"
+                    style="@style/AppTheme.Card.TextView.Secundary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/system_empty_field"
+                    tools:text="Celular" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/paymentTypeContainer"
@@ -158,4 +182,4 @@
 
     </ScrollView>
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

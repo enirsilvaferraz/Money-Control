@@ -16,6 +16,13 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
 
+        </activity>
+
+        <activity
+            android:name=".ui.transactionmanager.TransactionManagerActivity"
+            android:label="@string/transaction_manager_title"
+            android:theme="@style/AppTheme.Dialog" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,11 +30,6 @@
             </intent-filter>
 
         </activity>
-
-        <activity
-            android:name=".ui.transactionmanager.TransactionManagerActivity"
-            android:label="@string/title_activity_transaction_manager"
-            android:theme="@style/AppTheme.NoActionBar" />
 
     </application>
 

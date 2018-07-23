@@ -93,4 +93,12 @@ class TransactionManagerPresenter @Inject constructor(
         }
         view.showPriceDialog(transaction.refund, callback)
     }
+
+    override fun onContentClick() {
+        val callback: (String) -> Unit = {
+            transaction.description = it
+            view.setContent(it)
+        }
+        view.showContentDialog(transaction.description, callback)
+    }
 }
