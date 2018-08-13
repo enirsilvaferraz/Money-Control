@@ -182,7 +182,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/mContentContainer"
+        android:id="@+id/mContextContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="32dp"
@@ -192,26 +192,26 @@
         app:layout_constraintTop_toBottomOf="@id/mRefundContainer">
 
         <TextView
-            android:id="@+id/mContentLabel"
+            android:id="@+id/mContextLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/transaction_content"
             android:textAppearance="@style/AppTheme.Card.TextView.Primary"
-            app:layout_constraintBottom_toTopOf="@+id/mContentValue"
+            app:layout_constraintBottom_toTopOf="@+id/mContextValue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/mContentValue"
+            android:id="@+id/mContextValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/mContentLabel"
-            app:layout_constraintTop_toBottomOf="@+id/mContentLabel"
+            app:layout_constraintStart_toStartOf="@+id/mContextLabel"
+            app:layout_constraintTop_toBottomOf="@+id/mContextLabel"
             tools:text="Detalhes da compra" />
 
     </android.support.constraint.ConstraintLayout>

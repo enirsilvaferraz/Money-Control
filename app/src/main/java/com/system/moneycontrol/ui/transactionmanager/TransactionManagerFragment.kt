@@ -28,13 +28,12 @@ class TransactionManagerFragment : DaggerFragment(), TransactionManagerContract.
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tagTransactionContainer.setOnClickListener { presenter.onTagClick() }
-        paymentTypeContainer.setOnClickListener { presenter.onPaymentTypeClick() }
-        purchaseDateContainer.setOnClickListener { presenter.onPurchaseDateClick() }
-        paymentDateContainer.setOnClickListener { presenter.onPaymentDateClick() }
-        priceContainer.setOnClickListener { presenter.onPriceClick() }
-        refundContainer.setOnClickListener { presenter.onRefundClick() }
-        contentContainer.setOnClickListener { presenter.onContentClick() }
+        mTagContainer.setOnClickListener { presenter.onTagClick() }
+        mPaymentTypeContainer.setOnClickListener { presenter.onPaymentTypeClick() }
+        mPaymentDateContainer.setOnClickListener { presenter.onPaymentDateClick() }
+        mPriceContainer.setOnClickListener { presenter.onPriceClick() }
+        mRefundContainer.setOnClickListener { presenter.onRefundClick() }
+        mContentContainer.setOnClickListener { presenter.onContentClick() }
     }
 
     override fun showTagDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {
@@ -43,10 +42,6 @@ class TransactionManagerFragment : DaggerFragment(), TransactionManagerContract.
 
     override fun showPaymentTypeDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {
         MyViewUtils(context).showListDialog("Select the payment type", list, callback)
-    }
-
-    override fun showPurchaseDateDialog(purchaseDate: Date?, callback: (Date) -> Unit) {
-        MyViewUtils(context).showDatePicker(purchaseDate, callback)
     }
 
     override fun showPaymentDateDialog(paymentDate: Date?, callback: (Date) -> Unit) {
@@ -66,31 +61,27 @@ class TransactionManagerFragment : DaggerFragment(), TransactionManagerContract.
     }
 
     override fun setTag(tagString: String) {
-        tagTransaction.text = tagString
+        mTagValue.text = tagString
     }
 
     override fun setPaymentType(paymentTypeString: String) {
-        paymentType.text = paymentTypeString
-    }
-
-    override fun setPurchaseDate(purchaseDateString: String) {
-        purchaseDate.text = purchaseDateString
+        mPaymentTypeValue.text = paymentTypeString
     }
 
     override fun setPaymentDate(paymentDateString: String) {
-        paymentDate.text = paymentDateString
+        mPaymentDateValue.text = paymentDateString
     }
 
     override fun setPrice(priceString: String) {
-        price.text = priceString
+        mPriceValue.text = priceString
     }
 
     override fun setRefund(refundString: String) {
-        refund.text = refundString
+        mRefundValue.text = refundString
     }
 
     override fun setContent(description: String) {
-        content.text = description
+        mContentValue.text = description
     }
 
     override fun showError(message: String) {

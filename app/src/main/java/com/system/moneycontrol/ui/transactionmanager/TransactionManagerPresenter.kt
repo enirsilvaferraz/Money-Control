@@ -62,14 +62,6 @@ class TransactionManagerPresenter @Inject constructor(
         })
     }
 
-    override fun onPurchaseDateClick() {
-        val callback: (Date) -> Unit = {
-            transaction.purchaseDate = it
-            view.setPurchaseDate(myUtils.getDate(it, Constants.DATE_SHOW_VIEW))
-        }
-        view.showPurchaseDateDialog(transaction.purchaseDate, callback)
-    }
-
     override fun onPaymentDateClick() {
         val callback: (Date) -> Unit = {
             transaction.paymentDate = it

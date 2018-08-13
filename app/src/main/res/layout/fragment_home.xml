@@ -7,4 +7,6 @@
     tools:context=".ui.home.HomeFragment"
     tools:showIn="@layout/activity_home">
 
+
+
 </android.support.constraint.ConstraintLayout>
