@@ -6,18 +6,18 @@ import java.util.*
 interface TransactionManagerContract {
 
     interface View {
+
         fun showTagDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit)
         fun showPaymentTypeDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit)
         fun showPaymentDateDialog(paymentDate: Date?, callback: (Date) -> Unit)
-        fun showPriceDialog(price: Double?, callback: (Double) -> Unit)
-        fun showRefundDialog(refund: Double?, callback: (Double) -> Unit)
-        fun showContentDialog(description: String?, callback: (String) -> Unit)
+
         fun setTag(tagString: String)
         fun setPaymentType(paymentTypeString: String)
         fun setPaymentDate(paymentDateString: String)
         fun setPrice(priceString: String)
         fun setRefund(refundString: String)
         fun setContent(description: String)
+
         fun showError(message: String)
         fun showSuccess(message: String)
         fun closeWindow()
@@ -30,8 +30,8 @@ interface TransactionManagerContract {
         fun onTagClick()
         fun onPaymentTypeClick()
         fun onPaymentDateClick()
-        fun onPriceClick()
-        fun onRefundClick()
-        fun onContentClick()
+        fun onPriceSetted(value: Double)
+        fun onRefundSetted(value: Double)
+        fun onContentSetted(content: String)
     }
 }

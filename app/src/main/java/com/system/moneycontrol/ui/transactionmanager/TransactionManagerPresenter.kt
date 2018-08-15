@@ -14,10 +14,10 @@ import javax.inject.Inject
 
 class TransactionManagerPresenter @Inject constructor(
         val view: TransactionManagerContract.View,
-        val transactionBusiness: TransactionManagerBusiness,
-        val paymentTypeBusiness: PaymentTypeManagerBusiness,
-        val tagManagerBusiness: TagManagerBusiness,
-        val myUtils: MyUtils) : TransactionManagerContract.Presenter {
+        private val transactionBusiness: TransactionManagerBusiness,
+        private val paymentTypeBusiness: PaymentTypeManagerBusiness,
+        private val tagManagerBusiness: TagManagerBusiness,
+        private val myUtils: MyUtils) : TransactionManagerContract.Presenter {
 
     val transaction = Transaction()
 
@@ -70,27 +70,15 @@ class TransactionManagerPresenter @Inject constructor(
         view.showPaymentDateDialog(transaction.paymentDate, callback)
     }
 
-    override fun onPriceClick() {
-        val callback: (Double) -> Unit = {
-            transaction.moneySpent = it
-            view.setPrice(myUtils.currencyFormat(it))
-        }
-        view.showPriceDialog(transaction.moneySpent, callback)
+    override fun onPriceSetted(value: Double) {
+        transaction.moneySpent = value
     }
 
-    override fun onRefundClick() {
-        val callback: (Double) -> Unit = {
-            transaction.refund = it
-            view.setRefund(myUtils.currencyFormat(it))
-        }
-        view.showPriceDialog(transaction.refund, callback)
+    override fun onRefundSetted(value: Double) {
+        transaction.refund = value
     }
 
-    override fun onContentClick() {
-        val callback: (String) -> Unit = {
-            transaction.description = it
-            view.setContent(it)
-        }
-        view.showContentDialog(transaction.description, callback)
+    override fun onContentSetted(content: String) {
+        transaction.description = content
     }
 }

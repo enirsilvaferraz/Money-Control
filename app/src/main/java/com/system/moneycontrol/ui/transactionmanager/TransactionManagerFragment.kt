@@ -8,7 +8,8 @@ import android.widget.Toast
 import com.system.moneycontrol.R
 import com.system.moneycontrol.infrastructure.MyViewUtils
 import com.system.moneycontrol.model.entities.bases.DialogItem
-import com.system.moneycontrol.ui.component.CustomNumberPickerDialog
+import com.system.moneycontrol.ui.CurrencyTextWatcher
+import com.system.moneycontrol.ui.StringTextWatcher
 import dagger.android.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_transaction_manager.*
 import java.util.*
@@ -29,11 +30,12 @@ class TransactionManagerFragment : DaggerFragment(), TransactionManagerContract.
         super.onViewCreated(view, savedInstanceState)
 
         mTagContainer.setOnClickListener { presenter.onTagClick() }
-        mPaymentTypeContainer.setOnClickListener { presenter.onPaymentTypeClick() }
+        mTypeContainer.setOnClickListener { presenter.onPaymentTypeClick() }
         mPaymentDateContainer.setOnClickListener { presenter.onPaymentDateClick() }
-        mPriceContainer.setOnClickListener { presenter.onPriceClick() }
-        mRefundContainer.setOnClickListener { presenter.onRefundClick() }
-        mContentContainer.setOnClickListener { presenter.onContentClick() }
+
+        mPriceValue.addTextChangedListener(CurrencyTextWatcher { presenter.onPriceSetted(it) })
+        mRefundValue.addTextChangedListener(CurrencyTextWatcher { presenter.onRefundSetted(it) })
+        mContentValue.addTextChangedListener(StringTextWatcher { presenter.onContentSetted(it) })
     }
 
     override fun showTagDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {
@@ -48,40 +50,28 @@ class TransactionManagerFragment : DaggerFragment(), TransactionManagerContract.
         MyViewUtils(context).showDatePicker(paymentDate, callback)
     }
 
-    override fun showPriceDialog(price: Double?, callback: (Double) -> Unit) {
-        CustomNumberPickerDialog().show(fragmentManager, price, callback)
-    }
-
-    override fun showRefundDialog(refund: Double?, callback: (Double) -> Unit) {
-        CustomNumberPickerDialog().show(fragmentManager, refund, callback)
-    }
-
-    override fun showContentDialog(description: String?, callback: (String) -> Unit) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun setTag(tagString: String) {
-        mTagValue.text = tagString
+        mTagValue.setText(tagString)
     }
 
     override fun setPaymentType(paymentTypeString: String) {
-        mPaymentTypeValue.text = paymentTypeString
+        mTypeValue.setText(paymentTypeString)
     }
 
     override fun setPaymentDate(paymentDateString: String) {
-        mPaymentDateValue.text = paymentDateString
+        mPaymentDateValue.setText(paymentDateString)
     }
 
     override fun setPrice(priceString: String) {
-        mPriceValue.text = priceString
+        mPriceValue.setText(priceString)
     }
 
     override fun setRefund(refundString: String) {
-        mRefundValue.text = refundString
+        mRefundValue.setText(refundString)
     }
 
     override fun setContent(description: String) {
-        mContentValue.text = description
+        mContentValue.setText(description)
     }
 
     override fun showError(message: String) {

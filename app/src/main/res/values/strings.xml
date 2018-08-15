@@ -2,7 +2,7 @@
     <string name="app_name">Money Control</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_transaction_manager">TransactionManagerActivity</string>
+    <string name="title_activity_transaction_manager">Transaction Manager</string>
     <string name="title_activity_tag_manager">TagManagerActivity</string>
     <string name="title_activity_tag_list">TagListActivity</string>
 
@@ -30,5 +30,6 @@
     <string name="transaction_parcels">Parcels</string>
     <string name="transaction_already_paid">Already Paid</string>
     <string name="transaction">Transaction</string>
+    <string name="system_save">Save</string>
 
 </resources>
