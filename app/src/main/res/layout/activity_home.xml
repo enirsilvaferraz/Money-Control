@@ -34,15 +34,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:fabAlignmentMode="end"
-        app:hideOnScroll="true"
-        app:navigationIcon="@drawable/ic_info_outline_black_24dp" />
+        app:hideOnScroll="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_info_outline_black_24dp"
-        android:tint="@color/green"
+        android:src="@drawable/ic_attach_money_black_24dp"
+        android:tint="#ffffff"
         app:layout_anchor="@id/bar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
