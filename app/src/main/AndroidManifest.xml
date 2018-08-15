@@ -14,14 +14,14 @@
         <activity
             android:name=".ui.home.HomeActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
 
         </activity>
 
         <activity
             android:name=".ui.transactionmanager.TransactionManagerActivity"
             android:label="@string/transaction_manager_title"
-            android:theme="@style/AppTheme.Dialog" >
+            android:theme="@style/AppTheme">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

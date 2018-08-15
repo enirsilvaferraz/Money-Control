@@ -12,14 +12,8 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
 
-    <color name="dialog_title_text">#232F34</color>
-    <color name="dialog_item_text">#232F34</color>
+    <color name="red">#a10000</color>
+    <color name="green">#057e01</color>
 
-    <color name="ternary_text">#a7757575</color>
-    <color name="dafault_color">#666666</color>
-
-    <color name="item_marcked">#dcdada</color>
-    <color name="item_pinned">#c10d0d</color>
-    <color name="item_default">#000000</color>
 
 </resources>
