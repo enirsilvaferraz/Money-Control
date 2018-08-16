@@ -1,6 +1,7 @@
 package com.system.moneycontrol.model.entities
 
 import com.system.moneycontrol.infrastructure.MyUtils
+import com.system.moneycontrol.model.itemView.TransactionItemView
 import com.system.moneycontrol.model.mappers.TransactionMapper
 import java.util.*
 
@@ -26,5 +27,12 @@ data class Transaction(
             tag!!.key,
             paymentType!!.key,
             description
+    )
+
+    fun toItemView(): TransactionItemView = TransactionItemView(
+            tag!!.name,
+            MyUtils().currencyFormat(moneySpent),
+            MyUtils().currencyFormat(refund),
+            paymentType!!.key
     )
 }

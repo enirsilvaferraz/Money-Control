@@ -17,7 +17,7 @@ class TransactionRepository @Inject constructor(
 
     fun getList(year: Int, month: Int, onSuccess: ((List<Transaction>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
-        collection.document(year.toString()).collection(month.toString()).get()
+        collection.document(year.toString()).collection(month.toString()).orderBy("paymentDate").get()
                 .addOnCompleteListener { task ->
                     onSuccess?.invoke(task.result.documents.map {
                         it.toObject(TransactionMapper::class.java)!!.toModel(it.id)

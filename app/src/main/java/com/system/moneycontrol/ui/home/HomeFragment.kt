@@ -1,15 +1,14 @@
 package com.system.moneycontrol.ui.home
 
-import android.content.DialogInterface
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.system.moneycontrol.R
-import com.system.moneycontrol.model.entities.Transaction
 import dagger.android.DaggerFragment
+import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
 
 
@@ -30,8 +29,13 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
         presenter.init()
     }
 
-    override fun configureList(transactions: List<Transaction>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun setTitle(title: String) {
+        toolbar.title = title
+    }
+
+    override fun configureList(list: List<ItemRecyclerView>) {
+        mRecyclerView.layoutManager = LinearLayoutManager(context)
+        mRecyclerView.adapter = HomeAdapter(list)
     }
 
     override fun showEmptyState() {
@@ -40,23 +44,5 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
 
     override fun showError(message: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    fun showToast(it: List<Transaction>) {
-
-        val flowers = arrayListOf<String>()
-        it.mapTo(flowers) { it.paymentDate.toString() }
-
-        val arrayAdapter = ArrayAdapter<String>(context, R.layout.item_string, flowers)
-
-        val itemSelected = -1
-
-        AlertDialog.Builder(context, R.style.AppTheme_Dialog)
-                .setTitle("Select the number")
-                .setSingleChoiceItems(arrayAdapter, itemSelected, DialogInterface.OnClickListener { dialogInterface, selectedIndex ->
-                    dialogInterface.dismiss()
-                })
-                .create()
-                .show()
     }
 }

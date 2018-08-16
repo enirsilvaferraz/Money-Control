@@ -1,13 +1,12 @@
 package com.system.moneycontrol.ui.home
 
-import com.system.moneycontrol.model.entities.Transaction
-
 interface HomeContract {
 
     interface View {
-        fun configureList(transactions: List<Transaction>)
+        fun configureList(list: List<ItemRecyclerView>)
         fun showEmptyState()
         fun showError(message: String)
+        fun setTitle(title: String)
     }
 
     interface Presenter {
