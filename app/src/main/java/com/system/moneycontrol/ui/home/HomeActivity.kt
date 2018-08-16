@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.system.moneycontrol.R
 import com.system.moneycontrol.ui.transactionmanager.TransactionManagerActivity
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : DaggerAppCompatActivity() {
 
@@ -12,10 +13,9 @@ class HomeActivity : DaggerAppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-    }
 
-    private fun start() {
-        startActivity(Intent(this, TransactionManagerActivity::class.java))
+        fab.setOnClickListener {
+            startActivity(Intent(this, TransactionManagerActivity::class.java))
+        }
     }
-
 }
