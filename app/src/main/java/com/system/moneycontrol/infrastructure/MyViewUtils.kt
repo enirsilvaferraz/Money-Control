@@ -3,9 +3,9 @@ package com.system.moneycontrol.infrastructure
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
-import android.support.v7.app.AlertDialog
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import androidx.appcompat.app.AlertDialog
 import com.system.moneycontrol.R
 import com.system.moneycontrol.model.entities.bases.DialogItem
 import java.util.*

@@ -30,7 +30,7 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
     }
 
     override fun setTitle(title: String) {
-        toolbar.title = title
+       // toolbar.title = title
     }
 
     override fun configureList(list: List<ItemRecyclerView>) {
@@ -39,10 +39,10 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
     }
 
     override fun showEmptyState() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun showError(message: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
