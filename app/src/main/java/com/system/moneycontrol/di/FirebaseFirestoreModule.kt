@@ -21,13 +21,13 @@ class FirebaseFirestoreModule {
 
     @Named(ConstantsDI.FIRESTORE_PAYMENTTYPE)
     @Provides
-    fun provideFirebasePaymentType(): CollectionReference = getFirestoreInstance().collection("paymentTypes")
+    fun provideFirebasePaymentType(): CollectionReference = getFirestoreInstance().collection("types")
 
     private fun getFirestoreInstance(): FirebaseFirestore {
         val instance = FirebaseFirestore.getInstance()
-        instance.firestoreSettings = FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(true)
-                .build()
+//        instance.firestoreSettings = FirebaseFirestoreSettings.Builder()
+//                .setPersistenceEnabled(true)
+//                .build()
         return instance
     }
 }

@@ -26,7 +26,7 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.init()
+        //presenter.init()
     }
 
     override fun setTitle(title: String) {

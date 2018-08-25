@@ -1,218 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:showIn="@layout/activity_transaction_manager">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/mPaymentDateImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:alpha=".3"
-        android:importantForAccessibility="no"
-        app:layout_constraintBottom_toBottomOf="@+id/mPaymentDateContainer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/mPaymentDateContainer"
-        app:srcCompat="@drawable/ic_event_black_24dp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/mPaymentDateContainer"
-        style="@style/AppTheme.TextInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/mPaymentDateImage"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mPaymentDateValue"
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mPaymentDateImage"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:enabled="false"
-            android:hint="@string/transaction_payment_date"
-            android:textSize="14sp"
-            tools:text="24 de Janeiro de 2018" />
+            android:layout_marginStart="24dp"
+            android:alpha=".3"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@+id/mPaymentDateContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mPaymentDateContainer"
+            app:srcCompat="@drawable/ic_event_black_24dp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/mTagImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:alpha=".3"
-        android:importantForAccessibility="no"
-        app:layout_constraintBottom_toBottomOf="@+id/mTagContainer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/mTagContainer"
-        app:srcCompat="@drawable/ic_loyalty_black_24dp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/mTagContainer"
-        style="@style/AppTheme.TextInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/mTagImage"
-        app:layout_constraintTop_toBottomOf="@+id/mPaymentDateContainer">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mTagValue"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/mPaymentDateContainer"
+            style="@style/AppTheme.TextInputLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:enabled="false"
-            android:hint="@string/transaction_tag"
-            android:textSize="14sp"
-            tools:text="Aluguel" />
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/mPaymentDateImage"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mPaymentDateValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:hint="@string/transaction_payment_date"
+                android:textSize="14sp"
+                tools:text="24 de Janeiro de 2018" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/mPriceImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:alpha=".3"
-        android:importantForAccessibility="no"
-        app:layout_constraintBottom_toBottomOf="@+id/mPriceContainer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/mPriceContainer"
-        app:srcCompat="@drawable/ic_attach_money_black_24dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/mPriceContainer"
-        style="@style/AppTheme.TextInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/mRefundContainer"
-        app:layout_constraintStart_toEndOf="@+id/mTagImage"
-        app:layout_constraintTop_toBottomOf="@+id/mTagContainer">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mPriceValue"
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mTagImage"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/transaction_price"
-            android:lines="1"
-            android:textSize="14sp"
-            tools:text="R$ 1.000,00" />
+            android:layout_marginStart="24dp"
+            android:alpha=".3"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@+id/mTagContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mTagContainer"
+            app:srcCompat="@drawable/ic_loyalty_black_24dp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/mRefundContainer"
-        style="@style/AppTheme.TextInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/mPriceContainer"
-        app:layout_constraintTop_toBottomOf="@+id/mTagContainer">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mRefundValue"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/mTagContainer"
+            style="@style/AppTheme.TextInputLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/transaction_refund"
-            android:lines="1"
-            android:textSize="14sp" />
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/mTagImage"
+            app:layout_constraintTop_toBottomOf="@+id/mPaymentDateContainer">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mTagValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:hint="@string/transaction_tag"
+                android:textSize="14sp"
+                tools:text="Aluguel" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/mTypeImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:alpha=".3"
-        android:importantForAccessibility="no"
-        app:layout_constraintBottom_toBottomOf="@+id/mTypeContainer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/mTypeContainer"
-        app:srcCompat="@drawable/ic_account_balance_black_24dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/mTypeContainer"
-        style="@style/AppTheme.TextInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/mTagImage"
-        app:layout_constraintTop_toBottomOf="@+id/mPriceContainer">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mTypeValue"
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mPriceImage"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:enabled="false"
-            android:hint="@string/transaction_payment_type"
-            android:textSize="14sp"
-            tools:text="Conta Corrente do Itaú" />
+            android:layout_marginStart="24dp"
+            android:alpha=".3"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@+id/mPriceContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mPriceContainer"
+            app:srcCompat="@drawable/ic_attach_money_black_24dp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/mContentImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:alpha=".3"
-        android:importantForAccessibility="no"
-        app:layout_constraintBottom_toBottomOf="@+id/mContentContainer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/mContentContainer"
-        app:srcCompat="@drawable/ic_content_paste_black_24dp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/mContentContainer"
-        style="@style/AppTheme.TextInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/mContentImage"
-        app:layout_constraintTop_toBottomOf="@+id/mTypeContainer">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mContentValue"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/mPriceContainer"
+            style="@style/AppTheme.TextInputLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/transaction_content"
-            android:textSize="14sp"
-            tools:text="Pagamento referente ao mês de Dezembro de 2017" />
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/mRefundContainer"
+            app:layout_constraintStart_toEndOf="@+id/mTagImage"
+            app:layout_constraintTop_toBottomOf="@+id/mTagContainer">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mPriceValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/transaction_price"
+                android:inputType="numberDecimal"
+                android:lines="1"
+                android:textSize="14sp"
+                tools:text="R$ 1.000,00" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/mSaveButtom"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/system_save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/mContentContainer"
-        app:layout_constraintTop_toBottomOf="@+id/mContentContainer" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/mRefundContainer"
+            style="@style/AppTheme.TextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/mPriceContainer"
+            app:layout_constraintTop_toBottomOf="@+id/mTagContainer">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mRefundValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/transaction_refund"
+                android:inputType="numberDecimal"
+                android:lines="1"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mTypeImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:alpha=".3"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@+id/mTypeContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mTypeContainer"
+            app:srcCompat="@drawable/ic_account_balance_black_24dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/mTypeContainer"
+            style="@style/AppTheme.TextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/mTagImage"
+            app:layout_constraintTop_toBottomOf="@+id/mPriceContainer">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mTypeValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:hint="@string/transaction_payment_type"
+                android:textSize="14sp"
+                tools:text="Conta Corrente do Itaú" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mContentImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:alpha=".3"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@+id/mContentContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mContentContainer"
+            app:srcCompat="@drawable/ic_content_paste_black_24dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/mContentContainer"
+            style="@style/AppTheme.TextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/mContentImage"
+            app:layout_constraintTop_toBottomOf="@+id/mTypeContainer">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mContentValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/transaction_content"
+                android:textSize="14sp"
+                tools:text="Pagamento referente ao mês de Dezembro de 2017" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mSaveImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:tint="@color/accent"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@+id/mSaveButtom"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mSaveButtom"
+            app:srcCompat="@drawable/ic_save_black_24dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mSaveButtom"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/system_save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/mContentContainer"
+            app:layout_constraintTop_toBottomOf="@+id/mContentContainer" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

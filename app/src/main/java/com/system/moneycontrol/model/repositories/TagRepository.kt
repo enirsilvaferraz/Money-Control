@@ -15,13 +15,13 @@ class TagRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TAG) val co
     fun getList(onSuccess: ((List<Tag>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
         collection.get()
-                .addOnCompleteListener { task ->
-                    onSuccess?.invoke(task.result.documents.map {
-                        it.toObject(TagMapper::class.java)!!.toModel(it.id)
-                    })
-                }
                 .addOnFailureListener {
                     onFailure?.invoke(it)
+                }
+                .addOnSuccessListener { task->
+                    onSuccess?.invoke(task.documents.map {
+                        it.toObject(TagMapper::class.java)!!.toModel(it.id)
+                    })
                 }
     }
 

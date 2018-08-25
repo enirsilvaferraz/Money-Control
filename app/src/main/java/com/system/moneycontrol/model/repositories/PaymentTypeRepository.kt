@@ -15,8 +15,8 @@ class PaymentTypeRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_PAY
     fun getList(onSuccess: ((List<PaymentType>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
         collection.get()
-                .addOnCompleteListener { task ->
-                    onSuccess?.invoke(task.result.documents.map {
+                .addOnSuccessListener { task ->
+                    onSuccess?.invoke(task.documents.map {
                         it.toObject(PaymentTypeMapper::class.java)!!.toModel(it.id)
                     })
                 }

@@ -29,21 +29,21 @@ class TransactionManagerFragment : DaggerFragment(), TransactionManagerContract.
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mTagContainer.setOnClickListener { presenter.onTagClick() }
-        mTypeContainer.setOnClickListener { presenter.onPaymentTypeClick() }
-        mPaymentDateContainer.setOnClickListener { presenter.onPaymentDateClick() }
+        mPaymentDateValue.setOnClickListener { presenter.onPaymentDateClick() }
+        mTagValue.setOnClickListener { presenter.onTagClick() }
+        mTypeValue.setOnClickListener { presenter.onPaymentTypeClick() }
 
-        mPriceValue.addTextChangedListener(CurrencyTextWatcher { presenter.onPriceSetted(it) })
-        mRefundValue.addTextChangedListener(CurrencyTextWatcher { presenter.onRefundSetted(it) })
+        mPriceValue.addTextChangedListener(CurrencyTextWatcher { presenter.onPriceSetted(it.toDouble()) })
+        mRefundValue.addTextChangedListener(CurrencyTextWatcher { presenter.onRefundSetted(it.toDouble()) })
         mContentValue.addTextChangedListener(StringTextWatcher { presenter.onContentSetted(it) })
     }
 
     override fun showTagDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {
-        MyViewUtils(context).showListDialog("Select the tag description", list, callback)
+        MyViewUtils(context).showListDialog("Tags", list, callback)
     }
 
     override fun showPaymentTypeDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {
-        MyViewUtils(context).showListDialog("Select the payment type", list, callback)
+        MyViewUtils(context).showListDialog("Types", list, callback)
     }
 
     override fun showPaymentDateDialog(paymentDate: Date?, callback: (Date) -> Unit) {

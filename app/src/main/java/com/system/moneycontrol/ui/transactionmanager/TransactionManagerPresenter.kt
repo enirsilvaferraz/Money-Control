@@ -13,7 +13,7 @@ import java.util.*
 import javax.inject.Inject
 
 class TransactionManagerPresenter @Inject constructor(
-        val view: TransactionManagerContract.View,
+        private val view: TransactionManagerContract.View,
         private val transactionBusiness: TransactionManagerBusiness,
         private val paymentTypeBusiness: PaymentTypeManagerBusiness,
         private val tagManagerBusiness: TagManagerBusiness,
@@ -43,7 +43,7 @@ class TransactionManagerPresenter @Inject constructor(
         }
 
         paymentTypeBusiness.getAll({
-            view.showTagDialog(it, callback)
+            view.showPaymentTypeDialog(it, callback)
         }, {
             view.showError(it.message!!)
         })

@@ -15,7 +15,7 @@ class MyViewUtils @Inject constructor(val context: Context) {
 
     fun showListDialog(title: String, list: List<DialogItem>, callback: (DialogItem) -> Unit) {
 
-        val arrayAdapter = ArrayAdapter<String>(context, R.layout.item_list_single, list.map { it.getDescription() })
+        val arrayAdapter = ArrayAdapter<String>(context, R.layout.item_list_single, android.R.id.text1, list.map { it.getDescription() })
 
         val function: (DialogInterface, Int) -> Unit = { dialogInterface, selectedIndex ->
             callback(list[selectedIndex])

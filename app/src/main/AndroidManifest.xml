@@ -25,7 +25,8 @@
         <activity
             android:name=".ui.transactionmanager.TransactionManagerActivity"
             android:label="@string/transaction_manager_title"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateVisible|adjustResize"></activity>
 
     </application>
 
