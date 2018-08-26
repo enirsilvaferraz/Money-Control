@@ -109,7 +109,7 @@ class HomeBusinessTest {
             add(Tag("3", "Name 3"))
         }
 
-        val list = business.formatResultTransactions(transactions, tags)
+        val list = business.formatResultTransactions(transactions, tags, types)
 
         Assert.assertEquals("1", list[0].tag!!.key)
         Assert.assertEquals("Name 1", list[0].tag!!.name)
@@ -130,7 +130,7 @@ class HomeBusinessTest {
             add(Tag("3", "Name 3"))
         }
 
-        val list = business.formatResultTransactions(arrayListOf(), tags)
+        val list = business.formatResultTransactions(arrayListOf(), tags, types)
 
         Assert.assertEquals(0, list.size)
     }
