@@ -4,7 +4,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.system.moneycontrol.di.ConstantsDI
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.entities.Transaction
-import com.system.moneycontrol.model.mappers.TransactionMapper
+import com.system.moneycontrol.model.mappers.TransactionFirebase
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -15,12 +15,12 @@ class TransactionRepository @Inject constructor(
         @Named(ConstantsDI.FIRESTORE_TRANSACTION) private val collection: CollectionReference,
         var myUtils: MyUtils) {
 
-    fun getList(year: Int, month: Int, onSuccess: ((List<Transaction>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
+    fun getList(year: String, month: String, onSuccess: ((List<Transaction>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
-        collection.document(year.toString()).collection(month.toString()).orderBy("paymentDate").get()
-                .addOnCompleteListener { task ->
-                    onSuccess?.invoke(task.result.documents.map {
-                        it.toObject(TransactionMapper::class.java)!!.toModel(it.id)
+        collection.document(year).collection(month).orderBy("paymentDate").get()
+                .addOnSuccessListener { task ->
+                    onSuccess?.invoke(task.documents.map {
+                        it.toObject(TransactionFirebase::class.java)!!.toModel(it.id)
                     })
                 }
                 .addOnFailureListener {
@@ -54,7 +54,7 @@ class TransactionRepository @Inject constructor(
 
         collection.document(getYear(model)).collection(getMonth(model)).add(model.toMapper())
                 .addOnSuccessListener {
-                    onSuccess?.invoke(it.get().result.toObject(TransactionMapper::class.java)!!.toModel(it.id))
+                    onSuccess?.invoke(it.get().result.toObject(TransactionFirebase::class.java)!!.toModel(it.id))
                 }
                 .addOnFailureListener {
                     onFailure?.invoke(it)

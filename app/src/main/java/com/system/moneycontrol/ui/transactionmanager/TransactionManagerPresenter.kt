@@ -27,7 +27,7 @@ class TransactionManagerPresenter @Inject constructor(
         transaction.tag = Tag("PVCM8TqrfN1q0jcyZRIj", "Tag 1")
         transaction.moneySpent = 40.0
         transaction.refund = 0.40
-        transaction.paymentType = PaymentType("vjFawpXa471l9MlTcU78", "Aluguel")
+        transaction.paymentType = PaymentType("vjFawpXa471l9MlTcU78", "Aluguel", "#FFC107")
         transaction.description = "Teste 1"
 
         with(transaction) {

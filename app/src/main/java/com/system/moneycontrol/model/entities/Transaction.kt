@@ -2,7 +2,7 @@ package com.system.moneycontrol.model.entities
 
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.itemView.TransactionItemView
-import com.system.moneycontrol.model.mappers.TransactionMapper
+import com.system.moneycontrol.model.mappers.TransactionFirebase
 import java.util.*
 
 data class Transaction(
@@ -18,7 +18,7 @@ data class Transaction(
 
     constructor() : this(null, null, null, 0.0, 0.0, null, null, null)
 
-    fun toMapper(): TransactionMapper = TransactionMapper(
+    fun toMapper(): TransactionFirebase = TransactionFirebase(
             MyUtils().getDate(paymentDate!!, "yyyy-MM-dd"),
             moneySpent,
             refund,
@@ -31,6 +31,6 @@ data class Transaction(
             tag!!.name,
             MyUtils().currencyFormat(moneySpent),
             MyUtils().currencyFormat(refund),
-            paymentType!!.key
+            paymentType!!.color
     )
 }

@@ -7,6 +7,7 @@ interface HomeContract {
         fun showEmptyState()
         fun showError(message: String)
         fun setTitle(title: String)
+        fun setProgress(progress: Int)
     }
 
     interface Presenter {

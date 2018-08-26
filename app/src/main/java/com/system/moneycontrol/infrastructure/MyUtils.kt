@@ -31,6 +31,10 @@ class MyUtils @Inject constructor() {
 
     fun getDate(field: Int) = Calendar.getInstance().get(field)
 
+    fun getDate(pattern: String): String {
+        return getDate(Calendar.getInstance().time, pattern)
+    }
+
     fun currencyFormat(value: Double?): String {
         val instance = NumberFormat.getInstance()
         instance.minimumFractionDigits = 2

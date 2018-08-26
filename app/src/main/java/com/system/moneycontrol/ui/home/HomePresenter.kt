@@ -4,7 +4,6 @@ import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.business.HomeBusiness
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.model.itemView.TransactionTitleItemView
-import java.util.*
 import javax.inject.Inject
 
 class HomePresenter @Inject constructor(val view: HomeContract.View, val business: HomeBusiness) : HomeContract.Presenter {
@@ -13,15 +12,19 @@ class HomePresenter @Inject constructor(val view: HomeContract.View, val busines
 
         val utils = MyUtils()
 
-        val year = utils.getDate(Calendar.YEAR)
-        val month = utils.getDate(Calendar.MONTH)
+        val year = utils.getDate("yyyy")
+        val month = utils.getDate("MM")
 
-        view.setTitle(utils.getDate(Calendar.getInstance().time, "MMM 'de' yyyy"))
+        view.setTitle(utils.getDate("MMM 'de' yyyy"))
+
+        view.setProgress(10)
 
         business.getTransactions(year, month, {
             if (it.isNotEmpty()) {
+                view.setProgress(100)
                 view.configureList(configureListView(it))
             } else {
+                view.setProgress(100)
                 view.showEmptyState()
             }
         }, {
@@ -35,7 +38,7 @@ class HomePresenter @Inject constructor(val view: HomeContract.View, val busines
 
         transactions.forEach {
 
-            val titleItemView = TransactionTitleItemView(MyUtils().getDate(it.paymentDate!!, "dd 'de' MMM"))
+            val titleItemView = TransactionTitleItemView(MyUtils().getDate(it.paymentDate!!, "MMM, dd"))
             if (!itemList.contains(titleItemView)) {
                 itemList.add(titleItemView)
             }

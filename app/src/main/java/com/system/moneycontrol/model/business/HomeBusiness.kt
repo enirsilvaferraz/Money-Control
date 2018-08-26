@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class HomeBusiness @Inject constructor(val repTransaction: TransactionRepository, val repTag: TagRepository) {
 
-    fun getTransactions(year:Int, month:Int, onSuccess: ((List<Transaction>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
+    fun getTransactions(year:String, month:String, onSuccess: ((List<Transaction>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 
         repTransaction.getList(year, month, { transactions ->
             repTag.getList({ tags ->

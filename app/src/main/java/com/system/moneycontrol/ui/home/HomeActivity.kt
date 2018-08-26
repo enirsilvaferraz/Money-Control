@@ -2,6 +2,7 @@ package com.system.moneycontrol.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.widget.Toolbar
 import com.system.moneycontrol.R
 import com.system.moneycontrol.ui.transactionmanager.TransactionManagerActivity
 import dagger.android.support.DaggerAppCompatActivity
@@ -17,5 +18,10 @@ class HomeActivity : DaggerAppCompatActivity() {
         fab.setOnClickListener {
             startActivity(Intent(this, TransactionManagerActivity::class.java))
         }
+    }
+
+    fun setPageTitle(title: String) {
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar.title = title
     }
 }

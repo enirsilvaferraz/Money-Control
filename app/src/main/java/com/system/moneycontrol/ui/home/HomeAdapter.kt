@@ -43,7 +43,7 @@ class HomeAdapter(private val list: List<ItemRecyclerView>) : RecyclerView.Adapt
 
         fun bind(item: TransactionItemView) {
 
-            itemView.findViewById<TextView>(R.id.mTypeIndicator).setBackgroundColor(Color.parseColor(item.typeColor))
+            itemView.findViewById<View>(R.id.mTypeIndicator).setBackgroundColor(Color.parseColor(item.typeColor))
             itemView.findViewById<TextView>(R.id.mTag).text = item.tag
             itemView.findViewById<TextView>(R.id.mPrice).text = item.price
 

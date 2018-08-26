@@ -4,9 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment"
     android:background="@color/primary"
+    tools:context=".ui.home.HomeFragment"
+    android:animateLayoutChanges="true"
     tools:showIn="@layout/activity_home">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/mProgressContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="32dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Downloading your transactions" />
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/mProgressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="false"
+            android:max="100"
+            tools:progress="50" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mRecyclerView"

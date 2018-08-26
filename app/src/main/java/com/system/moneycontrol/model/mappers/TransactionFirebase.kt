@@ -6,13 +6,13 @@ import com.system.moneycontrol.model.entities.PaymentType
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
 
-class TransactionMapper(
+class TransactionFirebase(
         var paymentDate: String,
         var moneySpent: Double,
         var refund: Double,
         var tag: String,
-        var paymentType: String,
-        var description: String?) {
+        var type: String,
+        var content: String?) {
 
     constructor() : this(Constants.LASY_STRING, 0.0, 0.0, Constants.LASY_STRING, Constants.LASY_STRING, null)
 
@@ -23,7 +23,7 @@ class TransactionMapper(
             moneySpent,
             refund,
             Tag(tag, Constants.LASY_STRING),
-            PaymentType(paymentType, Constants.LASY_STRING),
-            description
+            PaymentType(type, Constants.LASY_STRING, Constants.LASY_STRING),
+            content
     )
 }
