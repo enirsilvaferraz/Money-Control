@@ -21,9 +21,26 @@ class TransactionManagerPresenter @Inject constructor(
 
     val transaction = Transaction()
 
-    override fun init() {}
+    override fun init() {
 
-    override fun save() {
+        transaction.paymentDate = Date()
+        transaction.tag = Tag("PVCM8TqrfN1q0jcyZRIj", "Tag 1")
+        transaction.moneySpent = 40.0
+        transaction.refund = 0.40
+        transaction.paymentType = PaymentType("vjFawpXa471l9MlTcU78", "Aluguel")
+        transaction.description = "Teste 1"
+
+        with(transaction) {
+            view.setPaymentDate(myUtils.getDate(this.paymentDate!!, Constants.DATE_SHOW_VIEW))
+            view.setTag(this.tag!!.name)
+            view.setPrice(MyUtils().valueFormat(this.moneySpent))
+            view.setRefund(MyUtils().valueFormat(this.refund))
+            view.setPaymentType(this.paymentType!!.name)
+            view.setContent(transaction.description!!)
+        }
+    }
+
+    override fun onSaveClicked() {
         transactionBusiness.save(transaction, {
             view.showSuccess("Transaction registred!")
             view.closeWindow()

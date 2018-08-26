@@ -25,7 +25,7 @@ interface TransactionManagerContract {
 
     interface Presenter {
         fun init()
-        fun save()
+        fun onSaveClicked()
         fun cancel()
         fun onTagClick()
         fun onPaymentTypeClick()

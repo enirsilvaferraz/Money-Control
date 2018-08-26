@@ -8,20 +8,18 @@ import com.system.moneycontrol.model.entities.Transaction
 
 class TransactionMapper(
         var paymentDate: String,
-        var purchaseDate: String,
         var moneySpent: Double,
         var refund: Double,
         var tag: String,
         var paymentType: String,
         var description: String?) {
 
-    constructor() : this(Constants.LASY_STRING, Constants.LASY_STRING, 0.0, 0.0, Constants.LASY_STRING, Constants.LASY_STRING, null)
+    constructor() : this(Constants.LASY_STRING, 0.0, 0.0, Constants.LASY_STRING, Constants.LASY_STRING, null)
 
     fun toModel(key: String): Transaction = Transaction(
             key,
             MyUtils().getDate(paymentDate, "yyyy-MM-dd"),
             MyUtils().getDate(paymentDate, "yyyy-MM-dd"),
-            MyUtils().getDate(purchaseDate, "yyyy-MM-dd"),
             moneySpent,
             refund,
             Tag(tag, Constants.LASY_STRING),

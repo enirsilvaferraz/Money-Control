@@ -32,7 +32,7 @@ class TransactionRepository @Inject constructor(
 
         collection.document(getYear(model)).collection(getMonth(model)).add(model.toMapper())
                 .addOnSuccessListener {
-                    onSuccess?.invoke(it.get().result.toObject(TransactionMapper::class.java)!!.toModel(it.id))
+                    onSuccess?.invoke(model.copy(key = it.id))
                 }
                 .addOnFailureListener {
                     onFailure?.invoke(it)

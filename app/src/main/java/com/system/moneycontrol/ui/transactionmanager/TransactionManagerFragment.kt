@@ -33,9 +33,13 @@ class TransactionManagerFragment : DaggerFragment(), TransactionManagerContract.
         mTagValue.setOnClickListener { presenter.onTagClick() }
         mTypeValue.setOnClickListener { presenter.onPaymentTypeClick() }
 
-        mPriceValue.addTextChangedListener(CurrencyTextWatcher { presenter.onPriceSetted(it.toDouble()) })
-        mRefundValue.addTextChangedListener(CurrencyTextWatcher { presenter.onRefundSetted(it.toDouble()) })
+        mPriceValue.addTextChangedListener(CurrencyTextWatcher { presenter.onPriceSetted(it) })
+        mRefundValue.addTextChangedListener(CurrencyTextWatcher { presenter.onRefundSetted(it) })
         mContentValue.addTextChangedListener(StringTextWatcher { presenter.onContentSetted(it) })
+
+        mSaveButtom.setOnClickListener { presenter.onSaveClicked() }
+
+        presenter.init()
     }
 
     override fun showTagDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {

@@ -41,7 +41,7 @@ class MyUtils @Inject constructor() {
 
     fun valueFormat(value: Double): String {
         val instance = NumberFormat.getInstance()
-        instance.maximumFractionDigits = 0
+        instance.maximumFractionDigits = 2
         instance.minimumIntegerDigits = 1
         return instance.format(value)
     }
