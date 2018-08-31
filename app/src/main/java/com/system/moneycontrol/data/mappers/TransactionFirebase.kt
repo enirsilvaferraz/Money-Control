@@ -1,4 +1,4 @@
-package com.system.moneycontrol.model.mappers
+package com.system.moneycontrol.data.mappers
 
 import com.system.moneycontrol.infrastructure.Constants
 import com.system.moneycontrol.infrastructure.MyUtils

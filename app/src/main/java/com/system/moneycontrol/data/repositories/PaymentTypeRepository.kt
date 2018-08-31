@@ -1,9 +1,10 @@
-package com.system.moneycontrol.model.repositories
+package com.system.moneycontrol.data.repositories
 
 import com.google.firebase.firestore.CollectionReference
+import com.system.moneycontrol.data.mappers.PaymentTypeFirebase
 import com.system.moneycontrol.di.ConstantsDI
+import com.system.moneycontrol.infrastructure.Result
 import com.system.moneycontrol.model.entities.PaymentType
-import com.system.moneycontrol.model.mappers.PaymentTypeMapper
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -12,18 +13,34 @@ import javax.inject.Named
  */
 class PaymentTypeRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_PAYMENTTYPE) private val collection: CollectionReference) {
 
-    fun getList(onSuccess: ((List<PaymentType>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
+    fun getList(): Result<PaymentType> = object : Result<PaymentType>() {
 
-        collection.get()
-                .addOnSuccessListener { task ->
-                    onSuccess?.invoke(task.documents.map {
-                        it.toObject(PaymentTypeMapper::class.java)!!.toModel(it.id)
-                    })
-                }
-                .addOnFailureListener {
-                    onFailure?.invoke(it)
-                }
+        override fun execute() {
+
+            collection.get()
+                    .addOnSuccessListener { task ->
+                        onSuccessList?.invoke(task.documents.map {
+                            it.toObject(PaymentTypeFirebase::class.java)!!.toModel(it.id)
+                        })
+                    }
+                    .addOnFailureListener {
+                        onFailure?.invoke(it)
+                    }
+        }
     }
+
+//    fun getList(onSuccessList: ((List<PaymentType>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
+//
+//        collection.get()
+//                .addOnSuccessListener { task ->
+//                    onSuccessList?.invoke(task.documents.map {
+//                        it.toObject(PaymentTypeFirebase::class.java)!!.toModel(it.id)
+//                    })
+//                }
+//                .addOnFailureListener {
+//                    onFailure?.invoke(it)
+//                }
+//    }
 
     fun save(model: PaymentType, onSuccess: ((PaymentType) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
 

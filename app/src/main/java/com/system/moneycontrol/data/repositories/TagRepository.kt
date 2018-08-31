@@ -1,9 +1,10 @@
-package com.system.moneycontrol.model.repositories
+package com.system.moneycontrol.data.repositories
 
 import com.google.firebase.firestore.CollectionReference
+import com.system.moneycontrol.data.mappers.TagFirebase
 import com.system.moneycontrol.di.ConstantsDI
+import com.system.moneycontrol.infrastructure.Result
 import com.system.moneycontrol.model.entities.Tag
-import com.system.moneycontrol.model.mappers.TagMapper
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -12,17 +13,20 @@ import javax.inject.Named
  */
 class TagRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TAG) val collection: CollectionReference) {
 
-    fun getList(onSuccess: ((List<Tag>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
+    fun getList() = object : Result<Tag>() {
 
-        collection.get()
-                .addOnFailureListener {
-                    onFailure?.invoke(it)
-                }
-                .addOnSuccessListener { task->
-                    onSuccess?.invoke(task.documents.map {
-                        it.toObject(TagMapper::class.java)!!.toModel(it.id)
-                    })
-                }
+        override fun execute() {
+
+            collection.get()
+                    .addOnFailureListener {
+                        onFailure?.invoke(it)
+                    }
+                    .addOnSuccessListener { task ->
+                        onSuccessList?.invoke(task.documents.map {
+                            it.toObject(TagFirebase::class.java)!!.toModel(it.id)
+                        })
+                    }
+        }
     }
 
     fun save(model: Tag, onSuccess: ((Tag) -> Unit)?, onFailure: ((Exception) -> Unit)?) {

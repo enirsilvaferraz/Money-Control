@@ -1,9 +1,9 @@
-package com.system.moneycontrol.model.mappers
+package com.system.moneycontrol.data.mappers
 
 import com.system.moneycontrol.infrastructure.Constants
 import com.system.moneycontrol.model.entities.PaymentType
 
-class PaymentTypeMapper(var name: String, var color: String) {
+class PaymentTypeFirebase(var name: String, var color: String) {
 
     constructor() : this(Constants.LASY_STRING, Constants.LASY_STRING)
 

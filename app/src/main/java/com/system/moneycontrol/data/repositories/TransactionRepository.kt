@@ -1,10 +1,10 @@
-package com.system.moneycontrol.model.repositories
+package com.system.moneycontrol.data.repositories
 
 import com.google.firebase.firestore.CollectionReference
 import com.system.moneycontrol.di.ConstantsDI
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.entities.Transaction
-import com.system.moneycontrol.model.mappers.TransactionFirebase
+import com.system.moneycontrol.data.mappers.TransactionFirebase
 import javax.inject.Inject
 import javax.inject.Named
 

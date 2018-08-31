@@ -3,7 +3,7 @@ package com.system.moneycontrol.model.business
 import com.nhaarman.mockitokotlin2.*
 import com.system.moneycontrol.infrastruture.ConstantsTest
 import com.system.moneycontrol.model.entities.Tag
-import com.system.moneycontrol.model.repositories.TagRepository
+import com.system.moneycontrol.data.repositories.TagRepository
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks

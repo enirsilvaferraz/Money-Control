@@ -15,8 +15,8 @@ import javax.inject.Inject
 class TransactionManagerPresenter @Inject constructor(
         private val view: TransactionManagerContract.View,
         private val transactionBusiness: TransactionManagerBusiness,
-        private val paymentTypeBusiness: PaymentTypeManagerBusiness,
-        private val tagManagerBusiness: TagManagerBusiness,
+        private val typeBusiness: PaymentTypeManagerBusiness,
+        private val tagBusiness: TagManagerBusiness,
         private val myUtils: MyUtils) : TransactionManagerContract.Presenter {
 
     val transaction = Transaction()
@@ -59,11 +59,10 @@ class TransactionManagerPresenter @Inject constructor(
             view.setPaymentType(it.name)
         }
 
-        paymentTypeBusiness.getAll({
-            view.showPaymentTypeDialog(it, callback)
-        }, {
-            view.showError(it.message!!)
-        })
+        typeBusiness.getAll()
+                .addSuccessList { view.showPaymentTypeDialog(it, callback) }
+                .addFailure { view.showError(it.message!!) }
+                .execute()
     }
 
     override fun onTagClick() {
@@ -72,11 +71,10 @@ class TransactionManagerPresenter @Inject constructor(
             view.setTag(it.name)
         }
 
-        tagManagerBusiness.getAll({
-            view.showTagDialog(it, callback)
-        }, {
-            view.showError(it.message!!)
-        })
+        tagBusiness.getAll()
+                .addSuccessList { view.showTagDialog(it, callback) }
+                .addFailure { view.showError(it.message!!) }
+                .execute()
     }
 
     override fun onPaymentDateClick() {

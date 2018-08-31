@@ -2,7 +2,7 @@ package com.system.moneycontrol.model.business
 
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.entities.Transaction
-import com.system.moneycontrol.model.repositories.TransactionRepository
+import com.system.moneycontrol.data.repositories.TransactionRepository
 import java.util.*
 import javax.inject.Inject
 

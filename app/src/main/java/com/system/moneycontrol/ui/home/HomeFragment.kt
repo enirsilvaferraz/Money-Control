@@ -47,6 +47,6 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
     }
 
     override fun setProgress(progress: Int) {
-        ProgressBarAnimation(mProgressContainer, mProgressBar, 1200).setProgress(progress);
+        //ProgressBarAnimation(mProgressContainer, mProgressBar, 1200).setProgress(progress);
     }
 }

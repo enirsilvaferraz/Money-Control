@@ -6,7 +6,7 @@ import com.system.moneycontrol.infrastruture.ConstantsTest
 import com.system.moneycontrol.model.entities.PaymentType
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
-import com.system.moneycontrol.model.repositories.TransactionRepository
+import com.system.moneycontrol.data.repositories.TransactionRepository
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks

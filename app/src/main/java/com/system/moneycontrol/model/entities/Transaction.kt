@@ -2,7 +2,7 @@ package com.system.moneycontrol.model.entities
 
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.itemView.TransactionItemView
-import com.system.moneycontrol.model.mappers.TransactionFirebase
+import com.system.moneycontrol.data.mappers.TransactionFirebase
 import java.util.*
 
 data class Transaction(
