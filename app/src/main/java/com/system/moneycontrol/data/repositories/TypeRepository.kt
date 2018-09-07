@@ -2,19 +2,19 @@ package com.system.moneycontrol.data.repositories
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
-import com.system.moneycontrol.data.mappers.TagFirebase
+import com.system.moneycontrol.data.mappers.PaymentTypeFirebase
 import com.system.moneycontrol.di.ConstantsDI
 import com.system.moneycontrol.infrastructure.Result
-import com.system.moneycontrol.model.entities.Tag
+import com.system.moneycontrol.model.entities.PaymentType
 import javax.inject.Inject
 import javax.inject.Named
 
 /**
- * @param collection: Firebase Firestore (tags)
+ * @param collection: Firebase Firestore (PaymentTypes)
  */
-class TagRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TAG) val collection: CollectionReference) {
+class TypeRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_PAYMENTTYPE) private val collection: CollectionReference) {
 
-    fun getList() = object : Result<Tag>() {
+    fun getList(): Result<PaymentType> = object : Result<PaymentType>() {
 
         override fun execute() {
             collection.get()
@@ -22,11 +22,10 @@ class TagRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TAG) val co
                         onSuccessList?.invoke(task.documents.map { getModel(it) })
                     }
                     .addOnFailureListener { onFailure?.invoke(it) }
-
         }
     }
 
-    fun save(model: Tag) = object : Result<Tag>() {
+    fun save(model: PaymentType) = object : Result<PaymentType>() {
 
         override fun execute() {
             collection.add(model.toMapper())
@@ -35,7 +34,7 @@ class TagRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TAG) val co
         }
     }
 
-    fun delete(model: Tag) = object : Result<Tag>() {
+    fun delete(model: PaymentType) = object : Result<PaymentType>() {
 
         override fun execute() {
             collection.document(model.key).delete()
@@ -44,7 +43,7 @@ class TagRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TAG) val co
         }
     }
 
-    fun update(model: Tag) = object : Result<Tag>() {
+    fun update(model: PaymentType) = object : Result<PaymentType>() {
 
         override fun execute() {
             collection.document(model.key).set(model.toMapper())
@@ -53,5 +52,5 @@ class TagRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TAG) val co
         }
     }
 
-    fun getModel(it: DocumentSnapshot) = it.toObject(TagFirebase::class.java)!!.toModel(it.id)
+    fun getModel(it: DocumentSnapshot) = it.toObject(PaymentTypeFirebase::class.java)!!.toModel(it.id)
 }

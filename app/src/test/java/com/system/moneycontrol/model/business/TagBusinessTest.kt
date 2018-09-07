@@ -12,14 +12,14 @@ import org.mockito.Spy
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class TagManagerBusinessTest {
+class TagBusinessTest {
 
     @Mock
     lateinit var repository: TagRepository
 
     @Spy
     @InjectMocks
-    lateinit var business: TagManagerBusiness
+    lateinit var business: TagBusiness
 
     val mockSaveValid = Tag("", ConstantsTest.VALID_STRING)
     val mockUpdateValid = Tag(ConstantsTest.VALID_KEY, ConstantsTest.VALID_STRING)

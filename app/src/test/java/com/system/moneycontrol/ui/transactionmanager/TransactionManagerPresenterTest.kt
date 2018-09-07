@@ -1,8 +1,8 @@
 package com.system.moneycontrol.ui.transactionmanager
 
 import com.nhaarman.mockitokotlin2.*
-import com.system.moneycontrol.model.business.TagManagerBusiness
-import com.system.moneycontrol.model.business.TransactionManagerBusiness
+import com.system.moneycontrol.model.business.TagBusiness
+import com.system.moneycontrol.model.business.TransactionBusiness
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
 import org.junit.Test
@@ -16,10 +16,10 @@ import org.mockito.junit.MockitoJUnitRunner
 class TransactionManagerPresenterTest {
 
     @Mock
-    lateinit var transactionBusiness: TransactionManagerBusiness
+    lateinit var transactionBusiness: TransactionBusiness
 
     @Mock
-    lateinit var tagBusiness: TagManagerBusiness
+    lateinit var tagBusiness: TagBusiness
 
     @Mock
     lateinit var view: TransactionManagerContract.View

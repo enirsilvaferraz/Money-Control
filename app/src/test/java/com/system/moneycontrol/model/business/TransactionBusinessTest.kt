@@ -16,7 +16,7 @@ import org.mockito.Spy
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class TransactionManagerBusinessTest {
+class TransactionBusinessTest {
 
     private val tag = Tag(ConstantsTest.VALID_KEY, ConstantsTest.VALID_STRING)
 
@@ -33,7 +33,7 @@ class TransactionManagerBusinessTest {
 
     @Spy
     @InjectMocks
-    lateinit var business: TransactionManagerBusiness
+    lateinit var business: TransactionBusiness
 
     @Test
     fun delete_testingListeners_success() {

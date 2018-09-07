@@ -1,6 +1,6 @@
 package com.system.moneycontrol.infrastructure
 
-abstract class Result<T> {
+abstract class Result<T> () {
 
     protected var onSuccessList: ((List<T>) -> Unit)? = null
     protected var onSuccessItem: ((T) -> Unit)? = null

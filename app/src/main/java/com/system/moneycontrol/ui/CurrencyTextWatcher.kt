@@ -3,6 +3,7 @@ package com.system.moneycontrol.ui
 import android.text.Editable
 import android.text.TextWatcher
 import java.text.NumberFormat
+import java.util.*
 
 class CurrencyTextWatcher(val calback: (Double) -> Unit) : TextWatcher {
 
@@ -19,7 +20,7 @@ class CurrencyTextWatcher(val calback: (Double) -> Unit) : TextWatcher {
 
             try {
 
-                val formatted = NumberFormat.getCurrencyInstance().format(digits)
+                val formatted = NumberFormat.getInstance(Locale.ENGLISH).format(digits)
                 string.replace(0, string.length, formatted)
 
             } catch (nfe: NumberFormatException) {

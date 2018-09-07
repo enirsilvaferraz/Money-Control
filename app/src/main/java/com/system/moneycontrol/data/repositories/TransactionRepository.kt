@@ -1,10 +1,12 @@
 package com.system.moneycontrol.data.repositories
 
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.system.moneycontrol.data.mappers.TransactionFirebase
 import com.system.moneycontrol.di.ConstantsDI
 import com.system.moneycontrol.infrastructure.MyUtils
+import com.system.moneycontrol.infrastructure.Result
 import com.system.moneycontrol.model.entities.Transaction
-import com.system.moneycontrol.data.mappers.TransactionFirebase
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -15,51 +17,54 @@ class TransactionRepository @Inject constructor(
         @Named(ConstantsDI.FIRESTORE_TRANSACTION) private val collection: CollectionReference,
         var myUtils: MyUtils) {
 
-    fun getList(year: String, month: String, onSuccess: ((List<Transaction>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
+    fun getList(year: String, month: String) = object : Result<Transaction>() {
 
-        collection.document(year).collection(month).orderBy("paymentDate").get()
-                .addOnSuccessListener { task ->
-                    onSuccess?.invoke(task.documents.map {
-                        it.toObject(TransactionFirebase::class.java)!!.toModel(it.id)
-                    })
-                }
-                .addOnFailureListener {
-                    onFailure?.invoke(it)
-                }
+        override fun execute() {
+            collection.document(year).collection(month).orderBy("paymentDate").get()
+                    .addOnSuccessListener { task -> onSuccessList?.invoke(task.documents.map { getModel(it) }) }
+                    .addOnFailureListener { onFailure?.invoke(it) }
+        }
     }
 
-    fun save(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
+    fun save(model: Transaction) = object : Result<Transaction>() {
 
-        collection.document(getYear(model)).collection(getMonth(model)).add(model.toMapper())
-                .addOnSuccessListener {
-                    onSuccess?.invoke(model.copy(key = it.id))
-                }
-                .addOnFailureListener {
-                    onFailure?.invoke(it)
-                }
+        override fun execute() {
+            collection.document(getYear(model)).collection(getMonth(model)).add(model.toMapper())
+                    .addOnCompleteListener { onSuccessItem?.invoke(model.copy(key = it.result.id)) }
+                    .addOnFailureListener { onFailure?.invoke(it) }
+        }
     }
 
-    fun delete(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
+    fun move(model: Transaction) = object : Result<Transaction>() {
 
-        collection.document(getYear(model)).collection(getMonth(model)).document(model.key!!).delete()
-                .addOnSuccessListener {
-                    onSuccess?.invoke(model)
-                }
-                .addOnFailureListener {
-                    onFailure?.invoke(it)
-                }
+        override fun execute() {
+            save(model).addSuccessItem { saved ->
+                delete(saved.copy(paymentDate = model.paymentDateOlder))
+                        .addSuccessItem { onSuccessItem?.invoke(saved) }
+                        .addFailure { onFailure?.invoke(it) }
+            }.addFailure { onFailure?.invoke(it) }
+        }
     }
 
-    fun update(model: Transaction, onSuccess: ((Transaction) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
+    fun delete(model: Transaction) = object : Result<Transaction>() {
 
-        collection.document(getYear(model)).collection(getMonth(model)).add(model.toMapper())
-                .addOnSuccessListener {
-                    onSuccess?.invoke(it.get().result.toObject(TransactionFirebase::class.java)!!.toModel(it.id))
-                }
-                .addOnFailureListener {
-                    onFailure?.invoke(it)
-                }
+        override fun execute() {
+            collection.document(getYear(model)).collection(getMonth(model)).document(model.key!!).delete()
+                    .addOnSuccessListener { onSuccessItem?.invoke(model) }
+                    .addOnFailureListener { onFailure?.invoke(it) }
+        }
     }
+
+    fun update(model: Transaction) = object : Result<Transaction>() {
+
+        override fun execute() {
+            collection.document(getYear(model)).collection(getMonth(model)).add(model.toMapper())
+                    .addOnSuccessListener { onSuccessItem?.invoke(model) }
+                    .addOnFailureListener { onFailure?.invoke(it) }
+        }
+    }
+
+    fun getModel(it: DocumentSnapshot) = it.toObject(TransactionFirebase::class.java)!!.toModel(it.id)
 
     private fun getMonth(model: Transaction) = myUtils.getDate(model.paymentDate!!, "MM")
 

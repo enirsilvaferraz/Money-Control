@@ -2,9 +2,9 @@ package com.system.moneycontrol.ui.transactionmanager
 
 import com.system.moneycontrol.infrastructure.Constants
 import com.system.moneycontrol.infrastructure.MyUtils
-import com.system.moneycontrol.model.business.PaymentTypeManagerBusiness
-import com.system.moneycontrol.model.business.TagManagerBusiness
-import com.system.moneycontrol.model.business.TransactionManagerBusiness
+import com.system.moneycontrol.model.business.TagBusiness
+import com.system.moneycontrol.model.business.TransactionBusiness
+import com.system.moneycontrol.model.business.TypeBusiness
 import com.system.moneycontrol.model.entities.PaymentType
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
@@ -14,9 +14,9 @@ import javax.inject.Inject
 
 class TransactionManagerPresenter @Inject constructor(
         private val view: TransactionManagerContract.View,
-        private val transactionBusiness: TransactionManagerBusiness,
-        private val typeBusiness: PaymentTypeManagerBusiness,
-        private val tagBusiness: TagManagerBusiness,
+        private val transactionBusiness: TransactionBusiness,
+        private val typeBusiness: TypeBusiness,
+        private val tagBusiness: TagBusiness,
         private val myUtils: MyUtils) : TransactionManagerContract.Presenter {
 
     val transaction = Transaction()
@@ -41,12 +41,13 @@ class TransactionManagerPresenter @Inject constructor(
     }
 
     override fun onSaveClicked() {
-        transactionBusiness.save(transaction, {
-            view.showSuccess("Transaction registred!")
-            view.closeWindow()
-        }, {
-            view.showError(it.message!!)
-        })
+
+        transactionBusiness.save(transaction)
+                .addSuccessItem {
+                    view.showSuccess("Transaction registred!")
+                    view.closeWindow()
+                }.addFailure { view.showError(it.message!!) }
+                .execute()
     }
 
     override fun cancel() {
