@@ -23,31 +23,28 @@ class TransactionManagerPresenter @Inject constructor(
 
     override fun init() {
 
-//        transaction.paymentDate = Date()
-//        transaction.tag = Tag("PVCM8TqrfN1q0jcyZRIj", "Tag 1")
-//        transaction.moneySpent = 40.0
-//        transaction.refund = 0.40
-//        transaction.paymentType = PaymentType("vjFawpXa471l9MlTcU78", "Aluguel", "#FFC107")
-//        transaction.description = "Teste 1"
-//
-//        with(transaction) {
-//            view.setPaymentDate(myUtils.getDate(this.paymentDate!!, Constants.DATE_SHOW_VIEW))
+        with(transaction) {
+            view.setPaymentDate(myUtils.getDate(this.paymentDate, Constants.DATE_SHOW_VIEW))
 //            view.setTag(this.tag!!.name)
-//            view.setPrice(MyUtils().valueFormat(this.moneySpent))
-//            view.setRefund(MyUtils().valueFormat(this.refund))
+            view.setPrice(MyUtils().valueFormat(this.moneySpent))
+            view.setRefund(MyUtils().valueFormat(this.refund))
 //            view.setPaymentType(this.paymentType!!.name)
 //            view.setContent(transaction.description!!)
-//        }
+        }
     }
 
     override fun onSaveClicked() {
 
-        transactionBusiness.save(transaction)
-                .addSuccessItem {
-                    view.showSuccess("Transaction registred!")
-                    view.closeWindow()
-                }.addFailure { view.showError(it.message!!) }
-                .execute()
+        if (transaction.tag == null) view.showError("Tag is required!")
+        if (transaction.paymentType == null) view.showError("Type is required!")
+        else {
+            transactionBusiness.save(transaction)
+                    .addSuccessItem {
+                        view.showSuccess("Transaction registred!")
+                        view.closeWindow()
+                    }.addFailure { view.showError(it.message!!) }
+                    .execute()
+        }
     }
 
     override fun cancel() {

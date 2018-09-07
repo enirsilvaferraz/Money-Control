@@ -1,25 +1,25 @@
 package com.system.moneycontrol.model.entities
 
+import com.system.moneycontrol.data.mappers.TransactionFirebase
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.itemView.TransactionItemView
-import com.system.moneycontrol.data.mappers.TransactionFirebase
 import java.util.*
 
 data class Transaction(
-        var key: String?,
-        var paymentDate: Date?,
-        var paymentDateOlder: Date?,
+        var key: String? = null,
+        var paymentDate: Date = Date(),
+        var paymentDateOlder: Date = Date(),
         var moneySpent: Double = 0.0,
         var refund: Double = 0.0,
-        var tag: Tag?,
-        var paymentType: PaymentType?,
-        var description: String?
+        var tag: Tag? = null,
+        var paymentType: PaymentType? = null,
+        var description: String = ""
 ) {
 
-    constructor() : this(null, null, null, 0.0, 0.0, null, null, null)
+    constructor() : this(key = null)
 
     fun toMapper(): TransactionFirebase = TransactionFirebase(
-            MyUtils().getDate(paymentDate!!, "yyyy-MM-dd"),
+            MyUtils().getDate(paymentDate, "yyyy-MM-dd"),
             moneySpent,
             refund,
             tag!!.key,
@@ -28,9 +28,10 @@ data class Transaction(
     )
 
     fun toItemView(): TransactionItemView = TransactionItemView(
+            this,
             tag!!.name,
-            MyUtils().currencyFormat(moneySpent),
-            MyUtils().currencyFormat(refund),
+            if (moneySpent != 0.0) MyUtils().currencyFormat(moneySpent) else "",
+            if (refund != 0.0) MyUtils().currencyFormat(refund) else "",
             paymentType!!.color
     )
 }

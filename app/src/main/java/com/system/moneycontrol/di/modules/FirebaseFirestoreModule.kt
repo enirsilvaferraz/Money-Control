@@ -26,9 +26,10 @@ class FirebaseFirestoreModule {
 
     private fun getFirestoreInstance(): FirebaseFirestore {
         val instance = FirebaseFirestore.getInstance()
-//        instance.firestoreSettings = FirebaseFirestoreSettings.Builder()
-//                .setPersistenceEnabled(true)
-//                .build()
+        instance.firestoreSettings = FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .setTimestampsInSnapshotsEnabled(true)
+                .build()
         return instance
     }
 }

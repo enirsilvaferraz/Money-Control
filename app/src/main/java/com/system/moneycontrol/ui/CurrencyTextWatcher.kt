@@ -2,8 +2,7 @@ package com.system.moneycontrol.ui
 
 import android.text.Editable
 import android.text.TextWatcher
-import java.text.NumberFormat
-import java.util.*
+import com.system.moneycontrol.infrastructure.MyUtils
 
 class CurrencyTextWatcher(val calback: (Double) -> Unit) : TextWatcher {
 
@@ -16,18 +15,10 @@ class CurrencyTextWatcher(val calback: (Double) -> Unit) : TextWatcher {
 
             mEditing = true
 
-            val digits = string.toString().replace("\\D".toRegex(), "").toDouble() / 100
+            val digits = MyUtils().replaceDigits(string.toString())
+            string.replace(0, string.length, digits)
 
-            try {
-
-                val formatted = NumberFormat.getInstance(Locale.ENGLISH).format(digits)
-                string.replace(0, string.length, formatted)
-
-            } catch (nfe: NumberFormatException) {
-                string.clear()
-            }
-
-            calback(digits)
+            calback(digits.replace(",", "").toDouble())
 
             mEditing = false
         }

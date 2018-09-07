@@ -12,9 +12,10 @@ class TransactionFirebase(
         var refund: Double,
         var tag: String,
         var type: String,
-        var content: String?) {
+        var content: String?
+) {
 
-    constructor() : this(Constants.LASY_STRING, 0.0, 0.0, Constants.LASY_STRING, Constants.LASY_STRING, null)
+    constructor() : this(Constants.LASY_STRING, 0.0, 0.0, Constants.LASY_STRING, Constants.LASY_STRING, "")
 
     fun toModel(key: String): Transaction = Transaction(
             key,
@@ -24,6 +25,6 @@ class TransactionFirebase(
             refund,
             Tag(tag, Constants.LASY_STRING),
             PaymentType(type, Constants.LASY_STRING, Constants.LASY_STRING),
-            content
+            if (content.isNullOrBlank()) "" else content!!
     )
 }

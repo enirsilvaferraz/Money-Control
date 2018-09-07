@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.system.moneycontrol.R
 import com.system.moneycontrol.ui.ProgressBarAnimation
@@ -26,7 +27,11 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.init()
+
+        mRecyclerView.layoutManager = LinearLayoutManager(context)
+        mRecyclerView.adapter = HomeAdapter(arrayListOf()) {
+            presenter.onItemSelected(it)
+        }
     }
 
     override fun setTitle(title: String) {
@@ -34,8 +39,7 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
     }
 
     override fun configureList(list: List<ItemRecyclerView>) {
-        mRecyclerView.layoutManager = LinearLayoutManager(context)
-        mRecyclerView.adapter = HomeAdapter(list)
+        (mRecyclerView.adapter as HomeAdapter).clear().addItens(list)
     }
 
     override fun showEmptyState() {
@@ -43,10 +47,15 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
     }
 
     override fun showError(message: String) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun setProgress(progress: Int) {
-        //ProgressBarAnimation(mProgressContainer, mProgressBar, 1200).setProgress(progress);
+        ProgressBarAnimation(mProgressContainer, mProgressBar, 1200).setProgress(progress)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter.init()
     }
 }

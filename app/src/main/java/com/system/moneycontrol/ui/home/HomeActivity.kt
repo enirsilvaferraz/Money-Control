@@ -16,7 +16,7 @@ class HomeActivity : DaggerAppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         fab.setOnClickListener {
-            startActivity(Intent(this, TransactionManagerActivity::class.java))
+            startActivityForResult(Intent(this, TransactionManagerActivity::class.java), 1000)
         }
     }
 

@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
-    tools:context=".ui.home.HomeFragment"
     android:animateLayoutChanges="true"
+    android:background="@color/primary"
+    android:paddingStart="@dimen/default_margin"
+    android:paddingEnd="@dimen/default_margin"
+    tools:context=".ui.home.HomeFragment"
     tools:showIn="@layout/activity_home">
 
     <androidx.appcompat.widget.LinearLayoutCompat

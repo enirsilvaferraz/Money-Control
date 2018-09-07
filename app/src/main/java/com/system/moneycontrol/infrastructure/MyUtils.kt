@@ -44,10 +44,18 @@ class MyUtils @Inject constructor() {
     }
 
     fun valueFormat(value: Double): String {
-        val instance = NumberFormat.getInstance()
+        val instance = NumberFormat.getInstance(Locale.ENGLISH)
         instance.maximumFractionDigits = 2
+        instance.minimumFractionDigits = 2
         instance.minimumIntegerDigits = 1
         return instance.format(value)
+    }
+
+    fun replaceDigits(digitString: String): String {
+        val replaceDigitis = digitString.replace("\\D".toRegex(), "")
+        val digits = if (replaceDigitis.isBlank()) 0.0 else replaceDigitis.toDouble() / 100
+        val valueFormat = valueFormat(digits)
+        return valueFormat
     }
 
     fun removeFormat(valueFormatted: String): Double? {

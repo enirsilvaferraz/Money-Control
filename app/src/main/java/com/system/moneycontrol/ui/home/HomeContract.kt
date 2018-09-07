@@ -1,5 +1,7 @@
 package com.system.moneycontrol.ui.home
 
+import com.system.moneycontrol.model.entities.Transaction
+
 interface HomeContract {
 
     interface View {
@@ -12,5 +14,7 @@ interface HomeContract {
 
     interface Presenter {
         fun init()
+        fun requestLoad()
+        fun onItemSelected(it: Transaction)
     }
 }
