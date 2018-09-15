@@ -31,5 +31,6 @@
     <string name="transaction_already_paid">Already Paid</string>
     <string name="transaction">Transaction</string>
     <string name="system_save">Save</string>
+    <string name="title_activity_tag">Tag</string>
 
 </resources>

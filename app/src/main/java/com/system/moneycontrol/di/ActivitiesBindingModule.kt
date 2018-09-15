@@ -1,8 +1,10 @@
 package com.system.moneycontrol.di
 
 import com.system.moneycontrol.di.modules.HomeActivityModule
+import com.system.moneycontrol.di.modules.TagListActivityModule
 import com.system.moneycontrol.di.modules.TransactionManagerActivityModule
 import com.system.moneycontrol.ui.home.HomeActivity
+import com.system.moneycontrol.ui.tag.TagListActivity
 import com.system.moneycontrol.ui.transactionmanager.TransactionManagerActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -15,4 +17,8 @@ abstract class ActivitiesBindingModule {
 
     @ContributesAndroidInjector(modules = [TransactionManagerActivityModule::class])
     abstract fun transactionManager(): TransactionManagerActivity
+
+    @ContributesAndroidInjector(modules = [TagListActivityModule::class])
+    abstract fun tagList(): TagListActivity
+
 }

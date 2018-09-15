@@ -13,6 +13,7 @@ import javax.inject.Singleton
 @Component(modules = [
     AndroidSupportInjectionModule::class,
     AppModule::class,
+//    FragmentsBindingModule::class,
     ActivitiesBindingModule::class,
     FirebaseFirestoreModule::class
 ])

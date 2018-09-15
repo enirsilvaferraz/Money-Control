@@ -10,7 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity
+            android:name=".ui.tag.TagListActivity"
+            android:label="@string/title_activity_tag"></activity>
         <activity
             android:name=".ui.home.HomeActivity"
             android:label="@string/title_activity_home"
@@ -21,13 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.transactionmanager.TransactionManagerActivity"
             android:label="@string/transaction_manager_title"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize"></activity>
-
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
