@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.system.moneycontrol.R
-import com.system.moneycontrol.ui.ProgressBarAnimation
 import dagger.android.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
@@ -51,7 +50,7 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
     }
 
     override fun setProgress(progress: Int) {
-        ProgressBarAnimation(mProgressContainer, mProgressBar, 1200).setProgress(progress)
+        //  ProgressBarAnimation(mProgressContainer, mProgressBar, 1200).setProgress(progress)
     }
 
     override fun onStart() {

@@ -25,7 +25,7 @@ class TransactionManagerPresenter @Inject constructor(
 
         with(transaction) {
             view.setPaymentDate(myUtils.getDate(this.paymentDate, Constants.DATE_SHOW_VIEW))
-//            view.setTag(this.tag!!.name)
+//            view.setTag(this.type!!.name)
             view.setPrice(MyUtils().valueFormat(this.moneySpent))
             view.setRefund(MyUtils().valueFormat(this.refund))
 //            view.setPaymentType(this.paymentType!!.name)
@@ -54,7 +54,7 @@ class TransactionManagerPresenter @Inject constructor(
     override fun onPaymentTypeClick() {
         val callback: (DialogItem) -> Unit = {
             transaction.paymentType = it as PaymentType
-            view.setPaymentType(it.name)
+            view.setPaymentType(it.name!!)
         }
 
         typeBusiness.getAll()

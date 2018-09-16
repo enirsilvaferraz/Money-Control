@@ -37,7 +37,7 @@ class TypeRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_PAYMENTTYP
     fun delete(model: PaymentType) = object : Result<PaymentType>() {
 
         override fun execute() {
-            collection.document(model.key).delete()
+            collection.document(model.key!!).delete()
                     .addOnSuccessListener { onSuccessItem?.invoke(model) }
                     .addOnFailureListener { onFailure?.invoke(it) }
         }
@@ -46,7 +46,7 @@ class TypeRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_PAYMENTTYP
     fun update(model: PaymentType) = object : Result<PaymentType>() {
 
         override fun execute() {
-            collection.document(model.key).set(model.toMapper())
+            collection.document(model.key!!).set(model.toMapper())
                     .addOnSuccessListener { onSuccessItem?.invoke(model) }
                     .addOnFailureListener { onFailure?.invoke(it) }
         }

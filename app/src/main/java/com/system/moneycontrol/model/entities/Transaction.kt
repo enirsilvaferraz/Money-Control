@@ -23,7 +23,7 @@ data class Transaction(
             moneySpent,
             refund,
             tag!!.key!!,
-            paymentType!!.key,
+            paymentType!!.key!!,
             description
     )
 
@@ -32,6 +32,6 @@ data class Transaction(
             tag!!.name!!,
             if (moneySpent != 0.0) MyUtils().currencyFormat(moneySpent) else "",
             if (refund != 0.0) MyUtils().currencyFormat(refund) else "",
-            paymentType!!.color
+            paymentType!!.color!!
     )
 }

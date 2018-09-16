@@ -4,6 +4,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_transaction_manager">Transaction Manager</string>
     <string name="title_activity_tag_manager">Tag</string>
+    <string name="title_activity_type_manager">Payment Type</string>
 
     <string name="system_action_cancel">Cancel</string>
     <string name="system_action_done">Done</string>

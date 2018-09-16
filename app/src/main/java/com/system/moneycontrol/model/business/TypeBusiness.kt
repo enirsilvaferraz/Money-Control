@@ -10,7 +10,7 @@ class TypeBusiness @Inject constructor(private val repository: TypeRepository) {
 
     fun delete(model: PaymentType) = repository.delete(model)
 
-    fun save(model: PaymentType) = if (model.key.isBlank()) {
+    fun save(model: PaymentType) = if (model.key.isNullOrBlank()) {
         repository.save(model)
     } else {
         repository.update(model)
