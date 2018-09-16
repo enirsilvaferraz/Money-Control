@@ -38,7 +38,7 @@ class TagRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TAG) val co
     fun delete(model: Tag) = object : Result<Tag>() {
 
         override fun execute() {
-            collection.document(model.key).delete()
+            collection.document(model.key!!).delete()
                     .addOnSuccessListener { onSuccessItem?.invoke(model) }
                     .addOnFailureListener { onFailure?.invoke(it) }
         }
@@ -47,7 +47,7 @@ class TagRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TAG) val co
     fun update(model: Tag) = object : Result<Tag>() {
 
         override fun execute() {
-            collection.document(model.key).set(model.toMapper())
+            collection.document(model.key!!).set(model.toMapper())
                     .addOnSuccessListener { onSuccessItem?.invoke(model) }
                     .addOnFailureListener { onFailure?.invoke(it) }
         }

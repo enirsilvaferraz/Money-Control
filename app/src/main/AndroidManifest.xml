@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.tag.TagListActivity"
+            android:name=".ui.tag.TagManagerActivity"
             android:label="@string/title_activity_tag"></activity>
         <activity
             android:name=".ui.home.HomeActivity"

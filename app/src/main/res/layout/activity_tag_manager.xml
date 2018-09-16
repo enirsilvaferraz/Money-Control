@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.tag.TagListActivity">
+    tools:context=".ui.tag.TagManagerActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -16,16 +16,16 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="@string/title_activity_tag_list" />
+            app:title="@string/title_activity_tag_manager" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.system.moneycontrol.ui.tag.TagListFragment"
+        android:name="com.system.moneycontrol.ui.tag.TagManagerFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout="@layout/fragment_tag_list" />
+        tools:layout="@layout/fragment_tag_manager" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,11 +1,13 @@
 package com.system.moneycontrol.model.entities
 
-import com.system.moneycontrol.model.entities.bases.DialogItem
 import com.system.moneycontrol.data.mappers.TagFirebase
+import com.system.moneycontrol.model.entities.bases.DialogItem
 
-data class Tag(var key: String, var name: String) : DialogItem {
+data class Tag(var key: String?, var name: String? = null) : DialogItem {
 
-    override fun getDescription(): String = name
+    constructor() : this(key = null)
 
-    fun toMapper() = TagFirebase(name)
+    override fun getDescription(): String = name!!
+
+    fun toMapper() = TagFirebase(name!!)
 }

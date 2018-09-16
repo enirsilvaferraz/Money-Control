@@ -10,7 +10,7 @@ class TagBusiness @Inject constructor(private val repository: TagRepository) {
 
     fun delete(model: Tag) = repository.delete(model)
 
-    fun save(model: Tag) = if (model.key.isBlank()) {
+    fun save(model: Tag) = if (model.key.isNullOrBlank()) {
         repository.save(model)
     } else {
         repository.update(model)

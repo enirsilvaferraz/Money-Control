@@ -22,14 +22,14 @@ data class Transaction(
             MyUtils().getDate(paymentDate, "yyyy-MM-dd"),
             moneySpent,
             refund,
-            tag!!.key,
+            tag!!.key!!,
             paymentType!!.key,
             description
     )
 
     fun toItemView(): TransactionItemView = TransactionItemView(
             this,
-            tag!!.name,
+            tag!!.name!!,
             if (moneySpent != 0.0) MyUtils().currencyFormat(moneySpent) else "",
             if (refund != 0.0) MyUtils().currencyFormat(refund) else "",
             paymentType!!.color

@@ -4,11 +4,11 @@ import android.os.Bundle
 import com.system.moneycontrol.R
 import dagger.android.support.DaggerAppCompatActivity
 
-class TagListActivity : DaggerAppCompatActivity() {
+class TagManagerActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tag_list)
+        setContentView(R.layout.activity_tag_manager)
     }
 
 }

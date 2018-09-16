@@ -7,7 +7,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.system.moneycontrol.R
-import com.system.moneycontrol.ui.tag.TagListActivity
+import com.system.moneycontrol.ui.tag.TagManagerActivity
 import com.system.moneycontrol.ui.transactionmanager.TransactionManagerActivity
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_home.*
@@ -40,7 +40,7 @@ class HomeActivity : DaggerAppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             R.id.tag_manager -> {
-                startActivityForResult(Intent(this, TagListActivity::class.java), 5001)
+                startActivityForResult(Intent(this, TagManagerActivity::class.java), 5001)
             }
             R.id.type_manager -> Toast.makeText(this, "type", Toast.LENGTH_SHORT).show()
         }

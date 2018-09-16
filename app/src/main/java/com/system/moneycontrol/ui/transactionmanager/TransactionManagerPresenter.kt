@@ -66,7 +66,7 @@ class TransactionManagerPresenter @Inject constructor(
     override fun onTagClick() {
         val callback: (DialogItem) -> Unit = {
             transaction.tag = it as Tag
-            view.setTag(it.name)
+            view.setTag(it.name!!)
         }
 
         tagBusiness.getAll()
