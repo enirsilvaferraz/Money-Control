@@ -1,5 +1,6 @@
 package com.system.moneycontrol.model.entities
 
+import com.system.moneycontrol.R
 import com.system.moneycontrol.data.mappers.TransactionFirebase
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.itemView.TransactionItemView
@@ -34,6 +35,7 @@ data class Transaction(
             if (refund != 0.0) MyUtils().currencyFormat(refund) else "",
             paymentType!!.color!!,
             MyUtils().getDate(paymentDate, "MMM, dd"),
-            paymentType!!.name!!
+            paymentType!!.name!!,
+            R.drawable.ic_fiber_manual_record_black_24dp
     )
 }

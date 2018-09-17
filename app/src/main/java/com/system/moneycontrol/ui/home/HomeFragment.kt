@@ -28,7 +28,7 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         mRecyclerView.layoutManager = LinearLayoutManager(context)
-        mRecyclerView.adapter = HomeAdapterV2(arrayListOf()) {
+        mRecyclerView.adapter = HomeAdapter(arrayListOf()) {
             presenter.onItemSelected(it)
         }
     }
@@ -38,7 +38,7 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
     }
 
     override fun configureList(list: List<ItemRecyclerView>) {
-        (mRecyclerView.adapter as HomeAdapterV2).clear().addItens(list)
+        (mRecyclerView.adapter as HomeAdapter).clear().addItens(list)
     }
 
     override fun showEmptyState() {

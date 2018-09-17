@@ -3,57 +3,69 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="42dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    android:layout_height="wrap_content">
 
-    <View
-        android:id="@+id/mTypeIndicator"
-        android:layout_width="4dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/mType"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/mPrice"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@color/accent" />
+        app:layout_constraintTop_toTopOf="@+id/mTag"
+        tools:src="@drawable/ic_fiber_manual_record_black_24dp"
+        tools:tint="@color/yellow" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/mTag"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:gravity="center_vertical"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/mPrice"
-        app:layout_constraintStart_toStartOf="@+id/mTypeIndicator"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toStartOf="@+id/mDate"
+        app:layout_constraintStart_toEndOf="@+id/mType"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Aluguel" />
+        tools:text="Comdomínio" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/mPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="8dp"
+        android:alpha="0.7"
+        android:paddingStart="0dp"
+        android:paddingEnd="8dp"
         android:textColor="@color/red"
-        android:textSize="16sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/mRefund"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="1.000,00" />
+        app:layout_constraintStart_toStartOf="@+id/mTag"
+        app:layout_constraintTop_toBottomOf="@+id/mTag"
+        tools:text="R$ 1000,00" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/mRefund"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
+        android:alpha="0.7"
+        android:textSize="12sp"
         android:textColor="@color/green"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/mPrice"
+        app:layout_constraintStart_toEndOf="@+id/mPrice"
+        app:layout_constraintTop_toTopOf="@+id/mPrice"
+        tools:text="R$ 1000,00" />
+
+    <TextView
+        android:id="@+id/mDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:textColor="@color/blue"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/mRefund"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="(50,00)" />
+        app:layout_constraintTop_toTopOf="@+id/mTag"
+        tools:text="Sep, 25" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

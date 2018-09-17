@@ -10,4 +10,5 @@ data class TransactionItemView(
         val refund: String,
         val typeColor: String,
         val date: String,
-        val typeName: String) : ItemRecyclerView
+        val typeName: String,
+        val typeDrawable: Int) : ItemRecyclerView

@@ -41,10 +41,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
+    android:clipToPadding="true"
+    android:paddingBottom="60dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     tools:context=".ui.home.HomeFragment"
-    tools:listitem="@layout/item_transaction_v3"
+    tools:listitem="@layout/item_transaction"
     tools:showIn="@layout/activity_home" />
