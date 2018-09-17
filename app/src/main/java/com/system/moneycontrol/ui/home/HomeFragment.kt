@@ -28,7 +28,7 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         mRecyclerView.layoutManager = LinearLayoutManager(context)
-        mRecyclerView.adapter = HomeAdapter(arrayListOf()) {
+        mRecyclerView.adapter = HomeAdapterV2(arrayListOf()) {
             presenter.onItemSelected(it)
         }
     }
@@ -38,7 +38,7 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
     }
 
     override fun configureList(list: List<ItemRecyclerView>) {
-        (mRecyclerView.adapter as HomeAdapter).clear().addItens(list)
+        (mRecyclerView.adapter as HomeAdapterV2).clear().addItens(list)
     }
 
     override fun showEmptyState() {
@@ -50,7 +50,7 @@ class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
     }
 
     override fun setProgress(progress: Int) {
-        //  ProgressBarAnimation(mProgressContainer, mProgressBar, 1200).setProgress(progress)
+
     }
 
     override fun onStart() {

@@ -26,7 +26,6 @@
         android:layout_marginEnd="16dp"
         android:gravity="center_vertical"
         android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/mPrice"
         app:layout_constraintStart_toStartOf="@+id/mTypeIndicator"

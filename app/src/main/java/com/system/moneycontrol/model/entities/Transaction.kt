@@ -32,6 +32,8 @@ data class Transaction(
             tag!!.name!!,
             if (moneySpent != 0.0) MyUtils().currencyFormat(moneySpent) else "",
             if (refund != 0.0) MyUtils().currencyFormat(refund) else "",
-            paymentType!!.color!!
+            paymentType!!.color!!,
+            MyUtils().getDate(paymentDate, "MMM, dd"),
+            paymentType!!.name!!
     )
 }
