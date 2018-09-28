@@ -1,4 +1,4 @@
-package com.system.moneycontrol.koin
+package com.system.moneycontrol.infrastructure.koin
 
 object ConstantsDI {
     const val FIRESTORE_TRANSACTION = "FIRESTORE_TRANSACTION"

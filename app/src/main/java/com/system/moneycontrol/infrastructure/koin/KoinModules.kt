@@ -1,4 +1,4 @@
-package com.system.moneycontrol.koin
+package com.system.moneycontrol.infrastructure.koin
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
