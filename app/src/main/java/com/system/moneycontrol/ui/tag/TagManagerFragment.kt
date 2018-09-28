@@ -4,25 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.system.moneycontrol.R
 import com.system.moneycontrol.ui.StringTextWatcher
-import dagger.android.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_tag_manager.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 /**
  * A placeholder fragment containing a simple view.
  */
-class TagManagerFragment @Inject constructor() : DaggerFragment(), TagManagerContract.View {
+class TagManagerFragment : Fragment(), TagManagerContract.View {
 
-    @Inject
-    lateinit var presenter: TagManagerContract.Presenter
+    val presenter: TagManagerContract.Presenter by inject { parametersOf(this) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
             inflater.inflate(R.layout.fragment_tag_manager, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         mTagValue.addTextChangedListener(StringTextWatcher { presenter.onTagSetted(it) })
@@ -39,7 +40,7 @@ class TagManagerFragment @Inject constructor() : DaggerFragment(), TagManagerCon
     }
 
     override fun closeWindow() {
-        activity.finish()
+        activity?.finish()
     }
 
 }

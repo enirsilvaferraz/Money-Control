@@ -1,10 +1,10 @@
 package com.system.moneycontrol.ui.tag
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.system.moneycontrol.R
-import dagger.android.support.DaggerAppCompatActivity
 
-class TagManagerActivity : DaggerAppCompatActivity() {
+class TagManagerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

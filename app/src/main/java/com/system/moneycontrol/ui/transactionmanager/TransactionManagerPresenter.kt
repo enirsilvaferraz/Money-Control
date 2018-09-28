@@ -10,9 +10,8 @@ import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.model.entities.bases.DialogItem
 import java.util.*
-import javax.inject.Inject
 
-class TransactionManagerPresenter @Inject constructor(
+class TransactionManagerPresenter(
         private val view: TransactionManagerContract.View,
         private val transactionBusiness: TransactionBusiness,
         private val typeBusiness: TypeBusiness,

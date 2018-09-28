@@ -4,9 +4,8 @@ import com.system.moneycontrol.data.repositories.TransactionRepository
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.entities.Transaction
 import java.util.*
-import javax.inject.Inject
 
-class TransactionBusiness @Inject constructor(
+class TransactionBusiness(
         val repository: TransactionRepository,
         var myUtils: MyUtils) {
 
@@ -25,10 +24,10 @@ class TransactionBusiness @Inject constructor(
     }
 
     fun isSameMonth(transaction: Transaction) =
-            myUtils.getDate(transaction.paymentDateOlder!!, Calendar.MONTH) == myUtils.getDate(transaction.paymentDate!!, Calendar.MONTH)
+            myUtils.getDate(transaction.paymentDateOlder, Calendar.MONTH) == myUtils.getDate(transaction.paymentDate, Calendar.MONTH)
 
     fun isSameYear(transaction: Transaction) =
-            myUtils.getDate(transaction.paymentDateOlder!!, Calendar.YEAR) == myUtils.getDate(transaction.paymentDate!!, Calendar.YEAR)
+            myUtils.getDate(transaction.paymentDateOlder, Calendar.YEAR) == myUtils.getDate(transaction.paymentDate, Calendar.YEAR)
 
     enum class SaveType { SAVE_NEW, UPDATE, UPDATE_ANOTHER_MONTH }
 }

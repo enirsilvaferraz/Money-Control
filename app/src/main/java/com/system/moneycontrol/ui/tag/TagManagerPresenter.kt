@@ -2,9 +2,8 @@ package com.system.moneycontrol.ui.tag
 
 import com.system.moneycontrol.model.business.TagBusiness
 import com.system.moneycontrol.model.entities.Tag
-import javax.inject.Inject
 
-class TagManagerPresenter @Inject constructor(val view: TagManagerContract.View, val tagBusiness: TagBusiness) : TagManagerContract.Presenter {
+class TagManagerPresenter(val view: TagManagerContract.View, val tagBusiness: TagBusiness) : TagManagerContract.Presenter {
 
     val tag = Tag()
 

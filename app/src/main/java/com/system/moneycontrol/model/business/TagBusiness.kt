@@ -2,9 +2,8 @@ package com.system.moneycontrol.model.business
 
 import com.system.moneycontrol.data.repositories.TagRepository
 import com.system.moneycontrol.model.entities.Tag
-import javax.inject.Inject
 
-class TagBusiness @Inject constructor(private val repository: TagRepository) {
+class TagBusiness constructor(private val repository: TagRepository) {
 
     fun getAll() = repository.getList()
 

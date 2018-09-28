@@ -3,19 +3,14 @@ package com.system.moneycontrol.data.repositories
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.system.moneycontrol.data.mappers.TransactionFirebase
-import com.system.moneycontrol.di.ConstantsDI
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.infrastructure.Result
 import com.system.moneycontrol.model.entities.Transaction
-import javax.inject.Inject
-import javax.inject.Named
 
 /**
  * @param collection: Firebase Firestore (transactions)
  */
-class TransactionRepository @Inject constructor(
-        @Named(ConstantsDI.FIRESTORE_TRANSACTION) private val collection: CollectionReference,
-        var myUtils: MyUtils) {
+class TransactionRepository(private val collection: CollectionReference, var myUtils: MyUtils) {
 
     fun getList(year: String, month: String) = object : Result<Transaction>() {
 
@@ -66,7 +61,7 @@ class TransactionRepository @Inject constructor(
 
     fun getModel(it: DocumentSnapshot) = it.toObject(TransactionFirebase::class.java)!!.toModel(it.id)
 
-    private fun getMonth(model: Transaction) = myUtils.getDate(model.paymentDate!!, "MM")
+    private fun getMonth(model: Transaction) = myUtils.getDate(model.paymentDate, "MM")
 
-    private fun getYear(model: Transaction) = myUtils.getDate(model.paymentDate!!, "yyyy")
+    private fun getYear(model: Transaction) = myUtils.getDate(model.paymentDate, "yyyy")
 }

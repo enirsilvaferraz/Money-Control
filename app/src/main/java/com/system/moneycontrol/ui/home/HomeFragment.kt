@@ -5,20 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.system.moneycontrol.R
-import dagger.android.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_home.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 
 /**
  * A placeholder fragment containing a simple view.
  */
-class HomeFragment @Inject constructor() : DaggerFragment(), HomeContract.View {
+class HomeFragment : Fragment(), HomeContract.View {
 
-    @Inject
-    lateinit var presenter: HomeContract.Presenter
+    val presenter: HomeContract.Presenter by inject { parametersOf(this) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)

@@ -3,16 +3,13 @@ package com.system.moneycontrol.data.repositories
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.system.moneycontrol.data.mappers.PaymentTypeFirebase
-import com.system.moneycontrol.di.ConstantsDI
 import com.system.moneycontrol.infrastructure.Result
 import com.system.moneycontrol.model.entities.PaymentType
-import javax.inject.Inject
-import javax.inject.Named
 
 /**
  * @param collection: Firebase Firestore (PaymentTypes)
  */
-class TypeRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_PAYMENTTYPE) private val collection: CollectionReference) {
+class TypeRepository(private val collection: CollectionReference) {
 
     fun getList(): Result<PaymentType> = object : Result<PaymentType>() {
 

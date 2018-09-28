@@ -5,9 +5,8 @@ import java.text.NumberFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.inject.Inject
 
-class MyUtils @Inject constructor() {
+class MyUtils {
 
     fun getDate(year: Int, month: Int, day: Int, hour: Int, minute: Int): Date {
         val instance = Calendar.getInstance()

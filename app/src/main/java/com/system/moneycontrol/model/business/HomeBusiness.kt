@@ -5,10 +5,9 @@ import com.system.moneycontrol.data.repositories.TransactionRepository
 import com.system.moneycontrol.model.entities.PaymentType
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
-import javax.inject.Inject
 
 
-class HomeBusiness @Inject constructor(val repTransaction: TransactionRepository, val repTag: TagRepository, val repType: TypeBusiness) {
+class HomeBusiness(val repTransaction: TransactionRepository, val repTag: TagRepository, val repType: TypeBusiness) {
 
     fun getTransactions(year: String, month: String, onSuccess: ((List<Transaction>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
         repTransaction.getList(year, month)

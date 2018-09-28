@@ -4,9 +4,8 @@ import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.business.HomeBusiness
 import com.system.moneycontrol.model.business.TransactionBusiness
 import com.system.moneycontrol.model.entities.Transaction
-import javax.inject.Inject
 
-class HomePresenter @Inject constructor(val view: HomeContract.View, val business: HomeBusiness, val transactionBusiness: TransactionBusiness) : HomeContract.Presenter {
+class HomePresenter(val view: HomeContract.View, val business: HomeBusiness, val transactionBusiness: TransactionBusiness) : HomeContract.Presenter {
 
     override fun init() {
         requestLoad()

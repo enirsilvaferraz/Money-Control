@@ -3,16 +3,13 @@ package com.system.moneycontrol.data.repositories
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.system.moneycontrol.data.mappers.TagFirebase
-import com.system.moneycontrol.di.ConstantsDI
 import com.system.moneycontrol.infrastructure.Result
 import com.system.moneycontrol.model.entities.Tag
-import javax.inject.Inject
-import javax.inject.Named
 
 /**
  * @param collection: Firebase Firestore (tags)
  */
-class TagRepository @Inject constructor(@Named(ConstantsDI.FIRESTORE_TAG) val collection: CollectionReference) {
+class TagRepository(val collection: CollectionReference) {
 
     fun getList() = object : Result<Tag>() {
 

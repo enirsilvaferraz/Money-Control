@@ -2,9 +2,8 @@ package com.system.moneycontrol.ui.typemanager
 
 import com.system.moneycontrol.model.business.TypeBusiness
 import com.system.moneycontrol.model.entities.PaymentType
-import javax.inject.Inject
 
-class TypeManagerPresenter @Inject constructor(val view: TypeManagerContract.View, val typeBusiness: TypeBusiness) : TypeManagerContract.Presenter {
+class TypeManagerPresenter(val view: TypeManagerContract.View, val typeBusiness: TypeBusiness) : TypeManagerContract.Presenter {
 
     val type = PaymentType()
 

@@ -4,15 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.system.moneycontrol.R
 import com.system.moneycontrol.ui.tag.TagManagerActivity
 import com.system.moneycontrol.ui.transactionmanager.TransactionManagerActivity
 import com.system.moneycontrol.ui.typemanager.TypeManagerActivity
-import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
-class HomeActivity : DaggerAppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 

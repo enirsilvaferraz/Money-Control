@@ -9,9 +9,8 @@ import androidx.appcompat.app.AlertDialog
 import com.system.moneycontrol.R
 import com.system.moneycontrol.model.entities.bases.DialogItem
 import java.util.*
-import javax.inject.Inject
 
-class MyViewUtils @Inject constructor(val context: Context) {
+class MyViewUtils(val context: Context) {
 
     fun showListDialog(title: String, list: List<DialogItem>, callback: (DialogItem) -> Unit) {
 
