@@ -21,6 +21,8 @@ interface TransactionManagerContract {
         fun showError(message: String)
         fun showSuccess(message: String)
         fun closeWindow()
+        fun showLoading()
+        fun hideLoading()
     }
 
     interface Presenter {

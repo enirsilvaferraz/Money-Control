@@ -14,7 +14,7 @@ class TagRepository(val collection: CollectionReference) {
     fun getList() = object : Result<Tag>() {
 
         override fun execute() {
-            collection.get()
+            collection.orderBy("name").get()
                     .addOnSuccessListener { task ->
                         onSuccessList?.invoke(task.documents.map { getModel(it) })
                     }

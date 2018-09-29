@@ -10,6 +10,13 @@ class TransactionManagerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction_manager)
-//        setSupportActionBar(toolbar)
+    }
+
+    fun showLoading() {
+
+    }
+
+    fun hideLoading() {
+
     }
 }

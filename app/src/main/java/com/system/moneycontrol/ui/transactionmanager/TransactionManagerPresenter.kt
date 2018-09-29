@@ -21,7 +21,6 @@ class TransactionManagerPresenter(
     val transaction = Transaction()
 
     override fun init() {
-
         with(transaction) {
             view.setPaymentDate(myUtils.getDate(this.paymentDate, Constants.DATE_SHOW_VIEW))
 //            view.setTag(this.type!!.name)
@@ -69,9 +68,17 @@ class TransactionManagerPresenter(
         }
 
         tagBusiness.getAll()
-                .addSuccessList { view.showTagDialog(it, callback) }
-                .addFailure { view.showError(it.message!!) }
+                .addSuccessList {
+                    view.hideLoading()
+                    view.showTagDialog(it, callback)
+                }
+                .addFailure {
+                    view.hideLoading()
+                    view.showError(it.message!!)
+                }
                 .execute()
+
+        view.showLoading()
     }
 
     override fun onPaymentDateClick() {

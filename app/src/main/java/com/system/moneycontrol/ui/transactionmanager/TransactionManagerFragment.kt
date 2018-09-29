@@ -68,10 +68,12 @@ class TransactionManagerFragment : Fragment(), TransactionManagerContract.View {
 
     override fun setPrice(priceString: String) {
         mPriceValue.setText(priceString)
+        mPriceValue.setSelection(priceString.length)
     }
 
     override fun setRefund(refundString: String) {
         mRefundValue.setText(refundString)
+        mRefundValue.setSelection(refundString.length)
     }
 
     override fun setContent(description: String) {
@@ -88,5 +90,13 @@ class TransactionManagerFragment : Fragment(), TransactionManagerContract.View {
 
     override fun closeWindow() {
         activity?.finish()
+    }
+
+    override fun showLoading() {
+        (activity as TransactionManagerActivity).showLoading()
+    }
+
+    override fun hideLoading() {
+        (activity as TransactionManagerActivity).hideLoading()
     }
 }

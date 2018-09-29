@@ -36,6 +36,6 @@ data class Transaction(
             paymentType!!.color!!,
             MyUtils().getDate(paymentDate, "MMM, dd"),
             paymentType!!.name!!,
-            R.drawable.ic_fiber_manual_record_black_24dp
+            R.drawable.ic_payment_black_24dp
     )
 }

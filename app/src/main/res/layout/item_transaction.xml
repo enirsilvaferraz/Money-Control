@@ -7,13 +7,13 @@
 
     <ImageView
         android:id="@+id/mType"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         app:layout_constraintBottom_toBottomOf="@+id/mPrice"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/mTag"
-        tools:src="@drawable/ic_fiber_manual_record_black_24dp"
+        tools:src="@drawable/ic_payment_black_24dp"
         tools:tint="@color/yellow" />
 
     <TextView
@@ -24,6 +24,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:textColor="#000000"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/mDate"
         app:layout_constraintStart_toEndOf="@+id/mType"
         app:layout_constraintTop_toTopOf="parent"
@@ -38,7 +39,6 @@
         android:paddingStart="0dp"
         android:paddingEnd="8dp"
         android:textColor="@color/red"
-        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/mTag"
         app:layout_constraintTop_toBottomOf="@+id/mTag"
@@ -49,7 +49,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:alpha="0.7"
-        android:textSize="12sp"
         android:textColor="@color/green"
         app:layout_constraintBottom_toBottomOf="@+id/mPrice"
         app:layout_constraintStart_toEndOf="@+id/mPrice"
@@ -60,12 +59,11 @@
         android:id="@+id/mDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="32dp"
         android:textColor="@color/blue"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/mRefund"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/mTag"
+        app:layout_constraintBottom_toBottomOf="@+id/mTag"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:text="Sep, 25" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

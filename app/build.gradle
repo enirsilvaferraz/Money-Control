@@ -8,7 +8,7 @@ android {
     buildToolsVersion "28.0.2"
     defaultConfig {
         applicationId "com.system.moneycontrol"
-        minSdkVersion 25
+        minSdkVersion 26
         targetSdkVersion 28
         versionCode 4
         versionName "v0.04"
