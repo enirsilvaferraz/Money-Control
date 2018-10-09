@@ -2,8 +2,6 @@ package com.system.moneycontrol.data.mappers
 
 import com.system.moneycontrol.infrastructure.Constants
 import com.system.moneycontrol.infrastructure.MyUtils
-import com.system.moneycontrol.model.entities.PaymentType
-import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
 
 class TransactionFirebase(
@@ -15,16 +13,22 @@ class TransactionFirebase(
         var content: String?
 ) {
 
-    constructor() : this(Constants.LASY_STRING, 0.0, 0.0, Constants.LASY_STRING, Constants.LASY_STRING, "")
+    constructor() : this(
+            Constants.LASY_STRING,
+            Constants.LAZY_DOUBLE,
+            Constants.LAZY_DOUBLE,
+            Constants.LASY_STRING,
+            Constants.LASY_STRING,
+            Constants.LASY_STRING)
 
-    fun toModel(key: String): Transaction = Transaction(
-            key,
-            MyUtils().getDate(paymentDate, "yyyy-MM-dd"),
-            MyUtils().getDate(paymentDate, "yyyy-MM-dd"),
-            moneySpent,
-            refund,
-            Tag(tag, Constants.LASY_STRING),
-            PaymentType(type, Constants.LASY_STRING, Constants.LASY_STRING),
-            if (content.isNullOrBlank()) "" else content!!
+    constructor(transaction: Transaction) : this(
+            MyUtils().getDate(transaction.paymentDate, "yyyy-MM-dd"),
+            transaction.moneySpent,
+            transaction.refund,
+            transaction.tag.key!!,
+            transaction.paymentType.key!!,
+            transaction.description
     )
+
+    fun toModel(key: String) = Transaction(this, key)
 }

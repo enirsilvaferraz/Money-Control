@@ -1,14 +1,14 @@
-package com.system.moneycontrol.ui.transactionmanager
+package com.system.moneycontrol.ui.presentation.transactionmanager
 
 import com.system.moneycontrol.infrastructure.Constants
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.business.TagBusiness
 import com.system.moneycontrol.model.business.TransactionBusiness
 import com.system.moneycontrol.model.business.TypeBusiness
+import com.system.moneycontrol.model.entities.DialogItem
 import com.system.moneycontrol.model.entities.PaymentType
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
-import com.system.moneycontrol.model.entities.bases.DialogItem
 import java.util.*
 
 class TransactionManagerPresenter(
@@ -23,24 +23,33 @@ class TransactionManagerPresenter(
     override fun init() {
         with(transaction) {
             view.setPaymentDate(myUtils.getDate(this.paymentDate, Constants.DATE_SHOW_VIEW))
-//            view.setTag(this.type!!.name)
+            view.setTag(this.tag.name)
             view.setPrice(MyUtils().valueFormat(this.moneySpent))
             view.setRefund(MyUtils().valueFormat(this.refund))
-//            view.setPaymentType(this.paymentType!!.name)
-//            view.setContent(transaction.description!!)
+            view.setPaymentType(this.paymentType.name)
+            view.setContent(transaction.description)
         }
     }
 
     override fun onSaveClicked() {
 
-        if (transaction.tag == null) view.showError("Tag is required!")
-        if (transaction.paymentType == null) view.showError("Type is required!")
+        if (transaction.tag.key == null) {
+            view.showError("Tag is required!")
+        }
+
+        if (transaction.paymentType.key == null) {
+            view.showError("Type is required!")
+        }
+
         else {
+
             transactionBusiness.save(transaction)
                     .addSuccessItem {
                         view.showSuccess("Transaction registred!")
                         view.closeWindow()
-                    }.addFailure { view.showError(it.message!!) }
+                    }.addFailure {
+                        view.showError(it.message!!)
+                    }
                     .execute()
         }
     }
@@ -50,9 +59,10 @@ class TransactionManagerPresenter(
     }
 
     override fun onPaymentTypeClick() {
+
         val callback: (DialogItem) -> Unit = {
             transaction.paymentType = it as PaymentType
-            view.setPaymentType(it.name!!)
+            view.setPaymentType(it.name)
         }
 
         typeBusiness.getAll()
@@ -62,9 +72,10 @@ class TransactionManagerPresenter(
     }
 
     override fun onTagClick() {
+
         val callback: (DialogItem) -> Unit = {
             transaction.tag = it as Tag
-            view.setTag(it.name!!)
+            view.setTag(it.name)
         }
 
         tagBusiness.getAll()
@@ -82,10 +93,12 @@ class TransactionManagerPresenter(
     }
 
     override fun onPaymentDateClick() {
+
         val callback: (Date) -> Unit = {
             transaction.paymentDate = it
             view.setPaymentDate(myUtils.getDate(it, Constants.DATE_SHOW_VIEW))
         }
+
         view.showPaymentDateDialog(transaction.paymentDate, callback)
     }
 

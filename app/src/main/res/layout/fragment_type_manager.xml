@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context=".ui.typemanager.TypeManagerFragment"
+    tools:context=".ui.presentation.typemanager.TypeManagerFragment"
     tools:showIn="@layout/activity_type_manager">
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,4 +1,4 @@
-package com.system.moneycontrol.ui.transactionmanager
+package com.system.moneycontrol.ui.presentation.transactionmanager
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.system.moneycontrol.R
 import com.system.moneycontrol.infrastructure.MyViewUtils
-import com.system.moneycontrol.model.entities.bases.DialogItem
-import com.system.moneycontrol.ui.CurrencyTextWatcher
-import com.system.moneycontrol.ui.StringTextWatcher
+import com.system.moneycontrol.model.entities.DialogItem
+import com.system.moneycontrol.ui.utils.CurrencyTextWatcher
+import com.system.moneycontrol.ui.utils.StringTextWatcher
 import kotlinx.android.synthetic.main.fragment_transaction_manager.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
@@ -21,6 +21,7 @@ import java.util.*
  */
 class TransactionManagerFragment : Fragment(), TransactionManagerContract.View {
 
+    val myViewUtils: MyViewUtils by inject()
     val presenter: TransactionManagerContract.Presenter by inject { parametersOf(this) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -38,20 +39,23 @@ class TransactionManagerFragment : Fragment(), TransactionManagerContract.View {
         mContentValue.addTextChangedListener(StringTextWatcher { presenter.onContentSetted(it) })
 
         mSaveButtom.setOnClickListener { presenter.onSaveClicked() }
+    }
 
+    override fun onStart() {
+        super.onStart()
         presenter.init()
     }
 
     override fun showTagDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {
-        MyViewUtils(context!!).showListDialog("Tags", list, callback)
+        myViewUtils.showListDialog(context!!, "Tags", list, callback)
     }
 
     override fun showPaymentTypeDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {
-        MyViewUtils(context!!).showListDialog("Types", list, callback)
+        myViewUtils.showListDialog(context!!, "Types", list, callback)
     }
 
     override fun showPaymentDateDialog(paymentDate: Date?, callback: (Date) -> Unit) {
-        MyViewUtils(context!!).showDatePicker(paymentDate, callback)
+        myViewUtils.showDatePicker(context!!, paymentDate, callback)
     }
 
     override fun setTag(tagString: String) {

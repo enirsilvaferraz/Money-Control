@@ -1,4 +1,4 @@
-package com.system.moneycontrol.model.entities.bases
+package com.system.moneycontrol.model.entities
 
 interface DialogItem {
     fun getDescription(): String

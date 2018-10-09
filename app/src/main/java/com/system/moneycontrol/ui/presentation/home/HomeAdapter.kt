@@ -1,4 +1,4 @@
-package com.system.moneycontrol.ui.home
+package com.system.moneycontrol.ui.presentation.home
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -10,7 +10,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.system.moneycontrol.R
 import com.system.moneycontrol.model.entities.Transaction
-import com.system.moneycontrol.model.itemView.TransactionItemView
+import com.system.moneycontrol.ui.itemView.ItemRecyclerView
+import com.system.moneycontrol.ui.itemView.TransactionItemView
 
 class HomeAdapter(private val list: ArrayList<ItemRecyclerView>, val callback: (Transaction) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -46,7 +47,7 @@ class HomeAdapter(private val list: ArrayList<ItemRecyclerView>, val callback: (
 
             val price = itemView.findViewById<TextView>(R.id.mPrice)
             price.text = item.price
-            price.visibility = if (item.price.isNotBlank()) View.VISIBLE else View.GONE
+            price.visibility = if (item.price.isNotBlank() || (item.price.isBlank() && item.refund.isBlank())) View.VISIBLE else View.GONE
 
             val refund = itemView.findViewById<TextView>(R.id.mRefund)
             refund.text = item.refund

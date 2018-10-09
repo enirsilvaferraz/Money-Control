@@ -1,14 +1,14 @@
-package com.system.moneycontrol.ui.typemanager
+package com.system.moneycontrol.ui.presentation.tag
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.system.moneycontrol.R
 
-class TypeManagerActivity : AppCompatActivity() {
+class TagManagerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_type_manager)
+        setContentView(R.layout.activity_tag_manager)
     }
 
 }

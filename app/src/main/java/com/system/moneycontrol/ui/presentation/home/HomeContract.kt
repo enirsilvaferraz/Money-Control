@@ -1,6 +1,7 @@
-package com.system.moneycontrol.ui.home
+package com.system.moneycontrol.ui.presentation.home
 
 import com.system.moneycontrol.model.entities.Transaction
+import com.system.moneycontrol.ui.itemView.ItemRecyclerView
 
 interface HomeContract {
 

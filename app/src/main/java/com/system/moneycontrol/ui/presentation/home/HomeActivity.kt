@@ -1,4 +1,4 @@
-package com.system.moneycontrol.ui.home
+package com.system.moneycontrol.ui.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,9 +7,9 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.system.moneycontrol.R
-import com.system.moneycontrol.ui.tag.TagManagerActivity
-import com.system.moneycontrol.ui.transactionmanager.TransactionManagerActivity
-import com.system.moneycontrol.ui.typemanager.TypeManagerActivity
+import com.system.moneycontrol.ui.presentation.tag.TagManagerActivity
+import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerActivity
+import com.system.moneycontrol.ui.presentation.typemanager.TypeManagerActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {

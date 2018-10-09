@@ -1,4 +1,4 @@
-package com.system.moneycontrol.ui.transactionmanager
+package com.system.moneycontrol.ui.presentation.transactionmanager
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

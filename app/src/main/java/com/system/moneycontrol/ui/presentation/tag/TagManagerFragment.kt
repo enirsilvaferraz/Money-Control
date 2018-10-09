@@ -1,31 +1,32 @@
-package com.system.moneycontrol.ui.typemanager
+package com.system.moneycontrol.ui.presentation.tag
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.system.moneycontrol.R
-import com.system.moneycontrol.ui.StringTextWatcher
-import kotlinx.android.synthetic.main.fragment_type_manager.*
+import com.system.moneycontrol.ui.utils.StringTextWatcher
+import kotlinx.android.synthetic.main.fragment_tag_manager.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
 /**
  * A placeholder fragment containing a simple view.
  */
-class TypeManagerFragment : Fragment(), TypeManagerContract.View {
+class TagManagerFragment : Fragment(), TagManagerContract.View {
 
-    val presenter: TypeManagerContract.Presenter by inject { parametersOf(this) }
+    val presenter: TagManagerContract.Presenter by inject { parametersOf(this) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
-            inflater.inflate(R.layout.fragment_type_manager, container, false)
+            inflater.inflate(R.layout.fragment_tag_manager, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mTypeValue.addTextChangedListener(StringTextWatcher { presenter.onTypeSetted(it) })
+        mTagValue.addTextChangedListener(StringTextWatcher { presenter.onTagSetted(it) })
 
         mSaveButtom.setOnClickListener { presenter.onSaveClicked() }
     }

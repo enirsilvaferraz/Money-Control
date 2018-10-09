@@ -1,4 +1,4 @@
-package com.system.moneycontrol.ui.home
+package com.system.moneycontrol.ui.presentation.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.system.moneycontrol.R
+import com.system.moneycontrol.ui.itemView.ItemRecyclerView
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf

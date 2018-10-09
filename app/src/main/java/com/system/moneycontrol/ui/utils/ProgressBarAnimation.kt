@@ -1,4 +1,4 @@
-package com.system.moneycontrol.ui
+package com.system.moneycontrol.ui.utils
 
 import android.view.View
 import android.view.animation.Animation

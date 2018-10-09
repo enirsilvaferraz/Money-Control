@@ -25,7 +25,7 @@ class TransactionRepository(private val collection: CollectionReference, var myU
 
         override fun execute() {
             collection.document(getYear(model)).collection(getMonth(model)).add(model.toMapper())
-                    .addOnCompleteListener { onSuccessItem?.invoke(model.copy(key = it.result.id)) }
+                    .addOnSuccessListener { onSuccessItem?.invoke(model.copy(key = it.id)) }
                     .addOnFailureListener { onFailure?.invoke(it) }
         }
     }

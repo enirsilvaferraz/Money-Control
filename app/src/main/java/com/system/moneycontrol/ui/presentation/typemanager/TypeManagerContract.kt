@@ -1,6 +1,6 @@
-package com.system.moneycontrol.ui.tag
+package com.system.moneycontrol.ui.presentation.typemanager
 
-interface TagManagerContract {
+interface TypeManagerContract {
 
     interface View {
 
@@ -11,7 +11,7 @@ interface TagManagerContract {
 
     interface Presenter {
 
-        fun onTagSetted(string: String)
+        fun onTypeSetted(string: String)
         fun onSaveClicked()
     }
 

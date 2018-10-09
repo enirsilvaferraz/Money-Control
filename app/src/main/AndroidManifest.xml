@@ -4,7 +4,7 @@
 
     <application
         android:name=".KoinApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -12,30 +12,31 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name="com.system.moneycontrol.ui.presentation.home.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name=".ui.transactionmanager.TransactionManagerActivity"
+            android:name="com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerActivity"
             android:label="@string/transaction_manager_title"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name=".ui.tag.TagManagerActivity"
+            android:name="com.system.moneycontrol.ui.presentation.tag.TagManagerActivity"
             android:label="@string/title_activity_tag"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.typemanager.TypeManagerActivity"
+            android:name="com.system.moneycontrol.ui.presentation.typemanager.TypeManagerActivity"
             android:label="@string/title_activity_type_manager"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />

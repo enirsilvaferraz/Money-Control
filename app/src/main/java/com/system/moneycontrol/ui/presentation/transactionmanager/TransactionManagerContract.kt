@@ -1,6 +1,6 @@
-package com.system.moneycontrol.ui.transactionmanager
+package com.system.moneycontrol.ui.presentation.transactionmanager
 
-import com.system.moneycontrol.model.entities.bases.DialogItem
+import com.system.moneycontrol.model.entities.DialogItem
 import java.util.*
 
 interface TransactionManagerContract {

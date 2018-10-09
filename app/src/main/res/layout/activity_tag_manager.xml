@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.tag.TagManagerActivity">
+    tools:context=".ui.presentation.tag.TagManagerActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.system.moneycontrol.ui.tag.TagManagerFragment"
+        android:name="com.system.moneycontrol.ui.presentation.tag.TagManagerFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

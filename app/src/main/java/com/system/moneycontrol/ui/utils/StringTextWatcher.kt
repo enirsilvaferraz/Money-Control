@@ -1,4 +1,4 @@
-package com.system.moneycontrol.ui
+package com.system.moneycontrol.ui.utils
 
 import android.text.Editable
 import android.text.TextWatcher

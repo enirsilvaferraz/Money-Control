@@ -7,12 +7,12 @@ import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.appcompat.app.AlertDialog
 import com.system.moneycontrol.R
-import com.system.moneycontrol.model.entities.bases.DialogItem
+import com.system.moneycontrol.model.entities.DialogItem
 import java.util.*
 
-class MyViewUtils(val context: Context) {
+class MyViewUtils {
 
-    fun showListDialog(title: String, list: List<DialogItem>, callback: (DialogItem) -> Unit) {
+    fun showListDialog(context: Context, title: String, list: List<DialogItem>, callback: (DialogItem) -> Unit) {
 
         val arrayAdapter = ArrayAdapter<String>(context, R.layout.item_list_single, android.R.id.text1, list.map { it.getDescription() })
 
@@ -27,7 +27,7 @@ class MyViewUtils(val context: Context) {
                 .create().show()
     }
 
-    fun showDatePicker(date: Date?, onResult: (Date) -> Unit) {
+    fun showDatePicker(context: Context, date: Date?, onResult: (Date) -> Unit) {
 
         val onDateSetListener: DatePickerDialog.OnDateSetListener = object : DatePickerDialog.OnDateSetListener {
             override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {

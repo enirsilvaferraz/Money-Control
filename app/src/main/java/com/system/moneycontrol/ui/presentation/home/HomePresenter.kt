@@ -1,19 +1,25 @@
-package com.system.moneycontrol.ui.home
+package com.system.moneycontrol.ui.presentation.home
 
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.business.HomeBusiness
 import com.system.moneycontrol.model.business.TransactionBusiness
 import com.system.moneycontrol.model.entities.Transaction
+import com.system.moneycontrol.ui.itemView.ItemRecyclerView
 
-class HomePresenter(val view: HomeContract.View, val business: HomeBusiness, val transactionBusiness: TransactionBusiness) : HomeContract.Presenter {
+class HomePresenter(
+
+        val view: HomeContract.View,
+        val business: HomeBusiness,
+        val transactionBusiness: TransactionBusiness,
+        val utils: MyUtils
+
+) : HomeContract.Presenter {
 
     override fun init() {
         requestLoad()
     }
 
     override fun requestLoad() {
-
-        val utils = MyUtils()
 
         val year = utils.getDate("yyyy")
         val month = utils.getDate("MM")
@@ -36,19 +42,8 @@ class HomePresenter(val view: HomeContract.View, val business: HomeBusiness, val
     }
 
     fun configureListView(transactions: List<Transaction>): List<ItemRecyclerView> {
-
         val itemList = arrayListOf<ItemRecyclerView>()
-
-        transactions.forEach {
-
-            //            val titleItemView = TransactionTitleItemView(MyUtils().getDate(it.paymentDate, "MMM, dd"))
-//            if (!itemList.contains(titleItemView)) {
-//                itemList.add(titleItemView)
-//            }
-
-            itemList.add(it.toItemView())
-        }
-
+        transactions.forEach { itemList.add(it.toItemView()) }
         return itemList
     }
 
@@ -58,7 +53,9 @@ class HomePresenter(val view: HomeContract.View, val business: HomeBusiness, val
                     view.showError("Transaction deleted!")
                     requestLoad()
                 }
-                .addFailure { view.showError(it.message!!) }
+                .addFailure {
+                    view.showError(it.message!!)
+                }
                 .execute()
     }
 }

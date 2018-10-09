@@ -32,8 +32,8 @@ class HomeBusiness(val repTransaction: TransactionRepository, val repTag: TagRep
 
     private fun formatResultTransactions(transactions: List<Transaction>, tags: List<Tag>, types: List<PaymentType>): List<Transaction> {
         transactions.forEach { transaction ->
-            transaction.tag = tags.filter { it.key == transaction.tag!!.key }[0]
-            transaction.paymentType = types.filter { it.key == transaction.paymentType!!.key }[0]
+            transaction.tag = tags.filter { it.key == transaction.tag.key }[0]
+            transaction.paymentType = types.filter { it.key == transaction.paymentType.key }[0]
         }
         return transactions
     }

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context=".ui.tag.TagManagerFragment"
+    tools:context=".ui.presentation.tag.TagManagerFragment"
     tools:showIn="@layout/activity_tag_manager">
 
     <androidx.constraintlayout.widget.ConstraintLayout

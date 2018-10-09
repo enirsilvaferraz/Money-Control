@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.typemanager.TypeManagerActivity">
+    tools:context=".ui.presentation.typemanager.TypeManagerActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.system.moneycontrol.ui.typemanager.TypeManagerFragment"
+        android:name="com.system.moneycontrol.ui.presentation.typemanager.TypeManagerFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

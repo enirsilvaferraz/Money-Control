@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeActivity">
+    tools:context=".ui.presentation.home.HomeActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -36,7 +36,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.system.moneycontrol.ui.home.HomeFragment"
+        android:name="com.system.moneycontrol.ui.presentation.home.HomeFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
