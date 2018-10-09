@@ -4,20 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.system.moneycontrol.R
+import com.system.moneycontrol.infrastructure.MyViewUtils
 import com.system.moneycontrol.ui.utils.StringTextWatcher
 import kotlinx.android.synthetic.main.fragment_tag_manager.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
+
 
 /**
  * A placeholder fragment containing a simple view.
  */
 class TagManagerFragment : Fragment(), TagManagerContract.View {
 
+    val myViewUtils: MyViewUtils by inject()
     val presenter: TagManagerContract.Presenter by inject { parametersOf(this) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
@@ -40,6 +42,7 @@ class TagManagerFragment : Fragment(), TagManagerContract.View {
     }
 
     override fun closeWindow() {
+        myViewUtils.hideKeyboard(activity, view)
         activity?.finish()
     }
 

@@ -23,6 +23,9 @@ interface TransactionManagerContract {
         fun closeWindow()
         fun showLoading()
         fun hideLoading()
+
+        fun showTagManager()
+        fun showTypeManager()
     }
 
     interface Presenter {

@@ -3,9 +3,12 @@ package com.system.moneycontrol.infrastructure
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentActivity
 import com.system.moneycontrol.R
 import com.system.moneycontrol.model.entities.DialogItem
 import java.util.*
@@ -50,5 +53,13 @@ class MyViewUtils {
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         DatePickerDialog(context, onDateSetListener, year, month, day).show()
+    }
+
+    fun hideKeyboard(activity: FragmentActivity?, view: View?) {
+
+        if (activity != null && view != null) {
+            (activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+                    .hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 }

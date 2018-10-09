@@ -1,7 +1,9 @@
 package com.system.moneycontrol.infrastructure.koin
 
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.system.moneycontrol.BuildConfig
 import com.system.moneycontrol.data.repositories.TagRepository
 import com.system.moneycontrol.data.repositories.TransactionRepository
 import com.system.moneycontrol.data.repositories.TypeRepository
@@ -23,11 +25,11 @@ import org.koin.dsl.module.module
 
 object KoinModules {
 
-    fun getFirestoreInstance(): FirebaseFirestore {
+    fun getFirestoreInstance(): DocumentReference {
         val instance = FirebaseFirestore.getInstance()
         instance.firestoreSettings = FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true).setTimestampsInSnapshotsEnabled(true).build()
-        return instance
+        return instance.collection("APP").document(BuildConfig.BUILD_TYPE)
     }
 
     val firebaseModule = module {

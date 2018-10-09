@@ -15,13 +15,13 @@ class TypeManagerPresenter(val view: TypeManagerContract.View, val typeBusiness:
 
         if (type.name.isBlank()) {
 
-            view.showError("Tag is required!")
+            view.showError("Type is required!")
 
         } else {
 
             typeBusiness.save(type)
                     .addSuccessItem {
-                        view.showSuccess("Tag created!")
+                        view.showSuccess("Type created!")
                         view.closeWindow()
                     }
                     .addFailure {

@@ -1,5 +1,6 @@
 package com.system.moneycontrol.ui.presentation.transactionmanager
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,8 @@ import androidx.fragment.app.Fragment
 import com.system.moneycontrol.R
 import com.system.moneycontrol.infrastructure.MyViewUtils
 import com.system.moneycontrol.model.entities.DialogItem
+import com.system.moneycontrol.ui.presentation.tag.TagManagerActivity
+import com.system.moneycontrol.ui.presentation.typemanager.TypeManagerActivity
 import com.system.moneycontrol.ui.utils.CurrencyTextWatcher
 import com.system.moneycontrol.ui.utils.StringTextWatcher
 import kotlinx.android.synthetic.main.fragment_transaction_manager.*
@@ -102,5 +105,13 @@ class TransactionManagerFragment : Fragment(), TransactionManagerContract.View {
 
     override fun hideLoading() {
         (activity as TransactionManagerActivity).hideLoading()
+    }
+
+    override fun showTagManager() {
+        startActivity(Intent(context, TagManagerActivity::class.java))
+    }
+
+    override fun showTypeManager() {
+        startActivity(Intent(context, TypeManagerActivity::class.java))
     }
 }

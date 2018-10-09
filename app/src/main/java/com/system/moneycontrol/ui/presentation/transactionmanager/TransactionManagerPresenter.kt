@@ -9,7 +9,9 @@ import com.system.moneycontrol.model.entities.DialogItem
 import com.system.moneycontrol.model.entities.PaymentType
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
+import com.system.moneycontrol.ui.itemView.ItemSelectCombo
 import java.util.*
+import kotlin.collections.ArrayList
 
 class TransactionManagerPresenter(
         private val view: TransactionManagerContract.View,
@@ -61,27 +63,46 @@ class TransactionManagerPresenter(
     override fun onPaymentTypeClick() {
 
         val callback: (DialogItem) -> Unit = {
-            transaction.paymentType = it as PaymentType
-            view.setPaymentType(it.name)
+            if (it is PaymentType) {
+                transaction.paymentType = it
+                view.setPaymentType(it.name)
+            } else {
+                view.showTypeManager()
+            }
         }
 
-        typeBusiness.getAll()
-                .addSuccessList { view.showPaymentTypeDialog(it, callback) }
-                .addFailure { view.showError(it.message!!) }
+        typeBusiness
+                .getAll()
+                .addSuccessList {
+                    val list = ArrayList<DialogItem>(it)
+                    list.add(ItemSelectCombo())
+                    view.showPaymentTypeDialog(list, callback)
+                    view.hideLoading()
+                }
+                .addFailure {
+                    view.hideLoading()
+                    view.showError(it.message!!)
+                }
                 .execute()
     }
 
     override fun onTagClick() {
 
         val callback: (DialogItem) -> Unit = {
-            transaction.tag = it as Tag
-            view.setTag(it.name)
+            if (it is Tag) {
+                transaction.tag = it
+                view.setTag(it.name)
+            } else {
+                view.showTagManager()
+            }
         }
 
         tagBusiness.getAll()
                 .addSuccessList {
+                    val list = ArrayList<DialogItem>(it)
+                    list.add(ItemSelectCombo())
+                    view.showTagDialog(list, callback)
                     view.hideLoading()
-                    view.showTagDialog(it, callback)
                 }
                 .addFailure {
                     view.hideLoading()
