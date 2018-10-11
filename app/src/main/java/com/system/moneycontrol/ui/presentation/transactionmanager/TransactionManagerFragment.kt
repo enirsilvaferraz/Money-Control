@@ -115,11 +115,21 @@ class TransactionManagerFragment : Fragment(), TransactionManagerContract.View {
         startActivity(Intent(context, TypeManagerActivity::class.java))
     }
 
-    override fun showTypeError(s: String) {
+    override fun showTagError(s: String) {
+        mTagContainer.isErrorEnabled = true
         mTagContainer.error = s
     }
 
-    override fun showTagError(s: String) {
+    override fun clearTagError() {
+        mTagContainer.isErrorEnabled = false
+    }
+
+    override fun showTypeError(s: String) {
+        mTypeContainer.isErrorEnabled = true
         mTypeContainer.error = s
+    }
+
+    override fun clearTypeError() {
+        mTypeContainer.isErrorEnabled = false
     }
 }

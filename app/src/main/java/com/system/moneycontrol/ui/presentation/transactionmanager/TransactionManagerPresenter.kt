@@ -80,6 +80,7 @@ class TransactionManagerPresenter(
                     list.add(ItemSelectCombo())
                     view.showPaymentTypeDialog(list, callback)
                     view.hideLoading()
+                    view.clearTypeError()
                 }
                 .addFailure {
                     view.hideLoading()
@@ -105,6 +106,7 @@ class TransactionManagerPresenter(
                     list.add(ItemSelectCombo())
                     view.showTagDialog(list, callback)
                     view.hideLoading()
+                    view.clearTagError()
                 }
                 .addFailure {
                     view.hideLoading()
