@@ -14,7 +14,8 @@ data class Transaction(
         var refund: Double = 0.0,
         var tag: Tag = Tag(),
         var paymentType: PaymentType = PaymentType(),
-        var description: String = ""
+        var description: String = "",
+        var isAlreadyPaid: Boolean = true
 ) {
 
     constructor() : this(key = null)
@@ -26,7 +27,7 @@ data class Transaction(
             transactionFirebase.refund,
             Tag(transactionFirebase.tag, Constants.LASY_STRING),
             PaymentType(transactionFirebase.type, Constants.LASY_STRING, Constants.LASY_STRING),
-            if (transactionFirebase.content.isNullOrBlank()) "" else transactionFirebase.content!!)
+            transactionFirebase.content)
 
     fun toMapper() = TransactionFirebase(this)
 

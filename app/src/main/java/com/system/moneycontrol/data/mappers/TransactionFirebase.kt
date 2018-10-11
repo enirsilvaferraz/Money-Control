@@ -5,21 +5,14 @@ import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.entities.Transaction
 
 class TransactionFirebase(
-        var paymentDate: String,
-        var moneySpent: Double,
-        var refund: Double,
-        var tag: String,
-        var type: String,
-        var content: String?
+        var paymentDate: String = Constants.LASY_STRING,
+        var moneySpent: Double = Constants.LAZY_DOUBLE,
+        var refund: Double = Constants.LAZY_DOUBLE,
+        var tag: String = Constants.LASY_STRING,
+        var type: String = Constants.LASY_STRING,
+        var content: String = Constants.LASY_STRING,
+        var isAlreadyPaid: Boolean = false
 ) {
-
-    constructor() : this(
-            Constants.LASY_STRING,
-            Constants.LAZY_DOUBLE,
-            Constants.LAZY_DOUBLE,
-            Constants.LASY_STRING,
-            Constants.LASY_STRING,
-            Constants.LASY_STRING)
 
     constructor(transaction: Transaction) : this(
             MyUtils().getDate(transaction.paymentDate, "yyyy-MM-dd"),
@@ -27,7 +20,8 @@ class TransactionFirebase(
             transaction.refund,
             transaction.tag.key!!,
             transaction.paymentType.key!!,
-            transaction.description
+            transaction.description,
+            transaction.isAlreadyPaid
     )
 
     fun toModel(key: String) = Transaction(this, key)

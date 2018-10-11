@@ -8,6 +8,8 @@ import java.util.*
 
 class MyUtils {
 
+    fun getDate() = Calendar.getInstance().time
+
     fun getDate(year: Int, month: Int, day: Int, hour: Int, minute: Int): Date {
         val instance = Calendar.getInstance()
         instance.set(year, month, day, hour, minute)

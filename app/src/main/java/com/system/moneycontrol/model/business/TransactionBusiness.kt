@@ -6,14 +6,16 @@ import com.system.moneycontrol.infrastructure.Result
 import com.system.moneycontrol.model.entities.Transaction
 import java.util.*
 
-class TransactionBusiness(
-        val repository: TransactionRepository,
-        var myUtils: MyUtils) {
+class TransactionBusiness(val repository: TransactionRepository, var myUtils: MyUtils) {
 
     fun save(model: Transaction): Result<Transaction> {
 
         if (model.tag.key.isNullOrBlank() || model.paymentType.key.isNullOrBlank()) {
             throw IllegalArgumentException()
+        }
+
+        if (model.paymentDate.after(myUtils.getDate())) {
+            model.isAlreadyPaid = false
         }
 
         return when (processSave(model)) {
