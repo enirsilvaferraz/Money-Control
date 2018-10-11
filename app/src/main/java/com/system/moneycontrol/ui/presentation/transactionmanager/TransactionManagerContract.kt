@@ -26,6 +26,8 @@ interface TransactionManagerContract {
 
         fun showTagManager()
         fun showTypeManager()
+        fun showTagError(s: String)
+        fun showTypeError(s: String)
     }
 
     interface Presenter {

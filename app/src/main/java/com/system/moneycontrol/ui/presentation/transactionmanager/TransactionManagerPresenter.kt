@@ -35,15 +35,7 @@ class TransactionManagerPresenter(
 
     override fun onSaveClicked() {
 
-        if (transaction.tag.key == null) {
-            view.showError("Tag is required!")
-        }
-
-        if (transaction.paymentType.key == null) {
-            view.showError("Type is required!")
-        }
-
-        else {
+        try {
 
             transactionBusiness.save(transaction)
                     .addSuccessItem {
@@ -53,6 +45,16 @@ class TransactionManagerPresenter(
                         view.showError(it.message!!)
                     }
                     .execute()
+
+        } catch (e: IllegalArgumentException) {
+
+            if (transaction.tag.key.isNullOrBlank()) {
+                view.showTagError("Tag is required!")
+            }
+
+            if (transaction.paymentType.key.isNullOrBlank()) {
+                view.showTypeError("Type is required!")
+            }
         }
     }
 

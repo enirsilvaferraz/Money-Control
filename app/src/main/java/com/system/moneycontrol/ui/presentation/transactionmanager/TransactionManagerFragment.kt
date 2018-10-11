@@ -114,4 +114,12 @@ class TransactionManagerFragment : Fragment(), TransactionManagerContract.View {
     override fun showTypeManager() {
         startActivity(Intent(context, TypeManagerActivity::class.java))
     }
+
+    override fun showTypeError(s: String) {
+        mTagContainer.error = s
+    }
+
+    override fun showTagError(s: String) {
+        mTypeContainer.error = s
+    }
 }
