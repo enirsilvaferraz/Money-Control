@@ -29,6 +29,11 @@ class HomeAdapter(private val list: ArrayList<ItemRecyclerView>, val callback: (
 
     fun addItens(list: List<ItemRecyclerView>) {
         this.list.addAll(list)
+        this.list.addAll(list)
+        this.list.addAll(list)
+        this.list.addAll(list)
+        this.list.addAll(list)
+        this.list.addAll(list)
         notifyDataSetChanged()
     }
 

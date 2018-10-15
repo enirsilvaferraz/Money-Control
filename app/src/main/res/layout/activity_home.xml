@@ -34,21 +34,19 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <fragment
-        android:id="@+id/fragment"
-        android:name="com.system.moneycontrol.ui.presentation.home.HomeFragment"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/primary"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout="@layout/fragment_home" />
-
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:fabAlignmentMode="end"
-        app:hideOnScroll="true" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".ui.presentation.home.HomeActivity"
+        tools:listitem="@layout/item_transaction"
+        tools:showIn="@layout/activity_home" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -56,6 +54,8 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_attach_money_black_24dp"
         android:tint="#ffffff"
-        app:layout_anchor="@id/bar" />
+        android:layout_margin="16dp"
+        app:layout_anchor="@+id/mRecyclerView"
+        app:layout_anchorGravity="right|bottom" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
