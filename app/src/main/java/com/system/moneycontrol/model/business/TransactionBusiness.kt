@@ -14,9 +14,7 @@ class TransactionBusiness(val repository: TransactionRepository, var myUtils: My
             throw IllegalArgumentException()
         }
 
-        if (model.paymentDate.after(myUtils.getDate())) {
-            model.alreadyPaid = false
-        }
+        model.alreadyPaid = !model.paymentDate.after(myUtils.getDate())
 
         return when (processSave(model)) {
             SaveType.SAVE_NEW -> repository.save(model)
