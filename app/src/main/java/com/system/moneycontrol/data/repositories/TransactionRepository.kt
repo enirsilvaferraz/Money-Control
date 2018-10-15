@@ -53,7 +53,8 @@ class TransactionRepository(private val collection: CollectionReference, var myU
     fun update(model: Transaction) = object : Result<Transaction>() {
 
         override fun execute() {
-            collection.document(getYear(model)).collection(getMonth(model)).add(model.toMapper())
+            collection.document(getYear(model)).collection(getMonth(model))
+                    .document(model.key!!).update(model.toMapper().toMap())
                     .addOnSuccessListener { onSuccessItem?.invoke(model) }
                     .addOnFailureListener { onFailure?.invoke(it) }
         }

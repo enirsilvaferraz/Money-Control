@@ -58,10 +58,7 @@ class HomeAdapter(private val list: ArrayList<ItemRecyclerView>, val callback: (
             refund.text = item.refund
             refund.visibility = if (item.refund.isNotBlank()) View.VISIBLE else View.GONE
 
-            itemView.setOnLongClickListener {
-                callback?.invoke(item.transaction)
-                true
-            }
+            itemView.setOnClickListener { callback?.invoke(item.transaction) }
         }
     }
 }

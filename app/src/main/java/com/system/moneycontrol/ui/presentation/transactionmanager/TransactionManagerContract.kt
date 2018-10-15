@@ -1,6 +1,7 @@
 package com.system.moneycontrol.ui.presentation.transactionmanager
 
 import com.system.moneycontrol.model.entities.DialogItem
+import com.system.moneycontrol.model.entities.Transaction
 import java.util.*
 
 interface TransactionManagerContract {
@@ -33,7 +34,7 @@ interface TransactionManagerContract {
     }
 
     interface Presenter {
-        fun init()
+        fun init(transaction: Transaction?)
         fun onSaveClicked()
         fun cancel()
         fun onTagClick()

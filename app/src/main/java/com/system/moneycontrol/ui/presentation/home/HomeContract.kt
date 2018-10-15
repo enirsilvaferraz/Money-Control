@@ -11,6 +11,7 @@ interface HomeContract {
         fun showError(message: String)
         fun setTitle(title: String)
         fun setProgress(progress: Int)
+        fun showTransactionManager(model: Transaction)
     }
 
     interface Presenter {

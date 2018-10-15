@@ -48,14 +48,17 @@ class HomePresenter(
     }
 
     override fun onItemSelected(it: Transaction) {
-        transactionBusiness.delete(it)
-                .addSuccessItem {
-                    view.showError("Transaction deleted!")
-                    requestLoad()
-                }
-                .addFailure {
-                    view.showError(it.message!!)
-                }
-                .execute()
+
+        view.showTransactionManager(it)
+
+//        transactionBusiness.delete(it)
+//                .addSuccessItem {
+//                    view.showError("Transaction deleted!")
+//                    requestLoad()
+//                }
+//                .addFailure {
+//                    view.showError(it.message!!)
+//                }
+//                .execute()
     }
 }

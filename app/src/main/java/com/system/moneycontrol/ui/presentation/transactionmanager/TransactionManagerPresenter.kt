@@ -20,16 +20,19 @@ class TransactionManagerPresenter(
         private val tagBusiness: TagBusiness,
         private val myUtils: MyUtils) : TransactionManagerContract.Presenter {
 
-    val transaction = Transaction()
+    lateinit var transaction: Transaction
 
-    override fun init() {
-        with(transaction) {
+    override fun init(transaction: Transaction?) {
+
+        this.transaction = transaction ?: Transaction()
+
+        with(this.transaction) {
             view.setPaymentDate(myUtils.getDate(this.paymentDate, Constants.DATE_SHOW_VIEW))
             view.setTag(this.tag.name)
             view.setPrice(MyUtils().valueFormat(this.moneySpent))
             view.setRefund(MyUtils().valueFormat(this.refund))
             view.setPaymentType(this.paymentType.name)
-            view.setContent(transaction.description)
+            view.setContent(this.description)
         }
     }
 

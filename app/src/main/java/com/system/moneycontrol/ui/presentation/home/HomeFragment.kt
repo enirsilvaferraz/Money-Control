@@ -1,5 +1,6 @@
 package com.system.moneycontrol.ui.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.system.moneycontrol.R
+import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.ui.itemView.ItemRecyclerView
+import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
@@ -52,6 +55,12 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     override fun setProgress(progress: Int) {
 
+    }
+
+    override fun showTransactionManager(model: Transaction) {
+        val intent = Intent(context, TransactionManagerActivity::class.java)
+        intent.putExtra("MODEL_EDIT", model)
+        startActivityForResult(intent, 5000)
     }
 
     override fun onStart() {
