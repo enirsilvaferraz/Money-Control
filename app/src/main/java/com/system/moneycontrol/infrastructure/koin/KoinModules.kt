@@ -3,7 +3,6 @@ package com.system.moneycontrol.infrastructure.koin
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
-import com.system.moneycontrol.BuildConfig
 import com.system.moneycontrol.data.repositories.TagRepository
 import com.system.moneycontrol.data.repositories.TransactionRepository
 import com.system.moneycontrol.data.repositories.TypeRepository
@@ -29,7 +28,7 @@ object KoinModules {
         val instance = FirebaseFirestore.getInstance()
         instance.firestoreSettings = FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true).setTimestampsInSnapshotsEnabled(true).build()
-        return instance.collection("APP").document(BuildConfig.BUILD_TYPE)
+        return instance.collection("APP").document("release")
     }
 
     val firebaseModule = module {

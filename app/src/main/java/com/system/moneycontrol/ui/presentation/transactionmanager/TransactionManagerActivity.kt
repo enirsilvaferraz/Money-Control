@@ -70,12 +70,12 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
 
     override fun setPrice(priceString: String) {
         mPriceValue.setText(priceString)
-        mPriceValue.setSelection(priceString.length)
+        mPriceValue.setSelection(mPriceValue.text.toString().length)
     }
 
     override fun setRefund(refundString: String) {
         mRefundValue.setText(refundString)
-        mRefundValue.setSelection(refundString.length)
+        mRefundValue.setSelection(mRefundValue.text.toString().length)
     }
 
     override fun setContent(description: String) {
