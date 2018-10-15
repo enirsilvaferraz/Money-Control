@@ -13,7 +13,6 @@ import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.koin.dsl.module.module
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.StandAloneContext.stopKoin
@@ -22,9 +21,7 @@ import org.koin.standalone.inject
 import org.koin.test.KoinTest
 import org.koin.test.declareMock
 import org.mockito.Mockito
-import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
 class TransactionBusinessTest : KoinTest {
 
     val testModule = module {
