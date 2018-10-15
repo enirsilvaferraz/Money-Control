@@ -3,31 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/mType"
-        android:layout_width="18dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/mPrice"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/mTag"
-        android:alpha=".6"
-        tools:src="@drawable/ic_fiber_manual_record_black_24dp"
-        tools:tint="@color/yellow" />
+    android:layout_height="wrap_content"
+    android:paddingStart="32dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="32dp"
+    android:paddingBottom="8dp">
 
     <TextView
         android:id="@+id/mTag"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:textColor="#000000"
+        android:textColor="@color/primary_text"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/mDate"
-        app:layout_constraintStart_toEndOf="@+id/mType"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Condomínio" />
 
@@ -35,13 +25,9 @@
         android:id="@+id/mPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:alpha="0.7"
-        android:paddingStart="0dp"
-        android:paddingEnd="8dp"
         android:textColor="@color/red"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/mTag"
+        app:layout_constraintEnd_toStartOf="@+id/mRefund"
         app:layout_constraintTop_toBottomOf="@+id/mTag"
         tools:text="R$ 1000,00" />
 
@@ -50,21 +36,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:alpha="0.7"
+        android:paddingStart="8dp"
+        android:paddingEnd="0dp"
         android:textColor="@color/green"
-        app:layout_constraintBottom_toBottomOf="@+id/mPrice"
-        app:layout_constraintStart_toEndOf="@+id/mPrice"
-        app:layout_constraintTop_toTopOf="@+id/mPrice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mTag"
         tools:text="R$ 1000,00" />
+
+    <TextView
+        android:id="@+id/mType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="@+id/mTag"
+        app:layout_constraintTop_toBottomOf="@+id/mTag"
+        tools:text="Conta Itaú" />
 
     <TextView
         android:id="@+id/mDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:textColor="@color/blue"
-        app:layout_constraintTop_toTopOf="@+id/mTag"
+        android:textColor="@color/primary_text"
         app:layout_constraintBottom_toBottomOf="@+id/mTag"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/mTag"
         tools:text="Sep, 25" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

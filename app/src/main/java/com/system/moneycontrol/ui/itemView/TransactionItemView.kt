@@ -13,7 +13,8 @@ data class TransactionItemView(
         val typeColor: String,
         val date: String,
         val typeName: String,
-        val typeDrawable: Int) : ItemRecyclerView {
+        val typeDrawable: Int,
+        val tagColor: Int) : ItemRecyclerView {
 
     constructor(transaction: Transaction) : this(
             transaction,
@@ -23,6 +24,7 @@ data class TransactionItemView(
             transaction.paymentType.color,
             MyUtils().getDate(transaction.paymentDate, "MMM, dd"),
             transaction.paymentType.name,
-            R.drawable.ic_payment_black_24dp
+            R.drawable.ic_fiber_manual_record_black_24dp,
+            if (transaction.alreadyPaid) R.color.primary_text else R.color.yellow
     )
 }

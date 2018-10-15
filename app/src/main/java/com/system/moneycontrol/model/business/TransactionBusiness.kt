@@ -15,7 +15,7 @@ class TransactionBusiness(val repository: TransactionRepository, var myUtils: My
         }
 
         if (model.paymentDate.after(myUtils.getDate())) {
-            model.isAlreadyPaid = false
+            model.alreadyPaid = false
         }
 
         return when (processSave(model)) {

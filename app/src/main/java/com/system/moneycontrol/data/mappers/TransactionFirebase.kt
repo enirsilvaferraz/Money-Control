@@ -11,7 +11,7 @@ class TransactionFirebase(
         var tag: String = Constants.LASY_STRING,
         var type: String = Constants.LASY_STRING,
         var content: String = Constants.LASY_STRING,
-        var isAlreadyPaid: Boolean = false
+        var alreadyPaid: Boolean = false
 ) {
 
     constructor(transaction: Transaction) : this(
@@ -21,7 +21,7 @@ class TransactionFirebase(
             transaction.tag.key!!,
             transaction.paymentType.key!!,
             transaction.description,
-            transaction.isAlreadyPaid
+            transaction.alreadyPaid
     )
 
     fun toModel(key: String) = Transaction(this, key)

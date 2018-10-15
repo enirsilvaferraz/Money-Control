@@ -106,7 +106,7 @@ class TransactionBusinessTest : KoinTest {
 
         business.save(transaction)
 
-        MatcherAssert.assertThat(transaction.isAlreadyPaid, CoreMatchers.equalTo(true))
+        MatcherAssert.assertThat(transaction.alreadyPaid, CoreMatchers.equalTo(true))
     }
 
     @Test
@@ -119,7 +119,7 @@ class TransactionBusinessTest : KoinTest {
 
         business.save(transaction)
 
-        MatcherAssert.assertThat(transaction.isAlreadyPaid, CoreMatchers.equalTo(false))
+        MatcherAssert.assertThat(transaction.alreadyPaid, CoreMatchers.equalTo(false))
     }
 
     @Test
