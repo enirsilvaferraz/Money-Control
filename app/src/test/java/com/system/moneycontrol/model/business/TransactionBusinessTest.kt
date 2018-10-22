@@ -1,12 +1,15 @@
 package com.system.moneycontrol.model.business
 
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
 import com.system.moneycontrol.data.repositories.TransactionRepository
 import com.system.moneycontrol.infrastructure.MyUtils
-import com.system.moneycontrol.infrastructure.koin.KoinModules
+import com.system.moneycontrol.infrastructure.koin.KoinModules.appModule
+import com.system.moneycontrol.infrastructure.koin.KoinModules.businessModule
+import com.system.moneycontrol.infrastructure.koin.KoinModules.presenterModule
 import com.system.moneycontrol.model.entities.Transaction
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.spyk
+import io.mockk.verify
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
 import org.junit.After
@@ -19,12 +22,14 @@ import org.koin.standalone.StandAloneContext.stopKoin
 import org.koin.standalone.get
 import org.koin.standalone.inject
 import org.koin.test.KoinTest
-import org.koin.test.declareMock
-import org.mockito.Mockito
 
 class TransactionBusinessTest : KoinTest {
 
     val testModule = module {
+
+        single(override = true) { spyk(MyUtils()) }
+
+        single(override = true) { mockk<TransactionRepository>() }
 
         factory("TRANSCTION_REQUIRED") {
             Transaction()
@@ -42,8 +47,8 @@ class TransactionBusinessTest : KoinTest {
                 key = "***"
                 tag.key = "***"
                 paymentType.key = "***"
-                paymentDate = MyUtils().getDate("01/10/2018", "dd/MM/yyyy")
-                paymentDateOlder = MyUtils().getDate("01/09/2018", "dd/MM/yyyy")
+                paymentDate = myUtils.getDate("01/10/2018", "dd/MM/yyyy")
+                paymentDateOlder = myUtils.getDate("01/09/2018", "dd/MM/yyyy")
             }
         }
 
@@ -52,8 +57,8 @@ class TransactionBusinessTest : KoinTest {
                 key = "***"
                 tag.key = "***"
                 paymentType.key = "***"
-                paymentDate = MyUtils().getDate("01/10/2018", "dd/MM/yyyy")
-                paymentDateOlder = MyUtils().getDate("01/10/2018", "dd/MM/yyyy")
+                paymentDate = myUtils.getDate("01/10/2018", "dd/MM/yyyy")
+                paymentDateOlder = myUtils.getDate("01/10/2018", "dd/MM/yyyy")
             }
         }
     }
@@ -64,16 +69,7 @@ class TransactionBusinessTest : KoinTest {
 
     @Before
     fun before() {
-
-        startKoin(listOf(
-                KoinModules.appModule,
-                KoinModules.firebaseModule,
-                KoinModules.repositoryModule,
-                KoinModules.businessModule,
-                KoinModules.presenterModule,
-                testModule))
-
-        declareMock<TransactionRepository>()
+        startKoin(listOf(appModule, businessModule, presenterModule, testModule))
     }
 
     @After
@@ -97,12 +93,12 @@ class TransactionBusinessTest : KoinTest {
     }
 
     @Test
-    fun `Validar salvar transacao nova ja paga`() {
-
-        declareMock<MyUtils>()
+    fun `Validar salvar transacao ja paga`() {
 
         val transaction = get<Transaction>("TRANSCTION_UPDATE") // 01/10/2018
-        whenever(myUtils.getDate()).thenReturn(MyUtils().getDate("02/10/2018", "dd/MM/yyyy"))
+
+        every { repository.update(any()) } answers { mockk() }
+        every { myUtils.getDate() } answers { myUtils.getDate("02/10/2018", "dd/MM/yyyy") }
 
         business.save(transaction)
 
@@ -110,12 +106,12 @@ class TransactionBusinessTest : KoinTest {
     }
 
     @Test
-    fun `Validar salvar transacao nova nao paga`() {
-
-        declareMock<MyUtils>()
+    fun `Validar salvar transacao nao paga`() {
 
         val transaction = get<Transaction>("TRANSCTION_UPDATE") // 01/10/2018
-        whenever(myUtils.getDate()).thenReturn(MyUtils().getDate("01/09/2018", "dd/MM/yyyy"))
+
+        every { repository.update(any()) } answers { mockk() }
+        every { myUtils.getDate() } answers { myUtils.getDate("01/09/2018", "dd/MM/yyyy") }
 
         business.save(transaction)
 
@@ -127,9 +123,12 @@ class TransactionBusinessTest : KoinTest {
 
         val transaction = get<Transaction>("TRANSCTION_NEW")
 
+        every { repository.save(any()) } answers { mockk() }
+        every { myUtils.getDate() } answers { myUtils.getDate("01/09/2018", "dd/MM/yyyy") }
+
         business.save(transaction)
 
-        Mockito.verify(repository).save(transaction)
+        verify { repository.save(transaction) }
     }
 
     @Test
@@ -137,27 +136,34 @@ class TransactionBusinessTest : KoinTest {
 
         val transaction = get<Transaction>("TRANSCTION_MOVE")
 
+        every { repository.move(any()) } answers { mockk() }
+        every { myUtils.getDate() } answers { myUtils.getDate("01/09/2018", "dd/MM/yyyy") }
+
         business.save(transaction)
 
-        Mockito.verify(repository).move(transaction)
+        verify { repository.move(transaction) }
     }
 
     @Test
     fun `Validar atualizar transacao`() {
 
-        val transaction = get<Transaction>("TRANSCTION_UPDATE")
+        val transaction = get<Transaction>("TRANSCTION_UPDATE") // 01/10/2018
+
+        every { repository.update(any()) } answers { mockk() }
+        every { myUtils.getDate() } answers { myUtils.getDate("01/10/2018", "dd/MM/yyyy") }
 
         business.save(transaction)
 
-        Mockito.verify(repository).update(transaction)
+        verify { repository.update(transaction) }
     }
 
     @Test
     fun `Validar deletar transacao`() {
 
-        business.delete(mock())
+        every { repository.delete(any()) } answers { mockk() }
 
-        Mockito.verify(repository).delete(any())
+        business.delete(mockk())
+
+        verify { repository.delete(any()) }
     }
-
 }
