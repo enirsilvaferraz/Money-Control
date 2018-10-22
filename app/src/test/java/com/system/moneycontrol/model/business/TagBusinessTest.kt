@@ -1,49 +1,44 @@
 package com.system.moneycontrol.model.business
 
-import com.nhaarman.mockito_kotlin.never
 import com.system.moneycontrol.data.repositories.TagRepository
-import com.system.moneycontrol.infrastructure.koin.KoinModules
+import com.system.moneycontrol.infrastructure.koin.KoinModules.appModule
+import com.system.moneycontrol.infrastructure.koin.KoinModules.businessModule
 import com.system.moneycontrol.model.entities.Tag
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.koin.dsl.module.module
-import org.koin.standalone.StandAloneContext
+import org.koin.standalone.StandAloneContext.startKoin
+import org.koin.standalone.StandAloneContext.stopKoin
 import org.koin.standalone.get
 import org.koin.standalone.inject
 import org.koin.test.KoinTest
-import org.koin.test.declareMock
-import org.mockito.Mockito
 
 class TagBusinessTest : KoinTest {
 
     val testModule = module {
+
+        single { mockk<TagRepository>() }
 
         factory("TAG_NEW") { Tag() }
 
         factory("TAG_UPDATE") { Tag().apply { key = "***" } }
     }
 
-    val tagBusiness: TagBusiness by inject()
-    val tagRepository: TagRepository by inject()
+    val business: TagBusiness by inject()
+    val repository: TagRepository by inject()
 
     @Before
     fun before() {
-
-        StandAloneContext.startKoin(listOf(
-                KoinModules.appModule,
-                KoinModules.firebaseModule,
-                KoinModules.repositoryModule,
-                KoinModules.businessModule,
-                KoinModules.presenterModule,
-                testModule))
-
-        declareMock<TagRepository>()
+        startKoin(listOf(appModule, businessModule, testModule))
     }
 
     @After
     fun after() {
-        StandAloneContext.stopKoin()
+        stopKoin()
     }
 
     @Test
@@ -51,10 +46,12 @@ class TagBusinessTest : KoinTest {
 
         val tag = get<Tag>("TAG_NEW")
 
-        tagBusiness.save(tag)
+        every { repository.save(tag) } returns mockk()
 
-        Mockito.verify(tagRepository).save(tag)
-        Mockito.verify(tagRepository, never()).update(tag)
+        business.save(tag)
+
+        verify(exactly = 1) { repository.save(tag) }
+        verify(exactly = 0) { repository.update(tag) }
     }
 
     @Test
@@ -62,18 +59,22 @@ class TagBusinessTest : KoinTest {
 
         val tag = get<Tag>("TAG_UPDATE")
 
-        tagBusiness.save(tag)
+        every { repository.update(tag) } returns mockk()
 
-        Mockito.verify(tagRepository, never()).save(tag)
-        Mockito.verify(tagRepository).update(tag)
+        business.save(tag)
+
+        verify(exactly = 0) { repository.save(tag) }
+        verify(exactly = 1) { repository.update(tag) }
     }
 
     @Test
     fun `Validar buscar todas as tags`() {
 
-        tagBusiness.getAll()
+        every { repository.getList() } returns mockk()
 
-        Mockito.verify(tagRepository).getList()
+        business.getAll()
+
+        verify(exactly = 1) { repository.getList() }
     }
 
     @Test
@@ -81,8 +82,10 @@ class TagBusinessTest : KoinTest {
 
         val tag = get<Tag>("TAG_UPDATE")
 
-        tagBusiness.delete(tag)
+        every { repository.delete(tag) } returns mockk()
 
-        Mockito.verify(tagRepository).delete(tag)
+        business.delete(tag)
+
+        verify { repository.delete(tag) }
     }
 }

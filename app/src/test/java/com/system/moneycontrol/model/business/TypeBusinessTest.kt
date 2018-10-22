@@ -1,44 +1,39 @@
 package com.system.moneycontrol.model.business
 
-import com.nhaarman.mockito_kotlin.never
 import com.system.moneycontrol.data.repositories.TypeRepository
-import com.system.moneycontrol.infrastructure.koin.KoinModules
+import com.system.moneycontrol.infrastructure.koin.KoinModules.appModule
+import com.system.moneycontrol.infrastructure.koin.KoinModules.businessModule
 import com.system.moneycontrol.model.entities.PaymentType
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.koin.dsl.module.module
 import org.koin.standalone.StandAloneContext
+import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.get
 import org.koin.standalone.inject
 import org.koin.test.KoinTest
-import org.koin.test.declareMock
-import org.mockito.Mockito
 
 class TypeBusinessTest : KoinTest {
 
     val testModule = module {
+
+        single { mockk<TypeRepository>() }
 
         factory("TYPE_NEW") { PaymentType() }
 
         factory("TYPE_UPDATE") { PaymentType().apply { key = "***" } }
     }
 
-    val typeBusiness: TypeBusiness by inject()
-    val typeRepository: TypeRepository by inject()
+    val business: TypeBusiness by inject()
+    val repository: TypeRepository by inject()
 
     @Before
     fun before() {
-
-        StandAloneContext.startKoin(listOf(
-                KoinModules.appModule,
-                KoinModules.firebaseModule,
-                KoinModules.repositoryModule,
-                KoinModules.businessModule,
-                KoinModules.presenterModule,
-                testModule))
-
-        declareMock<TypeRepository>()
+        startKoin(listOf(appModule, businessModule, testModule))
     }
 
     @After
@@ -51,10 +46,12 @@ class TypeBusinessTest : KoinTest {
 
         val type = get<PaymentType>("TYPE_NEW")
 
-        typeBusiness.save(type)
+        every { repository.save(type) } returns mockk()
 
-        Mockito.verify(typeRepository).save(type)
-        Mockito.verify(typeRepository, never()).update(type)
+        business.save(type)
+
+        verify(exactly = 1) { repository.save(type) }
+        verify(exactly = 0) { repository.update(type) }
     }
 
     @Test
@@ -62,18 +59,22 @@ class TypeBusinessTest : KoinTest {
 
         val type = get<PaymentType>("TYPE_UPDATE")
 
-        typeBusiness.save(type)
+        every { repository.update(type) } returns mockk()
 
-        Mockito.verify(typeRepository, never()).save(type)
-        Mockito.verify(typeRepository).update(type)
+        business.save(type)
+
+        verify(exactly = 0) { repository.save(type) }
+        verify(exactly = 1) { repository.update(type) }
     }
 
     @Test
-    fun `Validar buscar todas os tipo de pagamento`() {
+    fun `Validar buscar todas os tipos de pagamento`() {
 
-        typeBusiness.getAll()
+        every { repository.getList() } returns mockk()
 
-        Mockito.verify(typeRepository).getList()
+        business.getAll()
+
+        verify { repository.getList() }
     }
 
     @Test
@@ -81,8 +82,10 @@ class TypeBusinessTest : KoinTest {
 
         val type = get<PaymentType>("TYPE_UPDATE")
 
-        typeBusiness.delete(type)
+        every { repository.delete(type) } returns mockk()
 
-        Mockito.verify(typeRepository).delete(type)
+        business.delete(type)
+
+        verify { repository.delete(type) }
     }
 }
