@@ -2,18 +2,21 @@ package com.system.moneycontrol.ui.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.system.moneycontrol.R
 import com.system.moneycontrol.infrastructure.MyViewUtils
+import com.system.moneycontrol.model.entities.DialogItem
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.ui.itemView.ItemRecyclerView
 import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerActivity
 import kotlinx.android.synthetic.main.activity_home.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
+
 
 class HomeActivity : AppCompatActivity(), HomeContract.View {
 
@@ -25,6 +28,7 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        setSupportActionBar(toolbar)
 
         fab.setOnClickListener {
             startActivityForResult(Intent(this, TransactionManagerActivity::class.java), 5000)
@@ -40,21 +44,16 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
                 })
     }
 
-    fun setPageTitle(title: String) {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        toolbar.title = title
-    }
-
     override fun setTitle(title: String) {
-        // TODO configurar mais tarde (activity as HomeActivity).setPageTitle(title)
+        toolbar_title.text = title
     }
 
     override fun configureList(list: List<ItemRecyclerView>) {
-        (mRecyclerView.adapter as HomeAdapter).clear().addItens(list)
+        (mRecyclerView.adapter as HomeAdapter).addItens(list)
     }
 
     override fun showEmptyState() {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        (mRecyclerView.adapter as HomeAdapter).clear()
     }
 
     override fun showError(message: String) {
@@ -74,5 +73,22 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
 
     override fun showConfirmDeleteDialog(calback: () -> Unit) {
         myViewUtils.showConfirmDialog(this, "Alert", "Delete transaction?", calback)
+    }
+
+    override fun showMonthDialog(dates: List<DialogItem>, current: String, checkedItem: Int, calback: (DialogItem) -> Unit) {
+        myViewUtils.showListDialog(this, "Choose a month", dates, checkedItem) { calback(it) }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.home_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.choose_month -> {
+            presenter.onMenuMonthClicked()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 }

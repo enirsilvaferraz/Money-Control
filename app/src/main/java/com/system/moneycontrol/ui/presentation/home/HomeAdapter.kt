@@ -26,11 +26,13 @@ class HomeAdapter(
         (holder as TransactionViewHolder).bind(list[position] as TransactionItemView)
     }
 
-    fun clear() = apply {
+    fun clear() {
         list.clear()
+        notifyDataSetChanged()
     }
 
     fun addItens(list: List<ItemRecyclerView>) {
+        this.list.clear()
         this.list.addAll(list)
         notifyDataSetChanged()
     }

@@ -45,11 +45,11 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
     }
 
     override fun showTagDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {
-        myViewUtils.showListDialog(this, "Tags", list, callback)
+        myViewUtils.showListDialog(this, "Tags", list, -1, callback)
     }
 
     override fun showPaymentTypeDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {
-        myViewUtils.showListDialog(this, "Types", list, callback)
+        myViewUtils.showListDialog(this, "Types", list, -1, callback)
     }
 
     override fun showPaymentDateDialog(paymentDate: Date?, callback: (Date) -> Unit) {

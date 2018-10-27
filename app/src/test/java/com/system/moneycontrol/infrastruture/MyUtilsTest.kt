@@ -1,5 +1,6 @@
 package com.system.moneycontrol.infrastruture
 
+import com.system.moneycontrol.infrastructure.Constants
 import com.system.moneycontrol.infrastructure.MyUtils
 import org.junit.Assert
 import org.junit.Test
@@ -59,5 +60,11 @@ class MyUtilsTest {
     @Test
     fun replaceDigits_oneOneDotOneZeroString() {
         Assert.assertEquals("11.10", MyUtils().replaceDigits("11.10"))
+    }
+
+    @Test
+    fun `Obter lista de 5 datas`() {
+        val expect = arrayListOf("Aug / 2018", "Sep / 2018", "Oct / 2018", "Nov / 2018", "Dec / 2018")
+        Assert.assertEquals(expect, MyUtils().getDates(2, MyUtils().getDate("10/10/2018", "dd/MM/yyyy"), Constants.MONTH_SHOW_VIEW))
     }
 }

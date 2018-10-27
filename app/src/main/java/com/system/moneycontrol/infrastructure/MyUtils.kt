@@ -70,4 +70,23 @@ class MyUtils {
             return null
         }
     }
+
+    fun getDates(count: Int, current: Date, pattern: String): List<String> {
+
+        var initial = -count
+
+        val instance = Calendar.getInstance()
+        instance.time = current
+        instance.add(Calendar.MONTH, initial)
+
+        val arrayListOf = arrayListOf<String>()
+
+        while (initial <= count) {
+            arrayListOf.add(getDate(instance.time, pattern))
+            instance.add(Calendar.MONTH, 1)
+            initial++
+        }
+
+        return arrayListOf
+    }
 }

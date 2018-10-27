@@ -1,5 +1,6 @@
 package com.system.moneycontrol.ui.presentation.home
 
+import com.system.moneycontrol.model.entities.DialogItem
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.ui.itemView.ItemRecyclerView
 
@@ -13,6 +14,7 @@ interface HomeContract {
         fun setProgress(progress: Int)
         fun showTransactionManager(model: Transaction)
         fun showConfirmDeleteDialog(calback: () -> Unit)
+        fun showMonthDialog(dates: List<DialogItem>, current: String, checkedItem: Int, calback: (DialogItem) -> Unit)
     }
 
     interface Presenter {
@@ -20,5 +22,6 @@ interface HomeContract {
         fun requestLoad()
         fun onItemSelectedByClick(it: Transaction)
         fun onItemSelectedByLongClick(it: Transaction)
+        fun onMenuMonthClicked()
     }
 }

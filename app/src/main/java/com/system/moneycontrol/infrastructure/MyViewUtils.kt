@@ -15,7 +15,7 @@ import java.util.*
 
 class MyViewUtils {
 
-    fun showListDialog(context: Context, title: String, list: List<DialogItem>, callback: (DialogItem) -> Unit) {
+    fun showListDialog(context: Context, title: String, list: List<DialogItem>, checkedItem: Int = -1, callback: (DialogItem) -> Unit) {
 
         val arrayAdapter = ArrayAdapter<String>(context, R.layout.item_list_single, android.R.id.text1, list.map { it.getDescription() })
 
@@ -26,7 +26,7 @@ class MyViewUtils {
 
         AlertDialog.Builder(context, R.style.AppTheme_Dialog)
                 .setTitle(title)
-                .setSingleChoiceItems(arrayAdapter, -1, function)
+                .setSingleChoiceItems(arrayAdapter, checkedItem, function)
                 .create().show()
     }
 
