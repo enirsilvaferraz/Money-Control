@@ -12,11 +12,13 @@ interface HomeContract {
         fun setTitle(title: String)
         fun setProgress(progress: Int)
         fun showTransactionManager(model: Transaction)
+        fun showConfirmDeleteDialog(calback: () -> Unit)
     }
 
     interface Presenter {
         fun init()
         fun requestLoad()
-        fun onItemSelected(it: Transaction)
+        fun onItemSelectedByClick(it: Transaction)
+        fun onItemSelectedByLongClick(it: Transaction)
     }
 }

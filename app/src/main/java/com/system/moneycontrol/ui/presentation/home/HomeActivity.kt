@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.system.moneycontrol.R
+import com.system.moneycontrol.infrastructure.MyViewUtils
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.ui.itemView.ItemRecyclerView
 import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerActivity
@@ -18,6 +19,8 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
 
     val presenter: HomeContract.Presenter by inject { parametersOf(this) }
 
+    val myViewUtils: MyViewUtils by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -28,9 +31,13 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
         }
 
         mRecyclerView.layoutManager = LinearLayoutManager(this)
-        mRecyclerView.adapter = HomeAdapter(arrayListOf()) {
-            presenter.onItemSelected(it)
-        }
+        mRecyclerView.adapter = HomeAdapter(arrayListOf(),
+                {
+                    presenter.onItemSelectedByClick(it)
+                },
+                {
+                    presenter.onItemSelectedByLongClick(it)
+                })
     }
 
     fun setPageTitle(title: String) {
@@ -63,5 +70,9 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
     override fun onStart() {
         super.onStart()
         presenter.init()
+    }
+
+    override fun showConfirmDeleteDialog(calback: () -> Unit) {
+        myViewUtils.showConfirmDialog(this, "Alert", "Delete transaction?", calback)
     }
 }

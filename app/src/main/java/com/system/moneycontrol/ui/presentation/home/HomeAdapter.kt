@@ -1,5 +1,6 @@
 package com.system.moneycontrol.ui.presentation.home
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +12,13 @@ import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.ui.itemView.ItemRecyclerView
 import com.system.moneycontrol.ui.itemView.TransactionItemView
 
-class HomeAdapter(private val list: ArrayList<ItemRecyclerView>, val callback: (Transaction) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeAdapter(
+        private val list: ArrayList<ItemRecyclerView>,
+        private val onClick: ((Transaction) -> Unit)?,
+        private val onLongClick: ((Transaction) -> Unit)?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-            TransactionViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_transaction_v6, parent, false), callback)
-
+            TransactionViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_transaction_v6, parent, false), onClick, onLongClick)
 
     override fun getItemCount(): Int = list.size
 
@@ -32,7 +35,9 @@ class HomeAdapter(private val list: ArrayList<ItemRecyclerView>, val callback: (
         notifyDataSetChanged()
     }
 
-    class TransactionViewHolder(view: View, private val callback: ((Transaction) -> Unit)?) : RecyclerView.ViewHolder(view) {
+    class TransactionViewHolder(view: View,
+                                private val onClick: ((Transaction) -> Unit)?,
+                                private val onLongClick: ((Transaction) -> Unit)?) : RecyclerView.ViewHolder(view) {
 
         fun bind(item: TransactionItemView) {
 
@@ -45,10 +50,8 @@ class HomeAdapter(private val list: ArrayList<ItemRecyclerView>, val callback: (
             date.setTextColor(ContextCompat.getColor(itemView.context, item.tagColor))
 
             val type = itemView.findViewById<TextView>(R.id.mType)
-            //type.setColorFilter(Color.parseColor(item.typeColor))
-            //type.setImageDrawable(ContextCompat.getDrawable(itemView.context, item.typeDrawable))
+            type.setTextColor(Color.parseColor(item.typeColor))
             type.text = item.typeName
-            type.setTextColor(ContextCompat.getColor(itemView.context, item.tagColor))
 
             val price = itemView.findViewById<TextView>(R.id.mPrice)
             price.text = if (item.price.isBlank() && item.refund.isBlank()) "--" else item.price
@@ -58,7 +61,11 @@ class HomeAdapter(private val list: ArrayList<ItemRecyclerView>, val callback: (
             refund.text = item.refund
             refund.visibility = if (item.refund.isNotBlank()) View.VISIBLE else View.GONE
 
-            itemView.setOnClickListener { callback?.invoke(item.transaction) }
+            itemView.setOnClickListener { onClick?.invoke(item.transaction) }
+            itemView.setOnLongClickListener {
+                onLongClick?.invoke(item.transaction)
+                true
+            }
         }
     }
 }

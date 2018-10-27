@@ -21,7 +21,7 @@ data class TransactionItemView(
             transaction.tag.name,
             if (transaction.moneySpent != 0.0) MyUtils().currencyFormat(transaction.moneySpent) else "",
             if (transaction.refund != 0.0) MyUtils().currencyFormat(transaction.refund) else "",
-            transaction.paymentType.color,
+            if (transaction.alreadyPaid) transaction.paymentType.color else "#c49a0f",
             MyUtils().getDate(transaction.paymentDate, "MMM, dd"),
             transaction.paymentType.name,
             R.drawable.ic_fiber_manual_record_black_24dp,

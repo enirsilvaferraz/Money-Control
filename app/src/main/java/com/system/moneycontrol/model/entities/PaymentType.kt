@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.system.moneycontrol.data.mappers.PaymentTypeFirebase
 
-data class PaymentType(var key: String?, var name: String = "", var color: String = "") : DialogItem, Parcelable {
+data class PaymentType(var key: String?, var name: String = "", var color: String = "#000000") : DialogItem, Parcelable {
 
     constructor(parcel: Parcel) : this(
             parcel.readString(),

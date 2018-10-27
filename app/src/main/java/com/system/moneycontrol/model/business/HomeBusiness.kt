@@ -35,6 +35,6 @@ class HomeBusiness(val repTransaction: TransactionRepository, val repTag: TagRep
             transaction.tag = tags.filter { it.key == transaction.tag.key }[0]
             transaction.paymentType = types.filter { it.key == transaction.paymentType.key }[0]
         }
-        return transactions
+        return transactions.sortedWith(compareBy({ it.paymentDate }, { it.paymentType.name }, { it.tag.name }))
     }
 }

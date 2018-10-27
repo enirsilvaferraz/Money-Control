@@ -62,4 +62,14 @@ class MyViewUtils {
                     .hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
+
+    fun showConfirmDialog(context: Context, title: String, content: String, calback: () -> Unit) {
+        AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(content)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(R.string.system_yes) { _: DialogInterface, _: Int -> calback() }
+                .setNegativeButton(R.string.system_no) { _: DialogInterface, _: Int -> }
+                .create().show()
+    }
 }
