@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.system.moneycontrol.R
 import com.system.moneycontrol.infrastructure.MyViewUtils
 import com.system.moneycontrol.model.entities.DialogItem
+import com.system.moneycontrol.ui.component.RightDrawableOnTouchListener
 import com.system.moneycontrol.ui.presentation.tag.TagManagerActivity
 import com.system.moneycontrol.ui.presentation.typemanager.TypeManagerActivity
 import com.system.moneycontrol.ui.utils.CurrencyTextWatcher
@@ -21,20 +22,36 @@ import java.util.*
  */
 class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContract.View {
 
-    val myViewUtils: MyViewUtils by inject()
+    private val myViewUtils: MyViewUtils by inject()
     val presenter: TransactionManagerContract.Presenter by inject { parametersOf(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction_manager)
 
-        mPaymentDateValue.setOnClickListener { presenter.onPaymentDateClick() }
-        mTagValue.setOnClickListener { presenter.onTagClick() }
-        mTypeValue.setOnClickListener { presenter.onPaymentTypeClick() }
-
         mPriceValue.addTextChangedListener(CurrencyTextWatcher { presenter.onPriceSetted(it) })
+        mPriceValue.requestFocus()
+
         mRefundValue.addTextChangedListener(CurrencyTextWatcher { presenter.onRefundSetted(it) })
         mContentValue.addTextChangedListener(StringTextWatcher { presenter.onContentSetted(it) })
+
+        mPaymentDateValue.setOnTouchListener(object : RightDrawableOnTouchListener() {
+            override fun onDrawableTouch() {
+                presenter.onPaymentDateClick()
+            }
+        })
+
+        mTagValue.setOnTouchListener(object : RightDrawableOnTouchListener() {
+            override fun onDrawableTouch() {
+                presenter.onTagClick()
+            }
+        })
+
+        mTypeValue.setOnTouchListener(object : RightDrawableOnTouchListener() {
+            override fun onDrawableTouch() {
+                presenter.onPaymentTypeClick()
+            }
+        })
 
         mSaveButtom.setOnClickListener { presenter.onSaveClicked() }
     }

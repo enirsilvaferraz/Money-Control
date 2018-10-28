@@ -15,6 +15,7 @@
     <string name="system_message_deleted">%1$s deleted!</string>
     <string name="system_yes">Yes</string>
     <string name="system_no">No</string>
+    <string name="system_arrow">Arrow Down</string>
 
     <string name="system_actions_more_actions">More actions</string>
 
