@@ -34,6 +34,17 @@ class TransactionManagerPresenter(
             view.setPaymentType(this.paymentType.name)
             view.setContent(this.description)
         }
+
+        tagBusiness.getAll()
+                .addSuccessList { list -> view.configureTagAutofill(list.map { it.name }) }
+                .addFailure { view.showError(it.message!!) }
+                .execute()
+
+        typeBusiness
+                .getAll()
+                .addSuccessList { list -> view.configureTypeAutofill(list.map { it.name }) }
+                .addFailure { view.showError(it.message!!) }
+                .execute()
     }
 
     override fun onSaveClicked() {

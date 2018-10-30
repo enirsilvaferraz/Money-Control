@@ -31,6 +31,8 @@ interface TransactionManagerContract {
         fun showTypeError(s: String)
         fun clearTypeError()
         fun clearTagError()
+        fun configureTagAutofill(list: List<String>)
+        fun configureTypeAutofill(list: List<String>)
     }
 
     interface Presenter {
