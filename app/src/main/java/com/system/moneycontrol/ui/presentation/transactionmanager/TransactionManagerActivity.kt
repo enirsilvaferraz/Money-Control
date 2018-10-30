@@ -2,6 +2,7 @@ package com.system.moneycontrol.ui.presentation.transactionmanager
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.system.moneycontrol.R
@@ -141,5 +142,15 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
 
     override fun clearTypeError() {
         mTypeContainer.isErrorEnabled = false
+    }
+
+    override fun configureTagAutofill(list: List<String>) {
+        mTagValue.threshold = 1
+        mTagValue.setAdapter(ArrayAdapter<String>(this, android.R.layout.select_dialog_item, list))
+    }
+
+    override fun configureTypeAutofill(list: List<String>) {
+        mTypeValue.threshold = 1
+        mTypeValue.setAdapter(ArrayAdapter<String>(this, android.R.layout.select_dialog_item, list))
     }
 }

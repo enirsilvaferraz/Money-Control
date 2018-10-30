@@ -64,7 +64,7 @@ class MyUtilsTest {
 
     @Test
     fun `Obter lista de 5 datas`() {
-        val expect = arrayListOf("Aug / 2018", "Sep / 2018", "Oct / 2018", "Nov / 2018", "Dec / 2018")
+        val expect = arrayListOf("August / 2018", "September / 2018", "October / 2018", "November / 2018", "December / 2018")
         Assert.assertEquals(expect, MyUtils().getDates(2, MyUtils().getDate("10/10/2018", "dd/MM/yyyy"), Constants.MONTH_SHOW_VIEW))
     }
 }
