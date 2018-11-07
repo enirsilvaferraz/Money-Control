@@ -38,6 +38,7 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
         mRefundValue.addTextChangedListener(CurrencyTextWatcher { presenter.onRefundSetted(it) })
         mContentValue.addTextChangedListener(StringTextWatcher { presenter.onContentSetted(it) })
         mTagValue.addTextChangedListener(StringTextWatcher{presenter.selectTag(it)})
+        mTypeValue.addTextChangedListener(StringTextWatcher{presenter.selectType(it)})
 
         mPaymentDateValue.setOnTouchListener(object : RightDrawableOnTouchListener() {
             override fun onDrawableTouch() {

@@ -46,5 +46,6 @@ interface TransactionManagerContract {
         fun onRefundSetted(value: Double)
         fun onContentSetted(content: String)
         fun selectTag(tag: String?)
+        fun selectType(type: String?)
     }
 }

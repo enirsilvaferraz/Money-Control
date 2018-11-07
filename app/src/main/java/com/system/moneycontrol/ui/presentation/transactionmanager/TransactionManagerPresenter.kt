@@ -171,4 +171,19 @@ class TransactionManagerPresenter(
             transaction.tag = Tag()
         }
     }
+
+    override fun selectType(type: String?) {
+
+        if (type != null) {
+
+            typeBusiness.getByName(type)
+                    .addSuccessItem { transaction.paymentType = it }
+                    .addFailure { view.showError(it.message!!) }
+                    .addWarning { transaction.paymentType = PaymentType() }
+                    .execute()
+
+        } else {
+            transaction.paymentType = PaymentType()
+        }
+    }
 }

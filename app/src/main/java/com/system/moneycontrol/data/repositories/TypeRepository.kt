@@ -5,6 +5,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.system.moneycontrol.data.mappers.PaymentTypeFirebase
 import com.system.moneycontrol.infrastructure.Result
 import com.system.moneycontrol.model.entities.PaymentType
+import com.system.moneycontrol.model.entities.Tag
 
 /**
  * @param collection: Firebase Firestore (PaymentTypes)
@@ -17,6 +18,24 @@ class TypeRepository(private val collection: CollectionReference) {
             collection.get()
                     .addOnSuccessListener { task ->
                         onSuccessList?.invoke(task.documents.map { getModel(it) })
+                    }
+                    .addOnFailureListener { onFailure?.invoke(it) }
+        }
+    }
+
+    fun getByName(name: String) = object : Result<PaymentType>() {
+
+        override fun execute() {
+            collection.whereEqualTo("name", name).get()
+                    .addOnSuccessListener { task ->
+
+                        val documents = task.documents
+                        if (!documents.isEmpty()) {
+                            onSuccessItem?.invoke(documents.map { getModel(it) }.get(0))
+                        } else {
+                            onWarning?.invoke("Model not found!")
+                        }
+
                     }
                     .addOnFailureListener { onFailure?.invoke(it) }
         }

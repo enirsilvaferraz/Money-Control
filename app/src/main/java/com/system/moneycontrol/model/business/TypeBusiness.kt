@@ -14,4 +14,7 @@ class TypeBusiness(private val repository: TypeRepository) {
     } else {
         repository.update(model)
     }
+
+    fun getByName(name: String) = repository.getByName(name)
+
 }
