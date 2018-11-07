@@ -19,7 +19,24 @@ class TagRepository(val collection: CollectionReference) {
                         onSuccessList?.invoke(task.documents.map { getModel(it) })
                     }
                     .addOnFailureListener { onFailure?.invoke(it) }
+        }
+    }
 
+    fun getByName(name: String) = object : Result<Tag>() {
+
+        override fun execute() {
+            collection.whereEqualTo("name", name).get()
+                    .addOnSuccessListener { task ->
+
+                        val documents = task.documents
+                        if (!documents.isEmpty()) {
+                            onSuccessItem?.invoke(documents.map { getModel(it) }.get(0))
+                        } else {
+                            onWarning?.invoke("Model not found!")
+                        }
+
+                    }
+                    .addOnFailureListener { onFailure?.invoke(it) }
         }
     }
 

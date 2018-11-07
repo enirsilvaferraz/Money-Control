@@ -2,16 +2,18 @@ package com.system.moneycontrol.ui.presentation.transactionmanager
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.system.moneycontrol.R
 import com.system.moneycontrol.infrastructure.MyViewUtils
 import com.system.moneycontrol.model.entities.DialogItem
-import com.system.moneycontrol.ui.component.RightDrawableOnTouchListener
 import com.system.moneycontrol.ui.presentation.tag.TagManagerActivity
 import com.system.moneycontrol.ui.presentation.typemanager.TypeManagerActivity
 import com.system.moneycontrol.ui.utils.CurrencyTextWatcher
+import com.system.moneycontrol.ui.utils.RightDrawableOnTouchListener
 import com.system.moneycontrol.ui.utils.StringTextWatcher
 import kotlinx.android.synthetic.main.activity_transaction_manager.*
 import org.koin.android.ext.android.inject
@@ -35,6 +37,7 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
 
         mRefundValue.addTextChangedListener(CurrencyTextWatcher { presenter.onRefundSetted(it) })
         mContentValue.addTextChangedListener(StringTextWatcher { presenter.onContentSetted(it) })
+        mTagValue.addTextChangedListener(StringTextWatcher{presenter.selectTag(it)})
 
         mPaymentDateValue.setOnTouchListener(object : RightDrawableOnTouchListener() {
             override fun onDrawableTouch() {

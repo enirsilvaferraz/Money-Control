@@ -1,4 +1,4 @@
-package com.system.moneycontrol.ui.component
+package com.system.moneycontrol.ui.utils
 
 import android.graphics.drawable.Drawable
 import android.view.MotionEvent

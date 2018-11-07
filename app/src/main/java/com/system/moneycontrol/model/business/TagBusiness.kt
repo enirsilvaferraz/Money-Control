@@ -14,4 +14,6 @@ class TagBusiness constructor(private val repository: TagRepository) {
     } else {
         repository.update(model)
     }
+
+    fun getByName(name: String) = repository.getByName(name)
 }

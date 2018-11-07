@@ -64,10 +64,14 @@ class TransactionManagerPresenter(
 
             if (transaction.tag.key.isNullOrBlank()) {
                 view.showTagError("Tag is required!")
+            } else {
+                view.clearTagError()
             }
 
             if (transaction.paymentType.key.isNullOrBlank()) {
                 view.showTypeError("Type is required!")
+            } else {
+                view.clearTypeError()
             }
         }
     }
@@ -151,5 +155,20 @@ class TransactionManagerPresenter(
 
     override fun onContentSetted(content: String) {
         transaction.description = content
+    }
+
+    override fun selectTag(tag: String?) {
+
+        if (tag != null) {
+
+            tagBusiness.getByName(tag)
+                    .addSuccessItem { transaction.tag = it }
+                    .addFailure { view.showError(it.message!!) }
+                    .addWarning { transaction.tag = Tag() }
+                    .execute()
+
+        } else {
+            transaction.tag = Tag()
+        }
     }
 }
