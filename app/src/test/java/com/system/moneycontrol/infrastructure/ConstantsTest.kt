@@ -1,6 +1,4 @@
-package com.system.moneycontrol.infrastruture
-
-import com.system.moneycontrol.infrastructure.MyUtils
+package com.system.moneycontrol.infrastructure
 
 object ConstantsTest {
 

@@ -1,7 +1,5 @@
-package com.system.moneycontrol.infrastruture
+package com.system.moneycontrol.infrastructure
 
-import com.system.moneycontrol.infrastructure.Constants
-import com.system.moneycontrol.infrastructure.MyUtils
 import org.junit.Assert
 import org.junit.Test
 

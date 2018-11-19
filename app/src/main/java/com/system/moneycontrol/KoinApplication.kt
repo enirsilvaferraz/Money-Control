@@ -8,16 +8,16 @@ import com.system.moneycontrol.infrastructure.koin.KoinModules.presenterModule
 import com.system.moneycontrol.infrastructure.koin.KoinModules.repositoryModule
 import org.koin.android.ext.android.startKoin
 
-class KoinApplication : Application() {
+open class KoinApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        startKoin(this, listOf(
-                appModule,
-                firebaseModule,
-                repositoryModule,
-                businessModule,
-                presenterModule))
+        initDI()
+    }
+
+    protected open fun initDI() {
+        startKoin(this, listOf(appModule, firebaseModule, repositoryModule,
+                businessModule, presenterModule))
     }
 
 }
