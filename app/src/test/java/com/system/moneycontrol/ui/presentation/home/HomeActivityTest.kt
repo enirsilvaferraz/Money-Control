@@ -32,9 +32,8 @@ class HomeActivityTest : BaseRoboletricTest() {
     fun startActivity() {
 
         every { myUtils.getDate() } answers { myUtils.getDate("01/11/2018", "dd/MM/yyyy") }
-        every { business.getTransactions(any(), any(), any(), any()) } answers {
-            (this.args[2] as ((List<Transaction>) -> Unit)?)?.invoke(listOf())
-        }
+        every { business.getTransactions(any(), any(), any(), any()) } answers
+                { (this.args[2] as ((List<Transaction>) -> Unit)?)?.invoke(listOf()) }
 
         activity = Robolectric.setupActivity(HomeActivity::class.java)
     }
@@ -53,10 +52,7 @@ class HomeActivityTest : BaseRoboletricTest() {
 
         val alertDialog = ShadowAlertDialog.getShownDialogs()[0] as AlertDialog
 
-        val listView = alertDialog.listView
-        assertThat(listView.getItemAtPosition(0).toString(), equalTo("January / 2018"))
-
-        Shadows.shadowOf(listView).performItemClick(0)
+        Shadows.shadowOf(alertDialog.listView).performItemClick(0)
 
         val toolbar_title = activity.findViewById<TextView>(R.id.toolbar_title)
         assertThat(toolbar_title.text.toString(), equalTo("January, 2018"))
