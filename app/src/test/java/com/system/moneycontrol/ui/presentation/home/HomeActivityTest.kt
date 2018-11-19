@@ -68,11 +68,47 @@ class HomeActivityTest : KoinTest {
 
         activity.onOptionsItemSelected(RoboMenuItem(R.id.choose_month))
 
-        val listView = (ShadowAlertDialog.getShownDialogs()[0] as AlertDialog).listView
+        val alertDialog = ShadowAlertDialog.getShownDialogs()[0] as AlertDialog
+
+        val listView = alertDialog.listView
+        assertThat(listView.getItemAtPosition(0).toString(), equalTo("January / 2018"))
+
         Shadows.shadowOf(listView).performItemClick(0)
 
         val toolbar_title = activity.findViewById<TextView>(R.id.toolbar_title)
         assertThat(toolbar_title.text.toString(), equalTo("January, 2018"))
+    }
+
+    @Test
+    fun `validar dialog de meses`() {
+
+        activity.onOptionsItemSelected(RoboMenuItem(R.id.choose_month))
+
+        val alertDialog = ShadowAlertDialog.getShownDialogs()[0] as AlertDialog
+
+        val listView = alertDialog.listView
+
+        assertThat(listView.getItemAtPosition(0).toString(), equalTo("January / 2018"))
+        assertThat(listView.getItemAtPosition(1).toString(), equalTo("February / 2018"))
+        assertThat(listView.getItemAtPosition(2).toString(), equalTo("March / 2018"))
+        assertThat(listView.getItemAtPosition(3).toString(), equalTo("April / 2018"))
+        assertThat(listView.getItemAtPosition(4).toString(), equalTo("May / 2018"))
+        assertThat(listView.getItemAtPosition(5).toString(), equalTo("June / 2018"))
+        assertThat(listView.getItemAtPosition(6).toString(), equalTo("July / 2018"))
+        assertThat(listView.getItemAtPosition(7).toString(), equalTo("August / 2018"))
+        assertThat(listView.getItemAtPosition(8).toString(), equalTo("September / 2018"))
+        assertThat(listView.getItemAtPosition(9).toString(), equalTo("October / 2018"))
+        assertThat(listView.getItemAtPosition(10).toString(), equalTo("November / 2018"))
+        assertThat(listView.getItemAtPosition(11).toString(), equalTo("December / 2018"))
+        assertThat(listView.getItemAtPosition(12).toString(), equalTo("January / 2019"))
+        assertThat(listView.getItemAtPosition(13).toString(), equalTo("February / 2019"))
+        assertThat(listView.getItemAtPosition(14).toString(), equalTo("March / 2019"))
+        assertThat(listView.getItemAtPosition(15).toString(), equalTo("April / 2019"))
+        assertThat(listView.getItemAtPosition(16).toString(), equalTo("May / 2019"))
+        assertThat(listView.getItemAtPosition(17).toString(), equalTo("June / 2019"))
+        assertThat(listView.getItemAtPosition(18).toString(), equalTo("July / 2019"))
+        assertThat(listView.getItemAtPosition(19).toString(), equalTo("August / 2019"))
+        assertThat(listView.getItemAtPosition(20).toString(), equalTo("September / 2019"))
     }
 
     @Test
