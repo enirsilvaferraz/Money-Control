@@ -1,6 +1,5 @@
 package com.system.moneycontrol.ui.presentation.home
 
-import android.app.Activity
 import android.content.Intent
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -8,7 +7,7 @@ import androidx.test.core.app.ApplicationProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.system.moneycontrol.KoinApplication
 import com.system.moneycontrol.R
-import com.system.moneycontrol.TestKoinApplication
+import com.system.moneycontrol.infrastructure.BaseRoboletricTest
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.business.HomeBusiness
 import com.system.moneycontrol.model.entities.Transaction
@@ -16,28 +15,18 @@ import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionMan
 import io.mockk.every
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.koin.standalone.StandAloneContext
 import org.koin.standalone.inject
-import org.koin.test.KoinTest
 import org.robolectric.Robolectric
-import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
-import org.robolectric.annotation.Config
 import org.robolectric.fakes.RoboMenuItem
 import org.robolectric.shadows.ShadowAlertDialog
 
-@Config(application = TestKoinApplication::class)
-@RunWith(RobolectricTestRunner::class)
-class HomeActivityTest : KoinTest {
+class HomeActivityTest : BaseRoboletricTest() {
 
     val myUtils: MyUtils by inject()
     val business: HomeBusiness by inject()
-
-    lateinit var activity: Activity
 
     @Before
     fun startActivity() {
@@ -49,12 +38,6 @@ class HomeActivityTest : KoinTest {
 
         activity = Robolectric.setupActivity(HomeActivity::class.java)
     }
-
-    @After
-    fun after() {
-        StandAloneContext.stopKoin()
-    }
-
 
     @Test
     fun `validar titulo da tela`() {
