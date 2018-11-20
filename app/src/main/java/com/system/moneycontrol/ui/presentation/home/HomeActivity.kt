@@ -21,8 +21,10 @@ import org.koin.core.parameter.parametersOf
 class HomeActivity : AppCompatActivity(), HomeContract.View {
 
     val presenter: HomeContract.Presenter by inject { parametersOf(this) }
-
     val myViewUtils: MyViewUtils by inject()
+
+    private var menuEnableValues: MenuItem? = null
+    private var menuDableValues: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -81,14 +83,33 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.home_menu, menu)
+        menuEnableValues = menu.findItem(R.id.view_values)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+
         R.id.choose_month -> {
             presenter.onMenuMonthClicked()
             true
         }
+
+        R.id.view_values -> {
+            presenter.onMenuViewValuesClicked()
+            true
+        }
+
         else -> super.onOptionsItemSelected(item)
     }
+
+    override fun showEnableValuesMenu() {
+        menuEnableValues?.icon = getDrawable(R.drawable.ic_visibility_off_black_24dp)
+        menuEnableValues?.title = getString(R.string.home_menu_visibility_off)
+    }
+
+    override fun showDisableValuesMenu() {
+        menuEnableValues?.icon = getDrawable(R.drawable.ic_visibility_black_24dp)
+        menuEnableValues?.title = getString(R.string.home_menu_visibility_on)
+    }
+
 }

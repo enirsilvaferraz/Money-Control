@@ -15,6 +15,8 @@ interface HomeContract {
         fun showTransactionManager(model: Transaction)
         fun showConfirmDeleteDialog(calback: () -> Unit)
         fun showMonthDialog(dates: List<DialogItem>, current: String, checkedItem: Int, calback: (DialogItem) -> Unit)
+        fun showEnableValuesMenu()
+        fun showDisableValuesMenu()
     }
 
     interface Presenter {
@@ -23,5 +25,6 @@ interface HomeContract {
         fun onItemSelectedByClick(it: Transaction)
         fun onItemSelectedByLongClick(it: Transaction)
         fun onMenuMonthClicked()
+        fun onMenuViewValuesClicked()
     }
 }

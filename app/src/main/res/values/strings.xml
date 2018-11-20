@@ -20,6 +20,8 @@
     <string name="system_actions_more_actions">More actions</string>
 
     <string name="home_menu_choose_month">Choose Month</string>
+    <string name="home_menu_visibility_off">Hiding values</string>
+    <string name="home_menu_visibility_on">Showing values</string>
 
     <string name="transaction_payment_type">Payment Type</string>
     <string name="transaction_price">Price</string>

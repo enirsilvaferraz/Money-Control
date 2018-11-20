@@ -62,7 +62,7 @@
                     android:id="@+id/mPaymentDateValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_event_black_24dp"
+                    android:drawableEnd="@drawable/ic_event_black_24dp_alpha"
                     android:hint="@string/transaction_payment_date"
                     android:importantForAutofill="noExcludeDescendants"
                     android:textSize="14sp"

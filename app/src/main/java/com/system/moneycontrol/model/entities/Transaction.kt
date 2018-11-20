@@ -47,7 +47,7 @@ data class Transaction(
 
     fun toMapper() = TransactionFirebase(this)
 
-    fun toItemView() = TransactionItemView(this)
+    fun toItemView(viewValues: Boolean) = TransactionItemView(this, viewValues)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(key)

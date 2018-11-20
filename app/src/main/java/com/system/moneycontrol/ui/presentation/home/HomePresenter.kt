@@ -20,6 +20,7 @@ class HomePresenter(
 ) : HomeContract.Presenter {
 
     var current: Date = utils.getDate()
+    var viewValues: Boolean = false
 
     override fun init() {
         requestLoad()
@@ -35,6 +36,7 @@ class HomePresenter(
         view.setProgress(10)
 
         business.getTransactions(year, month, {
+
             if (it.isNotEmpty()) {
                 view.setProgress(100)
                 view.configureList(configureListView(it))
@@ -42,6 +44,8 @@ class HomePresenter(
                 view.setProgress(100)
                 view.showEmptyState()
             }
+            configureMenuViewValues()
+
         }, {
             view.showError(it.message!!)
         })
@@ -49,7 +53,7 @@ class HomePresenter(
 
     private fun configureListView(transactions: List<Transaction>): List<ItemRecyclerView> {
         val itemList = arrayListOf<ItemRecyclerView>()
-        transactions.forEach { itemList.add(it.toItemView()) }
+        transactions.forEach { itemList.add(it.toItemView(viewValues)) }
         return itemList
     }
 
@@ -77,6 +81,19 @@ class HomePresenter(
         view.showMonthDialog(dates, current, 10) { dateSelected: DialogItem ->
             this.current = utils.getDate(dateSelected.getDescription(), Constants.MONTH_SHOW_VIEW)
             requestLoad()
+        }
+    }
+
+    override fun onMenuViewValuesClicked() {
+        viewValues = !viewValues
+        requestLoad()
+    }
+
+    private fun configureMenuViewValues() {
+        if (viewValues) {
+            view.showDisableValuesMenu()
+        } else {
+            view.showEnableValuesMenu()
         }
     }
 }
