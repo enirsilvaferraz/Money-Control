@@ -49,9 +49,14 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
         mRecyclerView.adapter = HomeAdapter(arrayListOf(),
                 { presenter.onItemSelectedByClick(it) },
                 { presenter.onItemSelectedByLongClick(it) })
+    }
+
+    override fun configureMonthSpinner(selection: Int) {
 
         val months = resources.getStringArray(R.array.months)
+
         spinner_month.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, months)
+        spinner_month.setSelection(selection)
         spinner_month.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -62,9 +67,14 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
                 presenter.onMonthSelected(position)
             }
         }
+    }
+
+    override fun configureYearSpinner(selection: Int) {
 
         val years = resources.getStringArray(R.array.years)
+
         spinner_year.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, years)
+        spinner_year.setSelection(years.indexOf(selection.toString()))
         spinner_year.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

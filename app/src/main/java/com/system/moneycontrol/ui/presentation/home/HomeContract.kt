@@ -17,6 +17,8 @@ interface HomeContract {
         fun showMonthDialog(dates: List<DialogItem>, current: String, checkedItem: Int, calback: (DialogItem) -> Unit)
         fun showEnableValuesMenu()
         fun showDisableValuesMenu()
+        fun configureMonthSpinner(selection: Int)
+        fun configureYearSpinner(selection: Int)
     }
 
     interface Presenter {

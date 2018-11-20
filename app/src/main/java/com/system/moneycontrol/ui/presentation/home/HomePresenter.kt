@@ -21,6 +21,8 @@ class HomePresenter(
 
     override fun init() {
         requestLoad()
+        view.configureMonthSpinner(utils.getDate(current, Calendar.MONTH))
+        view.configureYearSpinner(utils.getDate(current, Calendar.YEAR))
     }
 
     override fun requestLoad() {
