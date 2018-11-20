@@ -7,6 +7,12 @@
         <item name="colorAccent">@color/accent</item>
     </style>
 
+    <style name="AppTheme.HomeActivity" parent="AppTheme">
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorPrimaryDark">@color/accent</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
     <style name="AppTheme.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox" />
 
 
@@ -63,6 +69,10 @@
     <style name="AppTheme.Buttom.OK" parent="AppTheme.Buttom">
         <item name="android:background">@drawable/button_background_ok</item>
         <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="Widget.Shrine.Backdrop" parent="">
+        <item name="android:background">?attr/colorAccent</item>
     </style>
 
 </resources>

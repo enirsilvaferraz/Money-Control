@@ -89,4 +89,11 @@ class MyUtils {
 
         return arrayListOf
     }
+
+    fun setDate(date: Date, field: Int, value: Int): Date {
+        val instance = Calendar.getInstance()
+        instance.time = date
+        instance.set(field, value)
+        return instance.time
+    }
 }

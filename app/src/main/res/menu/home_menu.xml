@@ -8,10 +8,4 @@
         android:title="@string/home_menu_visibility_on"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/choose_month"
-        android:icon="@drawable/ic_event_black_24dp"
-        android:title="@string/home_menu_choose_month"
-        app:showAsAction="always" />
-
 </menu>

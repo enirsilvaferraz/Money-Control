@@ -1,51 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.presentation.home.HomeActivity">
+    android:background="@color/accent"
+    android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+    <LinearLayout
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:liftOnScroll="true">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
-            app:theme="@style/ToolbarTheme"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="4dp">
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            app:navigationIcon="@drawable/ic_menu_black_24dp"
+            app:theme="@style/ToolbarTheme" />
 
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:text="@string/title_activity_home"
-                android:textColor="#000000"
-                android:textSize="26sp"
-                android:textStyle="bold" />
+        <com.pedromassango.ibackdrop.Backdrop
+            android:id="@+id/backdrop_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:backViewSize="520dp"
+            app:closeIcon="@drawable/ic_close_black_24dp"
+            app:openIcon="@drawable/ic_menu_black_24dp">
 
-        </androidx.appcompat.widget.Toolbar>
+            <include layout="@layout/activity_home_backlayer" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+            <include layout="@layout/activity_home_frontlayer" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/primary"
-        android:clipToPadding="false"
-        android:paddingBottom="80dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".ui.presentation.home.HomeActivity"
-        tools:listitem="@layout/item_transaction"
-        tools:showIn="@layout/activity_home" />
+        </com.pedromassango.ibackdrop.Backdrop>
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

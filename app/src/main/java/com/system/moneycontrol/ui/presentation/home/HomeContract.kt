@@ -24,7 +24,8 @@ interface HomeContract {
         fun requestLoad()
         fun onItemSelectedByClick(it: Transaction)
         fun onItemSelectedByLongClick(it: Transaction)
-        fun onMenuMonthClicked()
         fun onMenuViewValuesClicked()
+        fun onMonthSelected(position: Int)
+        fun onYearSelected(position: Int)
     }
 }

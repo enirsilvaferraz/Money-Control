@@ -1,11 +1,8 @@
 package com.system.moneycontrol.ui.presentation.home
 
-import com.system.moneycontrol.infrastructure.Constants
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.business.HomeBusiness
 import com.system.moneycontrol.model.business.TransactionBusiness
-import com.system.moneycontrol.model.entities.DialogItem
-import com.system.moneycontrol.model.entities.Month
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.ui.itemView.ItemRecyclerView
 import java.util.*
@@ -75,13 +72,14 @@ class HomePresenter(
         }
     }
 
-    override fun onMenuMonthClicked() {
-        val dates = utils.getDates(10, utils.getDate(), Constants.MONTH_SHOW_VIEW).map { Month(it) }
-        val current = utils.getDate(Constants.MONTH_SHOW_VIEW)
-        view.showMonthDialog(dates, current, 10) { dateSelected: DialogItem ->
-            this.current = utils.getDate(dateSelected.getDescription(), Constants.MONTH_SHOW_VIEW)
-            requestLoad()
-        }
+    override fun onMonthSelected(position: Int) {
+        current = utils.setDate(current, Calendar.MONTH, position)
+        requestLoad()
+    }
+
+    override fun onYearSelected(position: Int) {
+        current = utils.setDate(current, Calendar.YEAR, position)
+        requestLoad()
     }
 
     override fun onMenuViewValuesClicked() {

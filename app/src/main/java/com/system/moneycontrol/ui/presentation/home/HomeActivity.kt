@@ -4,8 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.system.moneycontrol.R
 import com.system.moneycontrol.infrastructure.MyViewUtils
@@ -14,6 +18,8 @@ import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.ui.itemView.ItemRecyclerView
 import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerActivity
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_home_backlayer.*
+import kotlinx.android.synthetic.main.activity_home_frontlayer.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
@@ -24,13 +30,16 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
     val myViewUtils: MyViewUtils by inject()
 
     private var menuEnableValues: MenuItem? = null
-    private var menuDableValues: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        toolbar.title = ""
         setSupportActionBar(toolbar)
+
+        backdrop_view.buildWithToolbar(toolbar)
 
         fab.setOnClickListener {
             startActivityForResult(Intent(this, TransactionManagerActivity::class.java), 5000)
@@ -38,16 +47,38 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
 
         mRecyclerView.layoutManager = LinearLayoutManager(this)
         mRecyclerView.adapter = HomeAdapter(arrayListOf(),
-                {
-                    presenter.onItemSelectedByClick(it)
-                },
-                {
-                    presenter.onItemSelectedByLongClick(it)
-                })
+                { presenter.onItemSelectedByClick(it) },
+                { presenter.onItemSelectedByLongClick(it) })
+
+        val months = resources.getStringArray(R.array.months)
+        spinner_month.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, months)
+        spinner_month.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Nothing to do
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                presenter.onMonthSelected(position)
+            }
+        }
+
+        val years = resources.getStringArray(R.array.years)
+        spinner_year.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, years)
+        spinner_year.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Nothing to do
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                presenter.onYearSelected((parent as AppCompatSpinner).adapter.getItem(position).toString().toInt())
+            }
+        }
     }
 
     override fun setTitle(title: String) {
-        toolbar_title.text = title
+        toolbar.title = title
     }
 
     override fun configureList(list: List<ItemRecyclerView>) {
@@ -88,11 +119,6 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-
-        R.id.choose_month -> {
-            presenter.onMenuMonthClicked()
-            true
-        }
 
         R.id.view_values -> {
             presenter.onMenuViewValuesClicked()

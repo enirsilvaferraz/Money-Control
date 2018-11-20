@@ -14,7 +14,7 @@
         <activity
             android:name="com.system.moneycontrol.ui.presentation.home.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
