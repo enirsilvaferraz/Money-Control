@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.system.moneycontrol.R
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.ui.itemView.ItemRecyclerView
+import com.system.moneycontrol.ui.itemView.TitleItemVIew
 import com.system.moneycontrol.ui.itemView.TransactionItemView
 
 class HomeAdapter(
@@ -17,13 +18,24 @@ class HomeAdapter(
         private val onClick: ((Transaction) -> Unit)?,
         private val onLongClick: ((Transaction) -> Unit)?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-            TransactionViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_transaction_v6, parent, false), onClick, onLongClick)
+    override fun getItemViewType(position: Int): Int = when (list[position]) {
+        is TitleItemVIew -> 0
+        is TransactionItemView -> 1
+        else -> super.getItemViewType(position)
+    }
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
+        0 -> TitleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_title, parent, false))
+        1 -> TransactionViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_transaction_v6, parent, false), onClick, onLongClick)
+        else -> throw RuntimeException("No type selected")
+    }
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as TransactionViewHolder).bind(list[position] as TransactionItemView)
+        when (holder) {
+            is TitleViewHolder -> holder.bind(list[position] as TitleItemVIew)
+            is TransactionViewHolder -> holder.bind(list[position] as TransactionItemView)
+        }
     }
 
     fun clear() {
@@ -35,6 +47,13 @@ class HomeAdapter(
         this.list.clear()
         this.list.addAll(list)
         notifyDataSetChanged()
+    }
+
+    class TitleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        fun bind(item: TitleItemVIew) {
+            itemView.findViewById<TextView>(R.id.title).text = item.title
+        }
     }
 
     class TransactionViewHolder(view: View,

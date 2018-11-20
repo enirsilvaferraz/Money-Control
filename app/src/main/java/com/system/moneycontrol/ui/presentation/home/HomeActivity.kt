@@ -148,4 +148,8 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
         menuEnableValues?.title = getString(R.string.home_menu_visibility_on)
     }
 
+    override fun closeBackDrop() {
+        backdrop_view.closeBackdrop()
+    }
+
 }

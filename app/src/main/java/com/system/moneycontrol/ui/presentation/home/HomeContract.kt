@@ -19,6 +19,7 @@ interface HomeContract {
         fun showDisableValuesMenu()
         fun configureMonthSpinner(selection: Int)
         fun configureYearSpinner(selection: Int)
+        fun closeBackDrop()
     }
 
     interface Presenter {

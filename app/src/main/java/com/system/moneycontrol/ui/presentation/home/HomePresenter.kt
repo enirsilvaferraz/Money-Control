@@ -4,7 +4,6 @@ import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.business.HomeBusiness
 import com.system.moneycontrol.model.business.TransactionBusiness
 import com.system.moneycontrol.model.entities.Transaction
-import com.system.moneycontrol.ui.itemView.ItemRecyclerView
 import java.util.*
 
 class HomePresenter(
@@ -32,28 +31,25 @@ class HomePresenter(
 
         view.setTitle(utils.getDate(current, "MMMM, yyyy"))
 
+        view.closeBackDrop()
+
         view.setProgress(10)
 
-        business.getTransactions(year, month, {
+        business.getTransactions(year, month, viewValues, {
 
             if (it.isNotEmpty()) {
                 view.setProgress(100)
-                view.configureList(configureListView(it))
+                view.configureList(it)
             } else {
                 view.setProgress(100)
                 view.showEmptyState()
             }
+
             configureMenuViewValues()
 
         }, {
             view.showError(it.message!!)
         })
-    }
-
-    private fun configureListView(transactions: List<Transaction>): List<ItemRecyclerView> {
-        val itemList = arrayListOf<ItemRecyclerView>()
-        transactions.forEach { itemList.add(it.toItemView(viewValues)) }
-        return itemList
     }
 
     override fun onItemSelectedByClick(it: Transaction) {

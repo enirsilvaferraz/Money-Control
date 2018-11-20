@@ -29,7 +29,7 @@ class HomeActivityTest : BaseRoboletricTest() {
     fun startActivity() {
 
         every { myUtils.getDate() } answers { myUtils.getDate("01/11/2018", "dd/MM/yyyy") }
-        every { business.getTransactions(any(), any(), any(), any()) } answers
+        every { business.getTransactions(any(), any(), any(), any(), any()) } answers
                 { (this.args[2] as ((List<Transaction>) -> Unit)?)?.invoke(listOf()) }
 
         activity = Robolectric.setupActivity(HomeActivity::class.java)
