@@ -2,51 +2,39 @@ package com.system.moneycontrol.model.business
 
 import com.system.moneycontrol.data.repositories.TagRepository
 import com.system.moneycontrol.data.repositories.TransactionRepository
-import com.system.moneycontrol.model.entities.PaymentType
+import com.system.moneycontrol.data.repositories.TypeRepository
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.ui.itemView.ItemRecyclerView
+import com.system.moneycontrol.ui.itemView.SummaryItemView
 import com.system.moneycontrol.ui.itemView.TitleItemVIew
 
 
-class HomeBusiness(val repTransaction: TransactionRepository, val repTag: TagRepository, val repType: TypeBusiness) {
+class HomeBusiness(private val repTransaction: TransactionRepository,
+                   private val repTag: TagRepository,
+                   private val repType: TypeRepository) {
 
-    fun getTransactions(year: String, month: String, viewValues: Boolean, onSuccess: ((List<ItemRecyclerView>) -> Unit)?, onFailure: ((Exception) -> Unit)?) {
-        repTransaction.getList(year, month)
-                .addSuccessList { transactions -> getTag(viewValues, onSuccess, transactions, onFailure) }
-                .addFailure(onFailure)
-                .execute()
-    }
+    suspend fun getViewTransactions(year: String, month: String, viewValues: Boolean): ArrayList<ItemRecyclerView> {
 
-    private fun getTag(viewValues: Boolean, onSuccess: ((List<ItemRecyclerView>) -> Unit)?, transactions: List<Transaction>, onFailure: ((Exception) -> Unit)?) {
-        repTag.getList()
-                .addSuccessList { tags -> getTypes(viewValues, onSuccess, transactions, tags, onFailure) }
-                .addFailure(onFailure)
-                .execute()
-    }
-
-    private fun getTypes(viewValues: Boolean, onSuccess: ((List<ItemRecyclerView>) -> Unit)?, transactions: List<Transaction>, tags: List<Tag>, onFailure: ((Exception) -> Unit)?) {
-        repType.getAll()
-                .addSuccessList { types -> onSuccess?.invoke(formatResultTransactions(transactions, tags, types, viewValues)) }
-                .addFailure(onFailure)
-                .execute()
-    }
-
-    private fun formatResultTransactions(transactions: List<Transaction>, tags: List<Tag>, types: List<PaymentType>, viewValues: Boolean): List<ItemRecyclerView> {
+        val transactions = repTransaction.getList(year, month)
+        val tags = repTag.getList()
+        val types = repType.getList()
 
         transactions.forEach { transaction ->
+            transaction.moneySpent = if (viewValues) transaction.moneySpent else 0.0
+            transaction.refund = if (viewValues) transaction.refund else 0.0
             transaction.tag = tags.filter { it.key == transaction.tag.key }[0]
             transaction.paymentType = types.filter { it.key == transaction.paymentType.key }[0]
         }
 
-        return if (transactions.isNotEmpty()) {
-            configureGroup(transactions, arrayOf("Nubank", "Credicard"), viewValues)
-        } else {
-            listOf()
-        }
+        val viewList = arrayListOf<ItemRecyclerView>()
+        viewList.addAll(configureSummaryList(transactions, tags))
+        viewList.addAll(configureTransactionList(transactions, arrayOf("Nubank", "Credicard")))
+
+        return viewList
     }
 
-    private fun configureGroup(fetchedList: List<Transaction>, typesName: Array<String>, viewValues: Boolean): ArrayList<ItemRecyclerView> {
+    private fun configureTransactionList(fetchedList: List<Transaction>, typesName: Array<String>): ArrayList<ItemRecyclerView> {
 
         val orderedList = arrayListOf<Transaction>()
         orderedList.addAll(fetchedList)
@@ -64,29 +52,43 @@ class HomeBusiness(val repTransaction: TransactionRepository, val repTag: TagRep
                 orderedList.removeAll(groupItens)
 
                 excluded.add(TitleItemVIew(typeName))
-                excluded.addAll(groupItens.map { it.toItemView(viewValues) })
+                excluded.addAll(groupItens.map { it.toItemView() })
             }
         }
 
         orderedList.sortedWith(compareBy({ it.paymentDate }, { it.paymentType.name }, { it.tag.name }))
 
-        // finalList.add(TitleItemVIew("Transações Correntes"))
-        finalList.addAll(orderedList.map { it.toItemView(viewValues) })
+        finalList.add(TitleItemVIew("Transações Correntes"))
+        finalList.addAll(orderedList.map { it.toItemView() })
         finalList.addAll(excluded)
 
         return finalList
     }
 
-    private fun getGroupedTransaction(groupItens: List<Transaction>): Transaction {
-
-        val transactionNubank = Transaction()
-        with(transactionNubank) {
-            tag.name = "Pagamentos Agrupados"
-            paymentDate = groupItens[0].paymentDate
-            paymentType = groupItens[0].paymentType
-            moneySpent = groupItens.sumByDouble { it.moneySpent }
-            refund = groupItens.sumByDouble { it.refund }
-        }
-        return transactionNubank
+    private fun getGroupedTransaction(groupItens: List<Transaction>): Transaction = with(Transaction()) {
+        tag.name = "Pagamentos Agrupados"
+        paymentDate = groupItens[0].paymentDate
+        paymentType = groupItens[0].paymentType
+        moneySpent = groupItens.sumByDouble { it.moneySpent }
+        refund = groupItens.sumByDouble { it.refund }
+        this
     }
+
+    private fun configureSummaryList(transactions: List<Transaction>, tags: List<Tag>): ArrayList<ItemRecyclerView> {
+
+        val finalList = arrayListOf<ItemRecyclerView>()
+        finalList.add(TitleItemVIew("Resumo Geral"))
+
+        tags.forEach { tag ->
+            finalList.add(getSummaredTransaction(transactions.filter { it.tag.equals(tag) }))
+        }
+
+        return finalList
+    }
+
+    private fun getSummaredTransaction(filteredList: List<Transaction>): ItemRecyclerView = SummaryItemView(
+            tag = filteredList[0].tag.name,
+            price = filteredList.sumByDouble { it.moneySpent },
+            refund = filteredList.sumByDouble { it.refund }
+    )
 }

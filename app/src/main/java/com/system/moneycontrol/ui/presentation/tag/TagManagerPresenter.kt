@@ -2,6 +2,9 @@ package com.system.moneycontrol.ui.presentation.tag
 
 import com.system.moneycontrol.model.business.TagBusiness
 import com.system.moneycontrol.model.entities.Tag
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class TagManagerPresenter(
 
@@ -24,15 +27,18 @@ class TagManagerPresenter(
 
         } else {
 
-            tagBusiness.save(tag)
-                    .addSuccessItem {
-                        view.showSuccess("Tag created!")
-                        view.closeWindow()
-                    }
-                    .addFailure {
-                        view.showError(it.message!!)
-                    }
-                    .execute()
+            GlobalScope.launch(Dispatchers.Main) {
+
+                try {
+
+                    tagBusiness.save(tag)
+                    view.showSuccess("Tag created!")
+                    view.closeWindow()
+
+                } catch (e: Exception) {
+                    view.showError(e.message!!)
+                }
+            }
         }
     }
 }

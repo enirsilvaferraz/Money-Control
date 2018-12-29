@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.system.moneycontrol.R
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.ui.itemView.ItemRecyclerView
+import com.system.moneycontrol.ui.itemView.SummaryItemView
 import com.system.moneycontrol.ui.itemView.TitleItemVIew
 import com.system.moneycontrol.ui.itemView.TransactionItemView
 
@@ -21,20 +22,24 @@ class HomeAdapter(
     override fun getItemViewType(position: Int): Int = when (list[position]) {
         is TitleItemVIew -> 0
         is TransactionItemView -> 1
+        is SummaryItemView -> 2
         else -> super.getItemViewType(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
         0 -> TitleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_title, parent, false))
         1 -> TransactionViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_transaction_v6, parent, false), onClick, onLongClick)
+        2 -> SummaryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_summary, parent, false))
         else -> throw RuntimeException("No type selected")
     }
+
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is TitleViewHolder -> holder.bind(list[position] as TitleItemVIew)
             is TransactionViewHolder -> holder.bind(list[position] as TransactionItemView)
+            is SummaryViewHolder -> holder.bind(list[position] as SummaryItemView)
         }
     }
 
@@ -53,6 +58,23 @@ class HomeAdapter(
 
         fun bind(item: TitleItemVIew) {
             itemView.findViewById<TextView>(R.id.title).text = item.title
+        }
+    }
+
+    class SummaryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        fun bind(item: SummaryItemView) {
+
+            val tag = itemView.findViewById<TextView>(R.id.mTag)
+            tag.text = item.tag
+
+            val price = itemView.findViewById<TextView>(R.id.mPrice)
+            price.text = if (item.price.isBlank() && item.refund.isBlank()) "--" else item.price
+            price.visibility = if (item.price.isNotBlank() || (item.price.isBlank() && item.refund.isBlank())) View.VISIBLE else View.GONE
+
+            val refund = itemView.findViewById<TextView>(R.id.mRefund)
+            refund.text = item.refund
+            refund.visibility = if (item.refund.isNotBlank()) View.VISIBLE else View.GONE
         }
     }
 

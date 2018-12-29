@@ -6,61 +6,63 @@ import com.system.moneycontrol.data.mappers.TransactionFirebase
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.infrastructure.Result
 import com.system.moneycontrol.model.entities.Transaction
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 /**
  * @param collection: Firebase Firestore (transactions)
  */
 class TransactionRepository(private val collection: CollectionReference, var myUtils: MyUtils) {
 
-    fun getList(year: String, month: String) = object : Result<Transaction>() {
+    suspend fun getList(year: String, month: String) = suspendCoroutine<List<Transaction>> {
 
-        override fun execute() {
-            collection.document(year).collection(month).orderBy("paymentDate").get()
-                    .addOnSuccessListener { task -> onSuccessList?.invoke(task.documents.map { getModel(it) }) }
-                    .addOnFailureListener { onFailure?.invoke(it) }
-        }
+        collection.document(year).collection(month).orderBy("paymentDate").get()
+                .addOnSuccessListener { task ->
+                    it.resume(task.documents.map { getModel(it) })
+                }
+                .addOnFailureListener { exception ->
+                    it.resumeWithException(exception)
+                }
     }
 
-    fun save(model: Transaction) = object : Result<Transaction>() {
+    suspend fun save(model: Transaction) = suspendCoroutine<Transaction> {
 
-        override fun execute() {
-            collection.document(getYear(model)).collection(getMonth(model)).add(model.toMapper())
-                    .addOnSuccessListener { onSuccessItem?.invoke(model.copy(key = it.id)) }
-                    .addOnFailureListener { onFailure?.invoke(it) }
-        }
+        collection.document(getYear(model)).collection(getMonth(model)).add(model.toMapper())
+                .addOnSuccessListener { task ->
+                    it.resume(model.copy(key = task.id))
+                }
+                .addOnFailureListener { exception ->
+                    it.resumeWithException(exception)
+                }
     }
 
-    fun move(model: Transaction) = object : Result<Transaction>() {
 
-        override fun execute() {
-            save(model).addSuccessItem { saved ->
-                delete(saved.copy(paymentDate = model.paymentDateOlder))
-                        .addSuccessItem { onSuccessItem?.invoke(saved) }
-                        .addFailure { onFailure?.invoke(it) }
-            }.addFailure { onFailure?.invoke(it) }
-        }
+    suspend fun delete(model: Transaction) = suspendCoroutine<Transaction> {
+
+        collection.document(getYear(model)).collection(getMonth(model)).document(model.key!!).delete()
+                .addOnSuccessListener { _ ->
+                    it.resume(model)
+                }
+                .addOnFailureListener { exception ->
+                    it.resumeWithException(exception)
+                }
     }
 
-    fun delete(model: Transaction) = object : Result<Transaction>() {
+    suspend fun move(model: Transaction) = delete(save(model).copy(paymentDate = model.paymentDateOlder))
 
-        override fun execute() {
-            collection.document(getYear(model)).collection(getMonth(model)).document(model.key!!).delete()
-                    .addOnSuccessListener { onSuccessItem?.invoke(model) }
-                    .addOnFailureListener { onFailure?.invoke(it) }
-        }
+    suspend fun update(model: Transaction) = suspendCoroutine<Transaction> {
+
+        collection.document(getYear(model)).collection(getMonth(model)).document(model.key!!).update(model.toMapper().toMap())
+                .addOnSuccessListener { _ ->
+                    it.resume(model)
+                }
+                .addOnFailureListener { exception ->
+                    it.resumeWithException(exception)
+                }
     }
 
-    fun update(model: Transaction) = object : Result<Transaction>() {
-
-        override fun execute() {
-            collection.document(getYear(model)).collection(getMonth(model))
-                    .document(model.key!!).update(model.toMapper().toMap())
-                    .addOnSuccessListener { onSuccessItem?.invoke(model) }
-                    .addOnFailureListener { onFailure?.invoke(it) }
-        }
-    }
-
-    fun getModel(it: DocumentSnapshot) = it.toObject(TransactionFirebase::class.java)!!.toModel(it.id)
+    private fun getModel(it: DocumentSnapshot) = it.toObject(TransactionFirebase::class.java)!!.toModel(it.id)
 
     private fun getMonth(model: Transaction) = myUtils.getDate(model.paymentDate, "MM")
 

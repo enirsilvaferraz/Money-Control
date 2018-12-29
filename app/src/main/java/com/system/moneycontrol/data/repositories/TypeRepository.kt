@@ -3,69 +3,76 @@ package com.system.moneycontrol.data.repositories
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.system.moneycontrol.data.mappers.PaymentTypeFirebase
-import com.system.moneycontrol.infrastructure.Result
 import com.system.moneycontrol.model.entities.PaymentType
-import com.system.moneycontrol.model.entities.Tag
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 /**
  * @param collection: Firebase Firestore (PaymentTypes)
  */
 class TypeRepository(private val collection: CollectionReference) {
 
-    fun getList(): Result<PaymentType> = object : Result<PaymentType>() {
+    suspend fun getList() = suspendCoroutine<List<PaymentType>> {
 
-        override fun execute() {
-            collection.get()
-                    .addOnSuccessListener { task ->
-                        onSuccessList?.invoke(task.documents.map { getModel(it) })
+        collection.orderBy("name").get()
+                .addOnSuccessListener { task ->
+                    it.resume(task.documents.map { getModel(it) })
+                }
+                .addOnFailureListener { exception ->
+                    it.resumeWithException(exception)
+                }
+    }
+
+    suspend fun getByName(name: String) = suspendCoroutine<PaymentType> {
+
+        collection.whereEqualTo("name", name).get()
+                .addOnSuccessListener { task ->
+
+                    val documents = task.documents
+                    if (!documents.isEmpty()) {
+                        it.resume(documents.map { getModel(it) }.get(0))
+                    } else {
+                        it.resumeWithException(Exception("Model not found!"))
                     }
-                    .addOnFailureListener { onFailure?.invoke(it) }
-        }
+
+                }
+                .addOnFailureListener { exception ->
+                    it.resumeWithException(exception)
+                }
     }
 
-    fun getByName(name: String) = object : Result<PaymentType>() {
+    suspend fun save(model: PaymentType) = suspendCoroutine<PaymentType> {
 
-        override fun execute() {
-            collection.whereEqualTo("name", name).get()
-                    .addOnSuccessListener { task ->
-
-                        val documents = task.documents
-                        if (!documents.isEmpty()) {
-                            onSuccessItem?.invoke(documents.map { getModel(it) }.get(0))
-                        } else {
-                            onWarning?.invoke("Model not found!")
-                        }
-
-                    }
-                    .addOnFailureListener { onFailure?.invoke(it) }
-        }
+        collection.add(model.toMapper())
+                .addOnSuccessListener { task ->
+                    it.resume(model.copy(key = task.id))
+                }
+                .addOnFailureListener { exception ->
+                    it.resumeWithException(exception)
+                }
     }
 
-    fun save(model: PaymentType) = object : Result<PaymentType>() {
+    suspend fun delete(model: PaymentType) = suspendCoroutine<PaymentType> {
 
-        override fun execute() {
-            collection.add(model.toMapper())
-                    .addOnSuccessListener { onSuccessItem?.invoke(model.copy(key = it.id)) }
-                    .addOnFailureListener { onFailure?.invoke(it) }
-        }
+        collection.document(model.key!!).delete()
+                .addOnSuccessListener { _ ->
+                    it.resume(model)
+                }
+                .addOnFailureListener { exception ->
+                    it.resumeWithException(exception)
+                }
     }
 
-    fun delete(model: PaymentType) = object : Result<PaymentType>() {
+    suspend fun update(model: PaymentType) = suspendCoroutine<PaymentType> {
 
-        override fun execute() {
-            collection.document(model.key!!).delete()
-                    .addOnSuccessListener { onSuccessItem?.invoke(model) }
-                    .addOnFailureListener { onFailure?.invoke(it) }
-        }
-    }
-
-    fun update(model: PaymentType) = object : Result<PaymentType>() {
-
-        override fun execute() {
-            collection.document(model.key!!).set(model.toMapper())
-                    .addOnSuccessListener { onSuccessItem?.invoke(model) }
-                    .addOnFailureListener { onFailure?.invoke(it) }
-        }
+        collection.document(model.key!!).set(model.toMapper())
+                .addOnSuccessListener { _ ->
+                    it.resume(model)
+                }
+                .addOnFailureListener { exception ->
+                    it.resumeWithException(exception)
+                }
     }
 
     fun getModel(it: DocumentSnapshot) = it.toObject(PaymentTypeFirebase::class.java)!!.toModel(it.id)

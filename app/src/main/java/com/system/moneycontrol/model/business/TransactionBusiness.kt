@@ -8,7 +8,7 @@ import java.util.*
 
 class TransactionBusiness(val repository: TransactionRepository, var myUtils: MyUtils) {
 
-    fun save(model: Transaction): Result<Transaction> {
+  suspend  fun save(model: Transaction): Transaction {
 
         if (model.tag.key.isNullOrBlank() || model.paymentType.key.isNullOrBlank()) {
             throw IllegalArgumentException()
@@ -23,7 +23,7 @@ class TransactionBusiness(val repository: TransactionRepository, var myUtils: My
         }
     }
 
-    fun delete(model: Transaction) = repository.delete(model)
+  suspend  fun delete(model: Transaction) = repository.delete(model)
 
     private fun processSave(transaction: Transaction): SaveType = when {
         transaction.key.isNullOrBlank() -> SaveType.SAVE_NEW

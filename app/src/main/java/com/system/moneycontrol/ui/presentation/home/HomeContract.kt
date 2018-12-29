@@ -25,8 +25,8 @@ interface HomeContract {
     interface Presenter {
         fun init()
         fun requestLoad()
-        fun onItemSelectedByClick(it: Transaction)
-        fun onItemSelectedByLongClick(it: Transaction)
+        fun onItemSelectedByClick(model: Transaction)
+        fun onItemSelectedByLongClick(model: Transaction)
         fun onMenuViewValuesClicked()
         fun onMonthSelected(position: Int)
         fun onYearSelected(position: Int)

@@ -16,11 +16,11 @@ data class TransactionItemView(
         val typeDrawable: Int,
         val tagColor: Int) : ItemRecyclerView {
 
-    constructor(transaction: Transaction, viewValues: Boolean) : this(
+    constructor(transaction: Transaction) : this(
             transaction,
             transaction.tag.name,
-            if (viewValues && transaction.moneySpent != 0.0) MyUtils().currencyFormat(transaction.moneySpent) else "",
-            if (viewValues && transaction.refund != 0.0) MyUtils().currencyFormat(transaction.refund) else "",
+            if (transaction.moneySpent != 0.0) MyUtils().currencyFormat(transaction.moneySpent) else "",
+            if (transaction.refund != 0.0) MyUtils().currencyFormat(transaction.refund) else "",
             if (transaction.alreadyPaid) transaction.paymentType.color else "#c49a0f",
             MyUtils().getDate(transaction.paymentDate, "MMM, dd"),
             transaction.paymentType.name,

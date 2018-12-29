@@ -4,6 +4,9 @@ import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.business.HomeBusiness
 import com.system.moneycontrol.model.business.TransactionBusiness
 import com.system.moneycontrol.model.entities.Transaction
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 class HomePresenter(
@@ -35,38 +38,47 @@ class HomePresenter(
 
         view.setProgress(10)
 
-        business.getTransactions(year, month, viewValues, {
+        GlobalScope.launch(Main) {
 
-            if (it.isNotEmpty()) {
-                view.setProgress(100)
-                view.configureList(it)
-            } else {
-                view.setProgress(100)
-                view.showEmptyState()
+            try {
+
+                val transactions = business.getViewTransactions(year, month, viewValues)
+
+                if (transactions.isNotEmpty()) {
+                    view.setProgress(100)
+                    view.configureList(transactions)
+                } else {
+                    view.setProgress(100)
+                    view.showEmptyState()
+                }
+
+                configureMenuViewValues()
+
+            } catch (e: Exception) {
+                view.showError(e.message!!)
             }
-
-            configureMenuViewValues()
-
-        }, {
-            view.showError(it.message!!)
-        })
+        }
     }
 
-    override fun onItemSelectedByClick(it: Transaction) {
-        view.showTransactionManager(it)
+    override fun onItemSelectedByClick(model: Transaction) {
+        view.showTransactionManager(model)
     }
 
-    override fun onItemSelectedByLongClick(it: Transaction) {
+    override fun onItemSelectedByLongClick(model: Transaction) {
         view.showConfirmDeleteDialog {
-            transactionBusiness.delete(it)
-                    .addSuccessItem {
-                        view.showError("Transaction deleted!")
-                        requestLoad()
-                    }
-                    .addFailure {
-                        view.showError(it.message!!)
-                    }
-                    .execute()
+
+            GlobalScope.launch(Main) {
+
+                try {
+
+                    transactionBusiness.delete(model)
+                    view.showError("Transaction deleted!")
+                    requestLoad()
+
+                } catch (e: Exception) {
+                    view.showError(e.message!!)
+                }
+            }
         }
     }
 

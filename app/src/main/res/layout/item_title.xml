@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:paddingStart="5dp"
-    android:paddingTop="32dp"
-    android:paddingBottom="12dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="24dp"
     android:textSize="22sp"
     tools:text="test" />

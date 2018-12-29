@@ -10,6 +10,9 @@ import com.system.moneycontrol.model.entities.PaymentType
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.ui.itemView.ItemSelectCombo
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -35,43 +38,45 @@ class TransactionManagerPresenter(
             view.setContent(this.description)
         }
 
-        tagBusiness.getAll()
-                .addSuccessList { list -> view.configureTagAutofill(list.map { it.name }) }
-                .addFailure { view.showError(it.message!!) }
-                .execute()
+        GlobalScope.launch(Main) {
 
-        typeBusiness
-                .getAll()
-                .addSuccessList { list -> view.configureTypeAutofill(list.map { it.name }) }
-                .addFailure { view.showError(it.message!!) }
-                .execute()
+            try {
+
+                view.configureTagAutofill(tagBusiness.getAll().map { it.name })
+                view.configureTypeAutofill(typeBusiness.getAll().map { it.name })
+
+            } catch (e: Exception) {
+                view.showError(e.message!!)
+            }
+        }
     }
 
     override fun onSaveClicked() {
 
-        try {
+        GlobalScope.launch(Main) {
 
-            transactionBusiness.save(transaction)
-                    .addSuccessItem {
-                        view.showSuccess("Transaction registred!")
-                        view.closeWindow()
-                    }.addFailure {
-                        view.showError(it.message!!)
-                    }
-                    .execute()
+            try {
 
-        } catch (e: IllegalArgumentException) {
+                transactionBusiness.save(transaction)
+                view.showSuccess("Transaction registred!")
+                view.closeWindow()
 
-            if (transaction.tag.key.isNullOrBlank()) {
-                view.showTagError("Tag is required!")
-            } else {
-                view.clearTagError()
-            }
+            } catch (e: IllegalArgumentException) {
 
-            if (transaction.paymentType.key.isNullOrBlank()) {
-                view.showTypeError("Type is required!")
-            } else {
-                view.clearTypeError()
+                if (transaction.tag.key.isNullOrBlank()) {
+                    view.showTagError("Tag is required!")
+                } else {
+                    view.clearTagError()
+                }
+
+                if (transaction.paymentType.key.isNullOrBlank()) {
+                    view.showTypeError("Type is required!")
+                } else {
+                    view.clearTypeError()
+                }
+
+            } catch (e: Exception) {
+                view.showError(e.message!!)
             }
         }
     }
@@ -91,20 +96,23 @@ class TransactionManagerPresenter(
             }
         }
 
-        typeBusiness
-                .getAll()
-                .addSuccessList {
-                    val list = ArrayList<DialogItem>(it)
-                    list.add(ItemSelectCombo())
-                    view.showPaymentTypeDialog(list, callback)
-                    view.hideLoading()
-                    view.clearTypeError()
-                }
-                .addFailure {
-                    view.hideLoading()
-                    view.showError(it.message!!)
-                }
-                .execute()
+        view.showLoading()
+
+        GlobalScope.launch(Main) {
+
+            try {
+
+                val list = ArrayList<DialogItem>(typeBusiness.getAll())
+                list.add(ItemSelectCombo())
+                view.showPaymentTypeDialog(list, callback)
+                view.hideLoading()
+                view.clearTypeError()
+
+            } catch (e: Exception) {
+                view.hideLoading()
+                view.showError(e.message!!)
+            }
+        }
     }
 
     override fun onTagClick() {
@@ -118,21 +126,23 @@ class TransactionManagerPresenter(
             }
         }
 
-        tagBusiness.getAll()
-                .addSuccessList {
-                    val list = ArrayList<DialogItem>(it)
-                    list.add(ItemSelectCombo())
-                    view.showTagDialog(list, callback)
-                    view.hideLoading()
-                    view.clearTagError()
-                }
-                .addFailure {
-                    view.hideLoading()
-                    view.showError(it.message!!)
-                }
-                .execute()
-
         view.showLoading()
+
+        GlobalScope.launch(Main) {
+
+            try {
+
+                val list = ArrayList<DialogItem>(tagBusiness.getAll())
+                list.add(ItemSelectCombo())
+                view.showTagDialog(list, callback)
+                view.hideLoading()
+                view.clearTypeError()
+
+            } catch (e: Exception) {
+                view.hideLoading()
+                view.showError(e.message!!)
+            }
+        }
     }
 
     override fun onPaymentDateClick() {
@@ -161,11 +171,16 @@ class TransactionManagerPresenter(
 
         if (tag != null) {
 
-            tagBusiness.getByName(tag)
-                    .addSuccessItem { transaction.tag = it }
-                    .addFailure { view.showError(it.message!!) }
-                    .addWarning { transaction.tag = Tag() }
-                    .execute()
+            GlobalScope.launch(Main) {
+
+                try {
+
+                    transaction.tag = tagBusiness.getByName(tag)
+
+                } catch (e: Exception) {
+                    view.showError(e.message!!)
+                }
+            }
 
         } else {
             transaction.tag = Tag()
@@ -176,11 +191,16 @@ class TransactionManagerPresenter(
 
         if (type != null) {
 
-            typeBusiness.getByName(type)
-                    .addSuccessItem { transaction.paymentType = it }
-                    .addFailure { view.showError(it.message!!) }
-                    .addWarning { transaction.paymentType = PaymentType() }
-                    .execute()
+            GlobalScope.launch(Main) {
+
+                try {
+
+                    transaction.paymentType = typeBusiness.getByName(type)
+
+                } catch (e: Exception) {
+                    view.showError(e.message!!)
+                }
+            }
 
         } else {
             transaction.paymentType = PaymentType()

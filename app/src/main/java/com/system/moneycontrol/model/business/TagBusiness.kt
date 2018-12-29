@@ -5,15 +5,15 @@ import com.system.moneycontrol.model.entities.Tag
 
 class TagBusiness constructor(private val repository: TagRepository) {
 
-    fun getAll() = repository.getList()
+    suspend fun getAll() = repository.getList()
 
-    fun delete(model: Tag) = repository.delete(model)
+    suspend fun delete(model: Tag) = repository.delete(model)
 
-    fun save(model: Tag) = if (model.key.isNullOrBlank()) {
+    suspend fun save(model: Tag) = if (model.key.isNullOrBlank()) {
         repository.save(model)
     } else {
         repository.update(model)
     }
 
-    fun getByName(name: String) = repository.getByName(name)
+    suspend fun getByName(name: String) = repository.getByName(name)
 }
