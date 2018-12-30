@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.system.moneycontrol.R
 import com.system.moneycontrol.infrastructure.MyViewUtils
 import com.system.moneycontrol.model.entities.DialogItem
+import com.system.moneycontrol.model.entities.Month
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.ui.itemView.ItemRecyclerView
 import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerActivity
@@ -30,6 +31,8 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
     val myViewUtils: MyViewUtils by inject()
 
     private var menuEnableValues: MenuItem? = null
+    private var menuMove: MenuItem? = null
+    private var menuDelete: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -48,7 +51,7 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
         mRecyclerView.layoutManager = LinearLayoutManager(this)
         mRecyclerView.adapter = HomeAdapter(arrayListOf(),
                 { presenter.onItemSelectedByClick(it) },
-                { presenter.onItemSelectedByLongClick(it) })
+                { transaction, isMarked -> presenter.onItemSelectedByLongClick(transaction, isMarked) })
     }
 
     override fun configureMonthSpinner(selection: Int) {
@@ -118,13 +121,16 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
         myViewUtils.showConfirmDialog(this, "Alert", "Delete transaction?", calback)
     }
 
-    override fun showMonthDialog(dates: List<DialogItem>, current: String, checkedItem: Int, calback: (DialogItem) -> Unit) {
-        myViewUtils.showListDialog(this, "Choose a month", dates, checkedItem) { calback(it) }
+    override fun showMonthDialog(checkedItem: Int, calback: (DialogItem) -> Unit) {
+        val months = resources.getStringArray(R.array.months).map { Month(it) }
+        myViewUtils.showListDialog(this, "Choose a month", months, checkedItem) { calback(it) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.home_menu, menu)
         menuEnableValues = menu.findItem(R.id.view_values)
+        menuMove = menu.findItem(R.id.move)
+        menuDelete = menu.findItem(R.id.delete)
         return true
     }
 
@@ -135,21 +141,51 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
             true
         }
 
+        R.id.delete -> {
+            presenter.onMenuDeleteClicked()
+            true
+        }
+
+        R.id.move -> {
+            presenter.onMenuMoveClicked()
+            true
+        }
+
         else -> super.onOptionsItemSelected(item)
     }
 
     override fun showEnableValuesMenu() {
+        menuEnableValues?.isVisible = true
         menuEnableValues?.icon = getDrawable(R.drawable.ic_visibility_off_black_24dp)
         menuEnableValues?.title = getString(R.string.home_menu_visibility_off)
+        menuMove?.isVisible = false
+        menuDelete?.isVisible = false
     }
 
     override fun showDisableValuesMenu() {
+        menuEnableValues?.isVisible = true
         menuEnableValues?.icon = getDrawable(R.drawable.ic_visibility_black_24dp)
         menuEnableValues?.title = getString(R.string.home_menu_visibility_on)
+        menuMove?.isVisible = false
+        menuDelete?.isVisible = false
+    }
+
+    override fun showSelectionMode() {
+        menuEnableValues?.isVisible = false
+        menuMove?.isVisible = true
+        menuDelete?.isVisible = true
     }
 
     override fun closeBackDrop() {
         backdrop_view.closeBackdrop()
+    }
+
+    override fun showLoading() {
+        loadingContainer.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        loadingContainer.visibility = View.GONE
     }
 
 }

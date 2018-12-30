@@ -30,12 +30,14 @@ class TransactionManagerPresenter(
         this.transaction = transaction ?: Transaction()
 
         with(this.transaction) {
-            view.setPaymentDate(myUtils.getDate(this.paymentDate, Constants.DATE_SHOW_VIEW))
-            view.setTag(this.tag.name)
-            view.setPrice(MyUtils().valueFormat(this.moneySpent))
-            view.setRefund(MyUtils().valueFormat(this.refund))
-            view.setPaymentType(this.paymentType.name)
-            view.setContent(this.description)
+            view.setPaymentDate(myUtils.getDate(paymentDate, Constants.DATE_SHOW_VIEW))
+            view.setTag(tag.name)
+            view.setPrice(MyUtils().valueFormat(moneySpent))
+            view.setRefund(MyUtils().valueFormat(refund))
+            view.setPaymentType(paymentType.name)
+            view.setContent(description)
+            if (key.isNullOrBlank()) view.disableCopy() else view.enableCopy()
+            this
         }
 
         GlobalScope.launch(Main) {
@@ -79,6 +81,12 @@ class TransactionManagerPresenter(
                 view.showError(e.message!!)
             }
         }
+    }
+
+    override fun onCopyClicked() {
+
+        transaction.key = null
+        onSaveClicked()
     }
 
     override fun cancel() {
@@ -167,9 +175,17 @@ class TransactionManagerPresenter(
         transaction.description = content
     }
 
+    override fun onPaymentDateSetted(date: String) {
+        try {
+            transaction.paymentDate = myUtils.getDate(date, Constants.DATE_SHOW_VIEW)
+        } catch (e: Exception) {
+            transaction.paymentDate = myUtils.getDate()
+        }
+    }
+
     override fun selectTag(tag: String?) {
 
-        if (tag != null) {
+        if (!tag.isNullOrBlank()) {
 
             GlobalScope.launch(Main) {
 
@@ -189,7 +205,7 @@ class TransactionManagerPresenter(
 
     override fun selectType(type: String?) {
 
-        if (type != null) {
+        if (!type.isNullOrBlank()) {
 
             GlobalScope.launch(Main) {
 

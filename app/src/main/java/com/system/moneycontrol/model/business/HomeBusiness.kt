@@ -16,20 +16,25 @@ class HomeBusiness(private val repTransaction: TransactionRepository,
 
     suspend fun getViewTransactions(year: String, month: String, viewValues: Boolean): ArrayList<ItemRecyclerView> {
 
-        val transactions = repTransaction.getList(year, month)
-        val tags = repTag.getList()
-        val types = repType.getList()
-
-        transactions.forEach { transaction ->
-            transaction.moneySpent = if (viewValues) transaction.moneySpent else 0.0
-            transaction.refund = if (viewValues) transaction.refund else 0.0
-            transaction.tag = tags.filter { it.key == transaction.tag.key }[0]
-            transaction.paymentType = types.filter { it.key == transaction.paymentType.key }[0]
-        }
-
         val viewList = arrayListOf<ItemRecyclerView>()
-        viewList.addAll(configureSummaryList(transactions, tags))
-        viewList.addAll(configureTransactionList(transactions, arrayOf("Nubank", "Credicard")))
+
+        val transactions = repTransaction.getList(year, month)
+
+        if (transactions.isNotEmpty()) {
+
+            val tags = repTag.getList()
+            val types = repType.getList()
+
+            transactions.forEach { transaction ->
+                transaction.moneySpent = if (viewValues) transaction.moneySpent else 0.0
+                transaction.refund = if (viewValues) transaction.refund else 0.0
+                transaction.tag = tags.filter { it.key == transaction.tag.key }[0]
+                transaction.paymentType = types.filter { it.key == transaction.paymentType.key }[0]
+            }
+
+            viewList.addAll(configureSummaryList(transactions, tags))
+            viewList.addAll(configureTransactionList(transactions, arrayOf("Nubank", "Credicard")))
+        }
 
         return viewList
     }
@@ -80,14 +85,14 @@ class HomeBusiness(private val repTransaction: TransactionRepository,
         finalList.add(TitleItemVIew("Resumo Geral"))
 
         tags.forEach { tag ->
-            finalList.add(getSummaredTransaction(transactions.filter { it.tag.equals(tag) }))
+            finalList.add(getSummaredTransaction(tag, transactions.filter { it.tag.equals(tag) }))
         }
 
         return finalList
     }
 
-    private fun getSummaredTransaction(filteredList: List<Transaction>): ItemRecyclerView = SummaryItemView(
-            tag = filteredList[0].tag.name,
+    private fun getSummaredTransaction(tag: Tag, filteredList: List<Transaction>): ItemRecyclerView = SummaryItemView(
+            tag = tag.name,
             price = filteredList.sumByDouble { it.moneySpent },
             refund = filteredList.sumByDouble { it.refund }
     )

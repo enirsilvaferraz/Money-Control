@@ -14,7 +14,8 @@ data class TransactionItemView(
         val date: String,
         val typeName: String,
         val typeDrawable: Int,
-        val tagColor: Int) : ItemRecyclerView {
+        val tagColor: Int,
+        var isMarked: Boolean = false) : ItemRecyclerView {
 
     constructor(transaction: Transaction) : this(
             transaction,

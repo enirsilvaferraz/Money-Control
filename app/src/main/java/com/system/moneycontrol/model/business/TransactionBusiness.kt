@@ -2,13 +2,12 @@ package com.system.moneycontrol.model.business
 
 import com.system.moneycontrol.data.repositories.TransactionRepository
 import com.system.moneycontrol.infrastructure.MyUtils
-import com.system.moneycontrol.infrastructure.Result
 import com.system.moneycontrol.model.entities.Transaction
 import java.util.*
 
 class TransactionBusiness(val repository: TransactionRepository, var myUtils: MyUtils) {
 
-  suspend  fun save(model: Transaction): Transaction {
+    suspend fun save(model: Transaction): Transaction {
 
         if (model.tag.key.isNullOrBlank() || model.paymentType.key.isNullOrBlank()) {
             throw IllegalArgumentException()
@@ -23,7 +22,13 @@ class TransactionBusiness(val repository: TransactionRepository, var myUtils: My
         }
     }
 
-  suspend  fun delete(model: Transaction) = repository.delete(model)
+    suspend fun delete(items: ArrayList<Transaction>) {
+        items.forEach { repository.delete(it) }
+    }
+
+    suspend fun move(items: ArrayList<Transaction>, month: Int) {
+        items.forEach { save(it.copy(key = null, paymentDate = myUtils.setDate(it.paymentDate, Calendar.MONTH, month))) }
+    }
 
     private fun processSave(transaction: Transaction): SaveType = when {
         transaction.key.isNullOrBlank() -> SaveType.SAVE_NEW

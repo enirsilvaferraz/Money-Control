@@ -2,8 +2,6 @@ package com.system.moneycontrol.ui.presentation.transactionmanager
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -35,10 +33,11 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
         mPriceValue.addTextChangedListener(CurrencyTextWatcher { presenter.onPriceSetted(it) })
         mPriceValue.requestFocus()
 
+        mPaymentDateValue.addTextChangedListener(StringTextWatcher { presenter.onPaymentDateSetted(it) })
         mRefundValue.addTextChangedListener(CurrencyTextWatcher { presenter.onRefundSetted(it) })
         mContentValue.addTextChangedListener(StringTextWatcher { presenter.onContentSetted(it) })
-        mTagValue.addTextChangedListener(StringTextWatcher{presenter.selectTag(it)})
-        mTypeValue.addTextChangedListener(StringTextWatcher{presenter.selectType(it)})
+        mTagValue.addTextChangedListener(StringTextWatcher { presenter.selectTag(it) })
+        mTypeValue.addTextChangedListener(StringTextWatcher { presenter.selectType(it) })
 
         mPaymentDateValue.setOnTouchListener(object : RightDrawableOnTouchListener() {
             override fun onDrawableTouch() {
@@ -59,6 +58,7 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
         })
 
         mSaveButtom.setOnClickListener { presenter.onSaveClicked() }
+        mCopyButtom.setOnClickListener { presenter.onCopyClicked() }
     }
 
     override fun onStart() {
@@ -156,5 +156,13 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
     override fun configureTypeAutofill(list: List<String>) {
         mTypeValue.threshold = 1
         mTypeValue.setAdapter(ArrayAdapter<String>(this, android.R.layout.select_dialog_item, list))
+    }
+
+    override fun disableCopy() {
+        mCopyButtom.isEnabled = false
+    }
+
+    override fun enableCopy() {
+        mCopyButtom.isEnabled = true
     }
 }

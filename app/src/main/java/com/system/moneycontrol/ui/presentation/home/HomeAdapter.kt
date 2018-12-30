@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.system.moneycontrol.R
@@ -17,7 +18,7 @@ import com.system.moneycontrol.ui.itemView.TransactionItemView
 class HomeAdapter(
         private val list: ArrayList<ItemRecyclerView>,
         private val onClick: ((Transaction) -> Unit)?,
-        private val onLongClick: ((Transaction) -> Unit)?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        private val onLongClick: ((Transaction, isMarked:Boolean) -> Unit)?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int = when (list[position]) {
         is TitleItemVIew -> 0
@@ -80,9 +81,13 @@ class HomeAdapter(
 
     class TransactionViewHolder(view: View,
                                 private val onClick: ((Transaction) -> Unit)?,
-                                private val onLongClick: ((Transaction) -> Unit)?) : RecyclerView.ViewHolder(view) {
+                                private val onLongClick: ((Transaction, isMarked:Boolean) -> Unit)?) : RecyclerView.ViewHolder(view) {
 
         fun bind(item: TransactionItemView) {
+
+            val mContainer = itemView.findViewById<ConstraintLayout>(R.id.mContainer)
+            mContainer.setBackgroundColor(ContextCompat.getColor(itemView.context,
+                    if (item.isMarked) R.color.primary_light else R.color.white))
 
             val tag = itemView.findViewById<TextView>(R.id.mTag)
             tag.text = item.tag
@@ -106,7 +111,12 @@ class HomeAdapter(
 
             itemView.setOnClickListener { onClick?.invoke(item.transaction) }
             itemView.setOnLongClickListener {
-                onLongClick?.invoke(item.transaction)
+
+                item.isMarked = !item.isMarked
+                mContainer.setBackgroundColor(ContextCompat.getColor(itemView.context,
+                        if (item.isMarked) R.color.primary_light else R.color.white))
+
+                onLongClick?.invoke(item.transaction, item.isMarked)
                 true
             }
         }

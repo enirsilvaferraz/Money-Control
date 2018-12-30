@@ -19,7 +19,9 @@ class HomePresenter(
 ) : HomeContract.Presenter {
 
     var current: Date = utils.getDate()
-    var viewValues: Boolean = false
+    var viewValues: Boolean = true
+
+    val markedItens = arrayListOf<Transaction>()
 
     override fun init() {
         requestLoad()
@@ -29,6 +31,8 @@ class HomePresenter(
 
     override fun requestLoad() {
 
+        configureMenuViewValues(markedItens.isNotEmpty())
+
         val year = utils.getDate(current, "yyyy")
         val month = utils.getDate(current, "MM")
 
@@ -36,7 +40,7 @@ class HomePresenter(
 
         view.closeBackDrop()
 
-        view.setProgress(10)
+        view.showLoading()
 
         GlobalScope.launch(Main) {
 
@@ -45,14 +49,12 @@ class HomePresenter(
                 val transactions = business.getViewTransactions(year, month, viewValues)
 
                 if (transactions.isNotEmpty()) {
-                    view.setProgress(100)
+                    view.hideLoading()
                     view.configureList(transactions)
                 } else {
-                    view.setProgress(100)
+                    view.hideLoading()
                     view.showEmptyState()
                 }
-
-                configureMenuViewValues()
 
             } catch (e: Exception) {
                 view.showError(e.message!!)
@@ -64,22 +66,15 @@ class HomePresenter(
         view.showTransactionManager(model)
     }
 
-    override fun onItemSelectedByLongClick(model: Transaction) {
-        view.showConfirmDeleteDialog {
+    override fun onItemSelectedByLongClick(model: Transaction, marked: Boolean) {
 
-            GlobalScope.launch(Main) {
-
-                try {
-
-                    transactionBusiness.delete(model)
-                    view.showError("Transaction deleted!")
-                    requestLoad()
-
-                } catch (e: Exception) {
-                    view.showError(e.message!!)
-                }
-            }
+        if (marked) {
+            markedItens.add(model)
+        } else {
+            markedItens.remove(model)
         }
+
+        configureMenuViewValues(markedItens.isNotEmpty())
     }
 
     override fun onMonthSelected(position: Int) {
@@ -97,11 +92,57 @@ class HomePresenter(
         requestLoad()
     }
 
-    private fun configureMenuViewValues() {
-        if (viewValues) {
+    private fun configureMenuViewValues(selectionMode: Boolean) {
+
+        if (selectionMode) {
+            view.showSelectionMode()
+        } else if (viewValues) {
             view.showDisableValuesMenu()
         } else {
             view.showEnableValuesMenu()
+        }
+    }
+
+    override fun onMenuDeleteClicked() {
+
+        view.showConfirmDeleteDialog {
+
+            view.showLoading()
+
+            GlobalScope.launch(Main) {
+
+                try {
+                    transactionBusiness.delete(markedItens)
+                    markedItens.clear()
+                    view.showError("Transaction deleted!")
+                    requestLoad()
+                } catch (e: Exception) {
+                    view.showError(e.message!!)
+                    view.hideLoading()
+                }
+            }
+        }
+    }
+
+    override fun onMenuMoveClicked() {
+
+        view.showMonthDialog(utils.getDate(current, Calendar.MONTH)) { dialogItem ->
+
+            view.showLoading()
+
+            GlobalScope.launch(Main) {
+
+                try {
+                    val month = utils.getDate(utils.getDate(dialogItem.getDescription(), "MMM"), Calendar.MONTH)
+                    transactionBusiness.move(markedItens, month)
+                    markedItens.clear()
+                    view.showError("Transaction Moved!")
+                    requestLoad()
+                } catch (e: Exception) {
+                    view.showError(e.message!!)
+                    view.hideLoading()
+                }
+            }
         }
     }
 }

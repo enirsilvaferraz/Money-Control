@@ -33,15 +33,19 @@ interface TransactionManagerContract {
         fun clearTagError()
         fun configureTagAutofill(list: List<String>)
         fun configureTypeAutofill(list: List<String>)
+        fun disableCopy()
+        fun enableCopy()
     }
 
     interface Presenter {
         fun init(transaction: Transaction?)
         fun onSaveClicked()
+        fun onCopyClicked()
         fun cancel()
         fun onTagClick()
         fun onPaymentTypeClick()
         fun onPaymentDateClick()
+        fun onPaymentDateSetted(date: String)
         fun onPriceSetted(value: Double)
         fun onRefundSetted(value: Double)
         fun onContentSetted(content: String)

@@ -16,6 +16,8 @@
     <string name="system_yes">Yes</string>
     <string name="system_no">No</string>
     <string name="system_arrow">Arrow Down</string>
+    <string name="system_save">Save</string>
+    <string name="system_copy">Copy</string>
 
     <string name="system_actions_more_actions">More actions</string>
 
@@ -37,7 +39,6 @@
     <string name="transaction_parcels">Parcels</string>
     <string name="transaction_already_paid">Already Paid</string>
     <string name="transaction">Transaction</string>
-    <string name="system_save">Save</string>
     <string name="title_activity_tag">Tag</string>
 
     <string-array name="months">
@@ -53,7 +54,6 @@
         <item>October</item>
         <item>November</item>
         <item>December</item>
-        <item>January</item>
     </string-array>
 
     <string-array name="years">
