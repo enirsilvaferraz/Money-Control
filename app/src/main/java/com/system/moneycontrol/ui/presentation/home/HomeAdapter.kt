@@ -10,20 +10,19 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.system.moneycontrol.R
 import com.system.moneycontrol.model.entities.Transaction
-import com.system.moneycontrol.ui.itemView.ItemRecyclerView
-import com.system.moneycontrol.ui.itemView.SummaryItemView
-import com.system.moneycontrol.ui.itemView.TitleItemVIew
-import com.system.moneycontrol.ui.itemView.TransactionItemView
+import com.system.moneycontrol.ui.itemView.*
 
 class HomeAdapter(
         private val list: ArrayList<ItemRecyclerView>,
         private val onClick: ((Transaction) -> Unit)?,
-        private val onLongClick: ((Transaction, isMarked:Boolean) -> Unit)?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        private val onLongClick: ((Transaction, isMarked: Boolean) -> Unit)?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int = when (list[position]) {
         is TitleItemVIew -> 0
         is TransactionItemView -> 1
         is SummaryItemView -> 2
+        is TagItemView -> 3
+        is GroupTagItemView -> 4
         else -> super.getItemViewType(position)
     }
 
@@ -31,6 +30,8 @@ class HomeAdapter(
         0 -> TitleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_title, parent, false))
         1 -> TransactionViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_transaction_v6, parent, false), onClick, onLongClick)
         2 -> SummaryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_summary, parent, false))
+        3 -> TagViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_tag, parent, false))
+        4 -> GroupTagViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_taggroup, parent, false))
         else -> throw RuntimeException("No type selected")
     }
 
@@ -41,6 +42,8 @@ class HomeAdapter(
             is TitleViewHolder -> holder.bind(list[position] as TitleItemVIew)
             is TransactionViewHolder -> holder.bind(list[position] as TransactionItemView)
             is SummaryViewHolder -> holder.bind(list[position] as SummaryItemView)
+            is TagViewHolder -> holder.bind(list[position] as TagItemView)
+            is GroupTagViewHolder -> holder.bind(list[position] as GroupTagItemView)
         }
     }
 
@@ -81,7 +84,7 @@ class HomeAdapter(
 
     class TransactionViewHolder(view: View,
                                 private val onClick: ((Transaction) -> Unit)?,
-                                private val onLongClick: ((Transaction, isMarked:Boolean) -> Unit)?) : RecyclerView.ViewHolder(view) {
+                                private val onLongClick: ((Transaction, isMarked: Boolean) -> Unit)?) : RecyclerView.ViewHolder(view) {
 
         fun bind(item: TransactionItemView) {
 
@@ -119,6 +122,40 @@ class HomeAdapter(
                 onLongClick?.invoke(item.transaction, item.isMarked)
                 true
             }
+        }
+    }
+
+    class GroupTagViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        fun bind(item: GroupTagItemView) {
+
+            val tag = itemView.findViewById<TextView>(R.id.mTag)
+            tag.text = item.tag
+
+            val price = itemView.findViewById<TextView>(R.id.mPrice)
+            price.text = if (item.price.isBlank() && item.refund.isBlank()) "--" else item.price
+            price.visibility = if (item.price.isNotBlank() || (item.price.isBlank() && item.refund.isBlank())) View.VISIBLE else View.GONE
+
+            val refund = itemView.findViewById<TextView>(R.id.mRefund)
+            refund.text = item.refund
+            refund.visibility = if (item.refund.isNotBlank()) View.VISIBLE else View.GONE
+        }
+    }
+
+    class TagViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        fun bind(item: TagItemView) {
+
+            val tag = itemView.findViewById<TextView>(R.id.mTag)
+            tag.text = item.tag
+
+            val price = itemView.findViewById<TextView>(R.id.mPrice)
+            price.text = if (item.price.isBlank() && item.refund.isBlank()) "--" else item.price
+            price.visibility = if (item.price.isNotBlank() || (item.price.isBlank() && item.refund.isBlank())) View.VISIBLE else View.GONE
+
+            val refund = itemView.findViewById<TextView>(R.id.mRefund)
+            refund.text = item.refund
+            refund.visibility = if (item.refund.isNotBlank()) View.VISIBLE else View.GONE
         }
     }
 }

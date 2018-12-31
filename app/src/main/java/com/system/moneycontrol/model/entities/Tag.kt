@@ -2,36 +2,39 @@ package com.system.moneycontrol.model.entities
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.system.moneycontrol.data.mappers.TagFirebase
+import com.system.moneycontrol.infrastructure.Constants
 
-data class Tag(var key: String?, var name: String = "") : DialogItem, Parcelable {
+data class Tag(
 
-    constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readString())
+        var key: String? = null,
+        var name: String = Constants.LASY_STRING,
+        var group: TagGroup = TagGroup(name = Constants.LASY_STRING),
+        var sumPrice: Double = 0.0,
+        var sumRefound: Double = 0.0
 
-    constructor() : this(key = null)
+) : DialogItem, Parcelable {
 
     override fun getDescription(): String = name
 
-    fun toMapper() = TagFirebase(name)
+    constructor(source: Parcel) : this(
+            source.readString(),
+            source.readString(),
+            source.readParcelable<TagGroup>(TagGroup::class.java.classLoader)
+    )
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(key)
-        parcel.writeString(name)
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(key)
+        writeString(name)
+        writeParcelable(group, 0)
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<Tag> {
-        override fun createFromParcel(parcel: Parcel): Tag {
-            return Tag(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Tag?> {
-            return arrayOfNulls(size)
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<Tag> = object : Parcelable.Creator<Tag> {
+            override fun createFromParcel(source: Parcel): Tag = Tag(source)
+            override fun newArray(size: Int): Array<Tag?> = arrayOfNulls(size)
         }
     }
 }

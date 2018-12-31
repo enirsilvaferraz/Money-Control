@@ -3,6 +3,7 @@ package com.system.moneycontrol.ui.presentation.home
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.business.HomeBusiness
 import com.system.moneycontrol.model.business.TransactionBusiness
+import com.system.moneycontrol.model.entities.ReportType
 import com.system.moneycontrol.model.entities.Transaction
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
@@ -46,7 +47,7 @@ class HomePresenter(
 
             try {
 
-                val transactions = business.getViewTransactions(year, month, viewValues)
+                val transactions = business.getViewTransactions(year, month, viewValues, ReportType.TAG)
 
                 if (transactions.isNotEmpty()) {
                     view.hideLoading()

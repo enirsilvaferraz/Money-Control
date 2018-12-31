@@ -44,7 +44,7 @@ class TagRepository(val collection: CollectionReference) {
 
     suspend fun save(model: Tag) = suspendCoroutine<Tag> {
 
-        collection.add(model.toMapper())
+        collection.add(TagFirebase(name = model.name, group = model.group.key!!))
                 .addOnSuccessListener { task ->
                     it.resume(model.copy(key = task.id))
                 }
@@ -66,7 +66,7 @@ class TagRepository(val collection: CollectionReference) {
 
     suspend fun update(model: Tag) = suspendCoroutine<Tag> {
 
-        collection.document(model.key!!).set(model.toMapper())
+        collection.document(model.key!!).set(TagFirebase(name = model.name, group = model.group.key!!))
                 .addOnSuccessListener { _ ->
                     it.resume(model)
                 }

@@ -3,6 +3,7 @@ package com.system.moneycontrol.infrastructure.koin
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.system.moneycontrol.data.repositories.TagGroupRepository
 import com.system.moneycontrol.data.repositories.TagRepository
 import com.system.moneycontrol.data.repositories.TransactionRepository
 import com.system.moneycontrol.data.repositories.TypeRepository
@@ -33,21 +34,23 @@ object KoinModules {
 
     val firebaseModule = module {
         single(name = ConstantsDI.FIRESTORE_TAG) { getFirestoreInstance().collection("tags") }
+        single(name = ConstantsDI.FIRESTORE_TAGGROUP) { getFirestoreInstance().collection("tagGroup") }
         single(name = ConstantsDI.FIRESTORE_PAYMENTTYPE) { getFirestoreInstance().collection("types") }
         single(name = ConstantsDI.FIRESTORE_TRANSACTION) { getFirestoreInstance().collection("transactions") }
     }
 
     val repositoryModule = module {
-        single { TagRepository(get(name = ConstantsDI.FIRESTORE_TAG)) }
-        single { TypeRepository(get(name = ConstantsDI.FIRESTORE_PAYMENTTYPE)) }
-        single { TransactionRepository(get(name = ConstantsDI.FIRESTORE_TRANSACTION), get()) }
+        single { TagRepository(collection = get(name = ConstantsDI.FIRESTORE_TAG)) }
+        single { TagGroupRepository(collection = get(name = ConstantsDI.FIRESTORE_TAGGROUP)) }
+        single { TypeRepository(collection = get(name = ConstantsDI.FIRESTORE_PAYMENTTYPE)) }
+        single { TransactionRepository(collection = get(name = ConstantsDI.FIRESTORE_TRANSACTION), myUtils = get()) }
     }
 
     val businessModule = module {
         single { TagBusiness(get()) }
         single { TypeBusiness(get()) }
         single { TransactionBusiness(get(), get()) }
-        single { HomeBusiness(get(), get(), get()) }
+        single { HomeBusiness(repTransaction = get(), repTag = get(), repType = get(), repTagGroup = get()) }
     }
 
     val appModule = module {

@@ -22,17 +22,6 @@ data class Transaction(
 
 ) : Parcelable {
 
-    constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readSerializable() as Date,
-            parcel.readSerializable() as Date,
-            parcel.readDouble(),
-            parcel.readDouble(),
-            parcel.readParcelable(Tag::class.java.classLoader),
-            parcel.readParcelable(PaymentType::class.java.classLoader),
-            parcel.readString(),
-            parcel.readByte() != 0.toByte())
-
     constructor() : this(key = null)
 
     constructor(transactionFirebase: TransactionFirebase, key: String) : this(key,
@@ -49,29 +38,38 @@ data class Transaction(
 
     fun toItemView() = TransactionItemView(this)
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(key)
-        parcel.writeSerializable(paymentDate)
-        parcel.writeSerializable(paymentDateOlder)
-        parcel.writeDouble(moneySpent)
-        parcel.writeDouble(refund)
-        parcel.writeParcelable(tag, flags)
-        parcel.writeParcelable(paymentType, flags)
-        parcel.writeString(description)
-        parcel.writeByte(if (alreadyPaid) 1 else 0)
+    constructor(source: Parcel) : this(
+            source.readString(),
+            source.readSerializable() as Date,
+            source.readSerializable() as Date,
+            source.readDouble(),
+            source.readDouble(),
+            source.readParcelable<Tag>(Tag::class.java.classLoader),
+            source.readParcelable<PaymentType>(PaymentType::class.java.classLoader),
+            source.readString(),
+            1 == source.readInt()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(key)
+        writeSerializable(paymentDate)
+        writeSerializable(paymentDateOlder)
+        writeDouble(moneySpent)
+        writeDouble(refund)
+        writeParcelable(tag, 0)
+        writeParcelable(paymentType, 0)
+        writeString(description)
+        writeInt((if (alreadyPaid) 1 else 0))
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    companion object {
 
-    companion object CREATOR : Parcelable.Creator<Transaction> {
-        override fun createFromParcel(parcel: Parcel): Transaction {
-            return Transaction(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Transaction?> {
-            return arrayOfNulls(size)
+        @JvmField
+        val CREATOR: Parcelable.Creator<Transaction> = object : Parcelable.Creator<Transaction> {
+            override fun createFromParcel(source: Parcel): Transaction = Transaction(source)
+            override fun newArray(size: Int): Array<Transaction?> = arrayOfNulls(size)
         }
     }
 }
