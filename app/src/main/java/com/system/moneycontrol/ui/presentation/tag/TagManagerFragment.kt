@@ -1,13 +1,14 @@
 package com.system.moneycontrol.ui.presentation.tag
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.system.moneycontrol.R
 import com.system.moneycontrol.infrastructure.MyViewUtils
+import com.system.moneycontrol.model.entities.TagGroup
+import com.system.moneycontrol.ui.utils.RightDrawableOnTouchListener
 import com.system.moneycontrol.ui.utils.StringTextWatcher
 import kotlinx.android.synthetic.main.fragment_tag_manager.*
 import org.koin.android.ext.android.inject
@@ -30,6 +31,12 @@ class TagManagerFragment : Fragment(), TagManagerContract.View {
 
         mTagValue.addTextChangedListener(StringTextWatcher { presenter.onTagSetted(it) })
 
+        mGroupTagValue.setOnTouchListener(object : RightDrawableOnTouchListener() {
+            override fun onDrawableTouch() {
+                presenter.onTagGroupClicked()
+            }
+        })
+
         mSaveButtom.setOnClickListener { presenter.onSaveClicked() }
     }
 
@@ -44,6 +51,26 @@ class TagManagerFragment : Fragment(), TagManagerContract.View {
     override fun closeWindow() {
         myViewUtils.hideKeyboard(activity, view)
         activity?.finish()
+    }
+
+    override fun showMenu(groups: List<TagGroup>, callback: (String) -> Unit) {
+
+        val popupMenu = PopupMenu(context, mGroupTagValue, Gravity.FILL_HORIZONTAL)
+
+        for (group in groups) {
+            popupMenu.menu.add(Menu.NONE, Menu.NONE, Menu.NONE, group.name)
+        }
+
+        popupMenu.setOnMenuItemClickListener {
+            callback(it.title.toString())
+            true
+        }
+
+        popupMenu.show()
+    }
+
+    override fun setGroup(name: String) {
+        mGroupTagValue.setText(name)
     }
 
 }

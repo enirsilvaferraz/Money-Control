@@ -47,7 +47,7 @@ object KoinModules {
     }
 
     val businessModule = module {
-        single { TagBusiness(get()) }
+        single { TagBusiness(repository = get(), groupRepository = get()) }
         single { TypeBusiness(get()) }
         single { TransactionBusiness(get(), get()) }
         single { HomeBusiness(repTransaction = get(), repTag = get(), repType = get(), repTagGroup = get()) }

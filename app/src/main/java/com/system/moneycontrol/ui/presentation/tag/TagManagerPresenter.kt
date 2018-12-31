@@ -21,7 +21,11 @@ class TagManagerPresenter(
 
     override fun onSaveClicked() {
 
-        if (tag.name.isBlank()) {
+        if (tag.group.key == null) {
+
+            view.showError("Group is required!")
+
+        } else if (tag.name.isBlank()) {
 
             view.showError("Name is required!")
 
@@ -38,6 +42,35 @@ class TagManagerPresenter(
                 } catch (e: Exception) {
                     view.showError(e.message!!)
                 }
+            }
+        }
+    }
+
+    override fun onTagGroupClicked() {
+
+
+        GlobalScope.launch(Dispatchers.Main) {
+
+            try {
+
+                val groups = tagBusiness.getGroups()
+
+                view.showMenu(groups) { name ->
+
+                    val findLast = groups.findLast { it.name == name }
+
+                    if (findLast != null) {
+
+                        tag.group = findLast
+                        view.setGroup(findLast.name)
+
+                    } else {
+                        view.showError("Group not found!")
+                    }
+                }
+
+            } catch (e: Exception) {
+                view.showError(e.message!!)
             }
         }
     }

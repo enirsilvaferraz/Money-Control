@@ -14,6 +14,43 @@
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mGroupTagImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:alpha=".3"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@+id/mGroupTagContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mGroupTagContainer"
+            app:srcCompat="@drawable/ic_loyalty_black_24dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/mGroupTagContainer"
+            style="@style/AppTheme.TextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/mGroupTagImage"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mGroupTagValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_loyalty_black_24dp"
+                android:hint="@string/transaction_tag"
+                android:paddingEnd="11dp"
+                android:textSize="14sp"
+                tools:text="Aluguel" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/mTagImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,7 +72,7 @@
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/mTagImage"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/mGroupTagContainer">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/mTagValue"
