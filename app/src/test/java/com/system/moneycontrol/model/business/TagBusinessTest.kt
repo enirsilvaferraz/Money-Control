@@ -72,7 +72,7 @@ class TagBusinessTest : KoinTest {
 
         every { repository.getList() } returns mockk()
 
-        business.getAll()
+        business.findAll()
 
         verify(exactly = 1) { repository.getList() }
     }

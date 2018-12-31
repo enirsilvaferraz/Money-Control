@@ -4,7 +4,6 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.system.moneycontrol.data.mappers.TransactionFirebase
 import com.system.moneycontrol.infrastructure.MyUtils
-import com.system.moneycontrol.infrastructure.Result
 import com.system.moneycontrol.model.entities.Transaction
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException

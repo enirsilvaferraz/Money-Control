@@ -72,7 +72,7 @@ class TypeBusinessTest : KoinTest {
 
         every { repository.getList() } returns mockk()
 
-        business.getAll()
+        business.findAll()
 
         verify { repository.getList() }
     }

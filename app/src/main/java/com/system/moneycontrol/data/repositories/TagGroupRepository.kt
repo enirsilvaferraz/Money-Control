@@ -2,27 +2,17 @@ package com.system.moneycontrol.data.repositories
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
-import com.system.moneycontrol.data.mappers.GroupTagFirebase
+import com.system.moneycontrol.data.mappers.TagGroupFirebase
 import com.system.moneycontrol.model.entities.TagGroup
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 /**
  * @param collection: Firebase Firestore (tagsgroup)
  */
-class TagGroupRepository(val collection: CollectionReference) {
+class TagGroupRepository(val collection: CollectionReference) : GenericRepository<TagGroup, TagGroupFirebase>(collection) {
 
-    suspend fun getList() = suspendCoroutine<List<TagGroup>> {
+    suspend fun findAll() = super.findAll("order")
 
-        collection.orderBy("order").get()
-                .addOnSuccessListener { task ->
-                    it.resume(task.documents.map { getModel(it) })
-                }
-                .addOnFailureListener { exception ->
-                    it.resumeWithException(exception)
-                }
-    }
+    override fun getDataModel(model: TagGroup): TagGroupFirebase = TagGroupFirebase(model.name)
 
-    private fun getModel(it: DocumentSnapshot) = it.toObject(GroupTagFirebase::class.java)!!.toModel(it.id)
+    override fun getModel(it: DocumentSnapshot) = it.toObject(TagGroupFirebase::class.java)!!.toModel(it.id)
 }

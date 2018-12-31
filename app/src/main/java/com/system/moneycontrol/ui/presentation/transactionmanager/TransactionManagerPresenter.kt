@@ -44,8 +44,8 @@ class TransactionManagerPresenter(
 
             try {
 
-                view.configureTagAutofill(tagBusiness.getAll().map { it.name })
-                view.configureTypeAutofill(typeBusiness.getAll().map { it.name })
+                view.configureTagAutofill(tagBusiness.findAll().map { it.name })
+                view.configureTypeAutofill(typeBusiness.findAll().map { it.name })
 
             } catch (e: Exception) {
                 view.showError(e.message!!)
@@ -110,7 +110,7 @@ class TransactionManagerPresenter(
 
             try {
 
-                val list = ArrayList<DialogItem>(typeBusiness.getAll())
+                val list = ArrayList<DialogItem>(typeBusiness.findAll())
                 list.add(ItemSelectCombo())
                 view.showPaymentTypeDialog(list, callback)
                 view.hideLoading()
@@ -140,7 +140,7 @@ class TransactionManagerPresenter(
 
             try {
 
-                val list = ArrayList<DialogItem>(tagBusiness.getAll())
+                val list = ArrayList<DialogItem>(tagBusiness.findAll())
                 list.add(ItemSelectCombo())
                 view.showTagDialog(list, callback)
                 view.hideLoading()

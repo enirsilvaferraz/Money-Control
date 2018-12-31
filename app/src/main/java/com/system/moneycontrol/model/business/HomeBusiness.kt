@@ -1,16 +1,14 @@
 package com.system.moneycontrol.model.business
 
 import com.system.moneycontrol.data.repositories.TagGroupRepository
-import com.system.moneycontrol.data.repositories.TagRepository
 import com.system.moneycontrol.data.repositories.TransactionRepository
-import com.system.moneycontrol.data.repositories.TypeRepository
 import com.system.moneycontrol.model.entities.ReportType
 import com.system.moneycontrol.ui.itemView.ItemRecyclerView
 
 
 class HomeBusiness(private val repTransaction: TransactionRepository,
-                   private val repTag: TagRepository,
-                   private val repType: TypeRepository,
+                   private val tagBusiness: TagBusiness,
+                   private val typeBusiness: TypeBusiness,
                    private val repTagGroup: TagGroupRepository) {
 
     suspend fun getViewTransactions(year: String, month: String, viewValues: Boolean, reportType: ReportType): List<ItemRecyclerView> {
@@ -19,12 +17,9 @@ class HomeBusiness(private val repTransaction: TransactionRepository,
 
         if (transactions.isNotEmpty()) {
 
-            val tags = repTag.getList()
-            val tagGroups = repTagGroup.getList()
-
-            tags.forEach { tag -> tag.group = tagGroups.filter { tag.group.key == it.key }[0] }
-
-            val types = repType.getList()
+            val tags = tagBusiness.findAll()
+            val tagGroups = repTagGroup.findAll()
+            val types = typeBusiness.findAll()
 
             transactions.forEach { transaction ->
                 transaction.moneySpent = if (viewValues) transaction.moneySpent else 0.0
