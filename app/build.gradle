@@ -10,8 +10,8 @@ android {
         applicationId "com.system.moneycontrol"
         minSdkVersion 25
         targetSdkVersion 28
-        versionCode 23
-        versionName "v0.23"
+        versionCode 24
+        versionName "v0.24"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

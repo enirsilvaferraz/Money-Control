@@ -13,7 +13,7 @@ class HomeBusiness(private val repTransaction: TransactionRepository,
 
     suspend fun getViewTransactions(year: String, month: String, viewValues: Boolean, reportType: ReportType): List<ItemRecyclerView> {
 
-        val transactions = repTransaction.getList(year, month)
+        val transactions = repTransaction.findAll(year, month)
 
         if (transactions.isNotEmpty()) {
 

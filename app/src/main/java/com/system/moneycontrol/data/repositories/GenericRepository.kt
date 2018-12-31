@@ -1,77 +1,76 @@
 package com.system.moneycontrol.data.repositories
 
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentSnapshot
+import com.system.moneycontrol.data.mappers.DataFire
+import com.system.moneycontrol.model.entities.EntityFire
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-abstract class GenericRepository<T : Any, MT : Any>(private val collection: CollectionReference) {
+object GenericRepository {
 
-    suspend fun findAll(order: String): List<T> = suspendCoroutine {
+    suspend inline fun <reified EF : EntityFire<DF>, reified DF : DataFire<EF>> findAll(collection: CollectionReference, order: String): List<EF> = suspendCoroutine {
 
         collection.orderBy(order).get()
                 .addOnSuccessListener { task ->
-                    it.resume(task.documents.map { model -> getModel(model) })
+                    it.resume(task.documents.map { model ->
+                        model.toObject(DF::class.java)!!.toEntity(model.id)
+                    })
                 }
                 .addOnFailureListener { exception ->
                     it.resumeWithException(exception)
                 }
-
     }
 
-    suspend fun getBy(field: String, value: String) = suspendCoroutine<T> {
+    suspend inline fun <reified EF : EntityFire<DF>, reified DF : DataFire<EF>> getBy(collection: CollectionReference, field: String, value: String) = suspendCoroutine<EF> {
 
         collection.whereEqualTo(field, value).get()
                 .addOnSuccessListener { task ->
-
                     val documents = task.documents
                     if (!documents.isEmpty()) {
-                        it.resume(documents.map { model -> getModel(model) }[0])
+                        it.resume(documents.map { model ->
+                            model.toObject(DF::class.java)!!.toEntity(model.id)
+                        }[0])
                     } else {
                         it.resumeWithException(Exception("Model not found!"))
                     }
-
                 }
                 .addOnFailureListener { exception ->
                     it.resumeWithException(exception)
                 }
     }
 
-    suspend fun save(model: T) = suspendCoroutine<String> {
+    suspend inline fun <reified EF : EntityFire<DF>, reified DF : DataFire<EF>> save(collection: CollectionReference, model: EF) = suspendCoroutine<EF> {
 
-        collection.add(getDataModel(model))
-                .addOnSuccessListener { task ->
-                    it.resume(task.id)
-                }
-                .addOnFailureListener { exception ->
-                    it.resumeWithException(exception)
-                }
-    }
-
-    suspend fun delete(key: String) = suspendCoroutine<String> {
-
-        collection.document(key).delete()
+        collection.add(model.toData())
                 .addOnSuccessListener { _ ->
-                    it.resume(key)
+                    it.resume(model)
                 }
                 .addOnFailureListener { exception ->
                     it.resumeWithException(exception)
                 }
     }
 
-    suspend fun update(key: String, model: T) = suspendCoroutine<String> {
+    suspend inline fun <reified EF : EntityFire<DF>, reified DF : DataFire<EF>> delete(collection: CollectionReference, model: EF) = suspendCoroutine<EF> {
 
-        collection.document(key).set(getDataModel(model))
+        collection.document(model.getID()).delete()
                 .addOnSuccessListener { _ ->
-                    it.resume(key)
+                    it.resume(model)
                 }
                 .addOnFailureListener { exception ->
                     it.resumeWithException(exception)
                 }
     }
 
-    abstract fun getModel(it: DocumentSnapshot): T
+    suspend inline fun <reified EF : EntityFire<DF>, reified DF : DataFire<EF>> update(collection: CollectionReference, model: EF) = suspendCoroutine<EF> {
 
-    abstract fun getDataModel(model: T): MT
+        collection.document(model.getID()).set(model.toData())
+                .addOnSuccessListener { _ ->
+                    it.resume(model)
+                }
+                .addOnFailureListener { exception ->
+                    it.resumeWithException(exception)
+                }
+    }
 }
+

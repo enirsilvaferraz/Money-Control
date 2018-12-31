@@ -20,7 +20,11 @@ data class Transaction(
         var description: String = "",
         var alreadyPaid: Boolean = true
 
-) : Parcelable {
+) : Parcelable, EntityFire<TransactionFirebase> {
+
+    override fun toData(): TransactionFirebase = TransactionFirebase(this)
+
+    override fun getID(): String = key!!
 
     constructor() : this(key = null)
 

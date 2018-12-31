@@ -2,6 +2,7 @@ package com.system.moneycontrol.model.entities
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.system.moneycontrol.data.mappers.TagFirebase
 import com.system.moneycontrol.infrastructure.Constants
 
 data class Tag(
@@ -12,7 +13,11 @@ data class Tag(
         var sumPrice: Double = 0.0,
         var sumRefound: Double = 0.0
 
-) : DialogItem, Parcelable {
+) : DialogItem, Parcelable, EntityFire<TagFirebase> {
+
+    override fun toData(): TagFirebase = TagFirebase(name = name, group = group.key!!)
+
+    override fun getID(): String = key!!
 
     override fun getDescription(): String = name
 

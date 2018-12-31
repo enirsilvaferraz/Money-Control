@@ -5,6 +5,7 @@ import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.entities.Transaction
 
 class TransactionFirebase(
+
         var paymentDate: String = Constants.LASY_STRING,
         var moneySpent: Double = Constants.LAZY_DOUBLE,
         var refund: Double = Constants.LAZY_DOUBLE,
@@ -12,7 +13,10 @@ class TransactionFirebase(
         var type: String = Constants.LASY_STRING,
         var content: String = Constants.LASY_STRING,
         var alreadyPaid: Boolean = false
-) {
+
+) : DataFire<Transaction> {
+
+    override fun toEntity(key: String): Transaction = Transaction(this, key)
 
     constructor(transaction: Transaction) : this(
             MyUtils().getDate(transaction.paymentDate, "yyyy-MM-dd"),
@@ -33,6 +37,4 @@ class TransactionFirebase(
         put("content", content)
         put("alreadyPaid", alreadyPaid)
     }
-
-    fun toModel(key: String) = Transaction(this, key)
 }

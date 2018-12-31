@@ -7,7 +7,8 @@ class TagGroupFirebase(
 
         val name: String = Constants.LASY_STRING,
         val order: Int = 0
-) {
 
-    fun toModel(key: String) = TagGroup(key, name)
+) : DataFire<TagGroup> {
+
+    override fun toEntity(key: String) = TagGroup(key, name)
 }

@@ -8,7 +8,7 @@ class PaymentTypeFirebase(
         var name: String = Constants.LASY_STRING,
         var color: String = Constants.LASY_STRING
 
-) {
+) : DataFire<PaymentType> {
 
-    fun toModel(key: String) = PaymentType(key, name, color)
+    override fun toEntity(key: String) = PaymentType(key, name, color)
 }

@@ -7,14 +7,13 @@ class TypeBusiness(private val repository: TypeRepository) {
 
     suspend fun findAll() = repository.findAll()
 
-    suspend fun delete(key: String) = repository.delete(key)
+    suspend fun delete(model: PaymentType) = repository.delete(model)
 
     suspend fun save(model: PaymentType) = if (model.key.isNullOrBlank()) {
         repository.save(model)
     } else {
-        repository.update(model.key!!, model)
+        repository.update(model)
     }
 
     suspend fun getByName(name: String) = repository.getByName(name)
-
 }

@@ -9,7 +9,7 @@ class TagBusiness constructor(private val repository: TagRepository, private val
 
     suspend fun findAll(): List<Tag> {
 
-        val tags = repository.findAll("name")
+        val tags = repository.findAll()
         val groups = groupRepository.findAll()
 
         tags.forEach { tag -> tag.group = groups.filter { tag.group.key == it.key }[0] }
@@ -17,15 +17,15 @@ class TagBusiness constructor(private val repository: TagRepository, private val
         return tags
     }
 
-    suspend fun delete(key: String) = repository.delete(key)
+    suspend fun delete(model: Tag) = repository.delete(model)
 
     suspend fun save(model: Tag) = if (model.key.isNullOrBlank()) {
         repository.save(model)
     } else {
-        repository.update(model.key!!, model)
+        repository.update(model)
     }
 
-    suspend fun getByName(name: String) = repository.getBy("name", name)
+    suspend fun getByName(name: String) = repository.getByName(name)
 
     suspend fun getGroups(): List<TagGroup> = groupRepository.findAll()
 }

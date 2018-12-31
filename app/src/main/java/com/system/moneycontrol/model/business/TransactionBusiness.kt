@@ -36,10 +36,10 @@ class TransactionBusiness(val repository: TransactionRepository, var myUtils: My
         else -> SaveType.UPDATE_ANOTHER_MONTH
     }
 
-    fun isSameMonth(transaction: Transaction) =
+    private fun isSameMonth(transaction: Transaction) =
             myUtils.getDate(transaction.paymentDateOlder, Calendar.MONTH) == myUtils.getDate(transaction.paymentDate, Calendar.MONTH)
 
-    fun isSameYear(transaction: Transaction) =
+    private fun isSameYear(transaction: Transaction) =
             myUtils.getDate(transaction.paymentDateOlder, Calendar.YEAR) == myUtils.getDate(transaction.paymentDate, Calendar.YEAR)
 
     enum class SaveType { SAVE_NEW, UPDATE, UPDATE_ANOTHER_MONTH }

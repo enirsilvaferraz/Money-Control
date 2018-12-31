@@ -1,18 +1,20 @@
 package com.system.moneycontrol.data.repositories
 
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentSnapshot
-import com.system.moneycontrol.data.mappers.TagGroupFirebase
 import com.system.moneycontrol.model.entities.TagGroup
 
 /**
  * @param collection: Firebase Firestore (tagsgroup)
  */
-class TagGroupRepository(val collection: CollectionReference) : GenericRepository<TagGroup, TagGroupFirebase>(collection) {
+class TagGroupRepository(val collection: CollectionReference) {
 
-    suspend fun findAll() = super.findAll("order")
+    suspend fun findAll(): List<TagGroup> = GenericRepository.findAll(collection, "order")
 
-    override fun getDataModel(model: TagGroup): TagGroupFirebase = TagGroupFirebase(model.name)
+    suspend fun getByName(name: String): TagGroup = GenericRepository.getBy(collection, "name", name)
 
-    override fun getModel(it: DocumentSnapshot) = it.toObject(TagGroupFirebase::class.java)!!.toModel(it.id)
+    suspend fun delete(model: TagGroup) = GenericRepository.delete(collection, model)
+
+    suspend fun save(model: TagGroup) = GenericRepository.save(collection, model)
+
+    suspend fun update(model: TagGroup) = GenericRepository.update(collection, model)
 }

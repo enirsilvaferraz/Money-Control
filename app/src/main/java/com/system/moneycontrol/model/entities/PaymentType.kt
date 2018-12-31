@@ -4,7 +4,13 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.system.moneycontrol.data.mappers.PaymentTypeFirebase
 
-data class PaymentType(var key: String?, var name: String = "", var color: String = "#000000") : DialogItem, Parcelable {
+data class PaymentType(
+
+        var key: String?,
+        var name: String = "",
+        var color: String = "#000000"
+
+) : DialogItem, Parcelable, EntityFire<PaymentTypeFirebase> {
 
     constructor(parcel: Parcel) : this(
             parcel.readString(),
@@ -13,9 +19,12 @@ data class PaymentType(var key: String?, var name: String = "", var color: Strin
 
     constructor() : this(key = null)
 
+    override fun getID(): String = key!!
+
+    override fun toData(): PaymentTypeFirebase = PaymentTypeFirebase(name, if (color.isBlank()) "#FFFFFF" else color)
+
     override fun getDescription(): String = name
 
-    fun toMapper() = PaymentTypeFirebase(name, if (color.isBlank()) "#FFFFFF" else color)
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(key)
         parcel.writeString(name)

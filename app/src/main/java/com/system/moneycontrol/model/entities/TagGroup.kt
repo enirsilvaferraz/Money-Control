@@ -2,13 +2,18 @@ package com.system.moneycontrol.model.entities
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.system.moneycontrol.data.mappers.TagGroupFirebase
 
 data class TagGroup(
 
         var key: String? = null,
         var name: String = ""
 
-) : DialogItem, Parcelable {
+) : DialogItem, Parcelable, EntityFire<TagGroupFirebase> {
+
+    override fun toData(): TagGroupFirebase = TagGroupFirebase(name)
+
+    override fun getID(): String = key!!
 
     override fun getDescription(): String = name
 
