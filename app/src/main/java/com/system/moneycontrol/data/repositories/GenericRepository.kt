@@ -40,6 +40,17 @@ object GenericRepository {
                 }
     }
 
+    suspend inline fun <reified EF : EntityFire<DF>, reified DF : DataFire<EF>> getByKey(collection: CollectionReference, key: String) = suspendCoroutine<EF> {
+
+        collection.document(key).get()
+                .addOnSuccessListener { model ->
+                    it.resume(model.toObject(DF::class.java)!!.toEntity(model.id))
+                }
+                .addOnFailureListener { exception ->
+                    it.resumeWithException(exception)
+                }
+    }
+
     suspend inline fun <reified EF : EntityFire<DF>, reified DF : DataFire<EF>> save(collection: CollectionReference, model: EF) = suspendCoroutine<EF> {
 
         collection.add(model.toData())

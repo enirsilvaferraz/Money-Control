@@ -16,4 +16,6 @@ class TypeBusiness(private val repository: TypeRepository) {
     }
 
     suspend fun getByName(name: String) = repository.getByName(name)
+
+    suspend fun getByKey(key: String): PaymentType = repository.getByKey(key)
 }

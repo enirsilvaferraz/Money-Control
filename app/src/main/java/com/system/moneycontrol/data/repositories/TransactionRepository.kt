@@ -19,6 +19,8 @@ class TransactionRepository(private val collection: CollectionReference, var myU
 
     suspend fun move(model: Transaction) = delete(save(model).copy(paymentDate = model.paymentDateOlder))
 
+    suspend fun getByKey(year: String, month: String, key: String): Transaction = GenericRepository.getByKey(getColl(year, month), key)
+
     private fun getMonth(model: Transaction) = myUtils.getDate(model.paymentDate, "MM")
 
     private fun getYear(model: Transaction) = myUtils.getDate(model.paymentDate, "yyyy")

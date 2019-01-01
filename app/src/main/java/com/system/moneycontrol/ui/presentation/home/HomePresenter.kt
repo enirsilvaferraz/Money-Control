@@ -3,8 +3,8 @@ package com.system.moneycontrol.ui.presentation.home
 import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.business.HomeBusiness
 import com.system.moneycontrol.model.business.TransactionBusiness
-import com.system.moneycontrol.model.entities.ReportType
 import com.system.moneycontrol.model.entities.Transaction
+import com.system.moneycontrol.model.types.ReportType
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

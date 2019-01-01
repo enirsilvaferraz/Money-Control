@@ -28,14 +28,14 @@ interface HomeReportBusiness {
                     orderedList.removeAll(groupItens)
 
                     excluded.add(TitleItemVIew(typeName))
-                    excluded.addAll(groupItens.map { it.toItemView() })
+                    excluded.addAll(groupItens.map { TransactionItemView(it) })
                 }
             }
 
             orderedList.sortedWith(compareBy({ it.paymentDate }, { it.paymentType.name }, { it.tag.name }))
 
             finalList.add(TitleItemVIew("Transações Correntes"))
-            finalList.addAll(orderedList.map { it.toItemView() })
+            finalList.addAll(orderedList.map { TransactionItemView(it) })
             finalList.addAll(excluded)
 
             return finalList

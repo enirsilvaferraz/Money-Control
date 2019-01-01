@@ -25,24 +25,27 @@ class TransactionManagerPresenter(
 
     lateinit var transaction: Transaction
 
-    override fun init(transaction: Transaction?) {
-
-        this.transaction = transaction ?: Transaction()
-
-        with(this.transaction) {
-            view.setPaymentDate(myUtils.getDate(paymentDate, Constants.DATE_SHOW_VIEW))
-            view.setTag(tag.name)
-            view.setPrice(MyUtils().valueFormat(moneySpent))
-            view.setRefund(MyUtils().valueFormat(refund))
-            view.setPaymentType(paymentType.name)
-            view.setContent(description)
-            if (key.isNullOrBlank()) view.disableCopy() else view.enableCopy()
-            this
-        }
+    override fun init(year: String?, month: String?, key: String?) {
 
         GlobalScope.launch(Main) {
 
             try {
+
+                if (!year.isNullOrBlank() && !month.isNullOrBlank() && !key.isNullOrBlank()) {
+
+                    transaction = transactionBusiness.getByKey(year, month, key)
+
+                    with(transaction) {
+                        view.setPaymentDate(myUtils.getDate(paymentDate, com.system.moneycontrol.infrastructure.Constants.DATE_SHOW_VIEW))
+                        view.setTag(tag.name)
+                        view.setPrice(com.system.moneycontrol.infrastructure.MyUtils().valueFormat(moneySpent))
+                        view.setRefund(com.system.moneycontrol.infrastructure.MyUtils().valueFormat(refund))
+                        view.setPaymentType(paymentType.name)
+                        view.setContent(description)
+                        if (key.isNullOrBlank()) view.disableCopy() else view.enableCopy()
+                        this
+                    }
+                }
 
                 view.configureTagAutofill(tagBusiness.findAll().map { it.name })
                 view.configureTypeAutofill(typeBusiness.findAll().map { it.name })

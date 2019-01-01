@@ -18,4 +18,6 @@ class TagRepository(val collection: CollectionReference) {
 
     suspend fun update(model: Tag) = GenericRepository.update(collection, model)
 
+    suspend fun getByKey(key: String): Tag = GenericRepository.getByKey(collection, key)
+
 }

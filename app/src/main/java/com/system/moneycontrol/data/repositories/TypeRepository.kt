@@ -18,4 +18,6 @@ class TypeRepository(private val collection: CollectionReference) {
     suspend fun save(model: PaymentType) = GenericRepository.save(collection, model)
 
     suspend fun update(model: PaymentType): PaymentType = GenericRepository.update(collection, model)
+
+    suspend fun getByKey(key: String): PaymentType = GenericRepository.getByKey(collection, key)
 }

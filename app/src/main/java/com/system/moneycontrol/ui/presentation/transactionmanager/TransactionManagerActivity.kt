@@ -63,7 +63,11 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
 
     override fun onStart() {
         super.onStart()
-        presenter.init(intent.getParcelableExtra("MODEL_EDIT"))
+        presenter.init(
+                intent.getStringExtra("MODEL_EDIT_YEAR"),
+                intent.getStringExtra("MODEL_EDIT_MONTH"),
+                intent.getStringExtra("MODEL_EDIT_KEY")
+        )
     }
 
     override fun showTagDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {

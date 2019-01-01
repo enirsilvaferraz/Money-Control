@@ -20,4 +20,6 @@ class TagBusiness constructor(private val repository: TagRepository, private val
     suspend fun getByName(name: String) = repository.getByName(name)
 
     suspend fun getGroups(): List<TagGroup> = groupRepository.findAll()
+
+    suspend fun getByKey(key: String): Tag = repository.getByKey(key)
 }

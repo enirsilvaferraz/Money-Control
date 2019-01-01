@@ -2,7 +2,7 @@ package com.system.moneycontrol.model.business
 
 import com.system.moneycontrol.data.repositories.TagGroupRepository
 import com.system.moneycontrol.data.repositories.TransactionRepository
-import com.system.moneycontrol.model.entities.ReportType
+import com.system.moneycontrol.model.types.ReportType
 import com.system.moneycontrol.ui.itemView.ItemRecyclerView
 
 

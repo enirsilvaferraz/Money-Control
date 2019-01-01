@@ -27,14 +27,4 @@ class TransactionFirebase(
             transaction.description,
             transaction.alreadyPaid
     )
-
-    fun toMap() = hashMapOf<String, Any>().apply {
-        put("paymentDate", paymentDate)
-        put("moneySpent", moneySpent)
-        put("refund", refund)
-        put("tag", tag)
-        put("type", type)
-        put("content", content)
-        put("alreadyPaid", alreadyPaid)
-    }
 }

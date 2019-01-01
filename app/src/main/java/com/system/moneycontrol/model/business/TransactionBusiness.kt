@@ -5,7 +5,11 @@ import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.model.entities.Transaction
 import java.util.*
 
-class TransactionBusiness(val repository: TransactionRepository, var myUtils: MyUtils) {
+class TransactionBusiness(
+        private val repository: TransactionRepository,
+        private val tagBusiness: TagBusiness,
+        private val typeBusiness: TypeBusiness,
+        private val myUtils: MyUtils) {
 
     suspend fun save(model: Transaction): Transaction {
 
@@ -37,6 +41,13 @@ class TransactionBusiness(val repository: TransactionRepository, var myUtils: My
 
             save(it.copy(key = null, paymentDate = calendar.time))
         }
+    }
+
+    suspend fun getByKey(year: String, month: String, key: String): Transaction {
+        val transaction = repository.getByKey(year, month, key)
+        transaction.tag = tagBusiness.getByKey(transaction.tag.key!!)
+        transaction.paymentType = typeBusiness.getByKey(transaction.paymentType.key!!)
+        return transaction
     }
 
     private fun processSave(transaction: Transaction): SaveType = when {

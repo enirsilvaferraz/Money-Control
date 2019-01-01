@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.system.moneycontrol.R
+import com.system.moneycontrol.infrastructure.MyUtils
 import com.system.moneycontrol.infrastructure.MyViewUtils
 import com.system.moneycontrol.model.entities.DialogItem
 import com.system.moneycontrol.model.entities.Month
@@ -108,7 +109,9 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
 
     override fun showTransactionManager(model: Transaction) {
         val intent = Intent(this, TransactionManagerActivity::class.java)
-        intent.putExtra("MODEL_EDIT", model)
+        intent.putExtra("MODEL_EDIT_YEAR", MyUtils().getDate(model.paymentDate, "yyyy").toString())
+        intent.putExtra("MODEL_EDIT_MONTH", MyUtils().getDate(model.paymentDate, "MM").toString())
+        intent.putExtra("MODEL_EDIT_KEY", model.key.toString())
         startActivityForResult(intent, 5000)
     }
 
