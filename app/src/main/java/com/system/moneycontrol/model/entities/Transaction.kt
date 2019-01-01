@@ -29,8 +29,8 @@ data class Transaction(
     constructor() : this(key = null)
 
     constructor(transactionFirebase: TransactionFirebase, key: String) : this(key,
-            MyUtils().getDate(transactionFirebase.paymentDate, "yyyy-MM-dd"),
-            MyUtils().getDate(transactionFirebase.paymentDate, "yyyy-MM-dd"),
+            MyUtils().getDate(transactionFirebase.paymentDate, "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"),
+            MyUtils().getDate(transactionFirebase.paymentDate, "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"),
             transactionFirebase.moneySpent,
             transactionFirebase.refund,
             Tag(transactionFirebase.tag, Constants.LASY_STRING),

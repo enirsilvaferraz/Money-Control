@@ -10,24 +10,15 @@ interface HomeReportBusiness {
 
     class TransactionReport {
 
-        fun getReport(transactions: List<Transaction>, tags: List<Tag>): ArrayList<ItemRecyclerView> {
-
-            val viewList = arrayListOf<ItemRecyclerView>()
-
-            //viewList.addAll(configureSummaryList(transactions, tags))
-            viewList.addAll(configureTransactionList(transactions, arrayOf("Nubank", "Credicard")))
-            return viewList
-        }
-
-        private fun configureTransactionList(fetchedList: List<Transaction>, typesName: Array<String>): ArrayList<ItemRecyclerView> {
+        fun getReport(transactions: List<Transaction>): ArrayList<ItemRecyclerView> {
 
             val orderedList = arrayListOf<Transaction>()
-            orderedList.addAll(fetchedList)
+            orderedList.addAll(transactions)
 
             val finalList = arrayListOf<ItemRecyclerView>()
             val excluded = arrayListOf<ItemRecyclerView>()
 
-            for (typeName in typesName) {
+            for (typeName in arrayOf("Nubank", "Credicard")) {
 
                 val groupItens = orderedList.filter { it.paymentType.name == typeName }
 
@@ -48,6 +39,7 @@ interface HomeReportBusiness {
             finalList.addAll(excluded)
 
             return finalList
+
         }
 
         private fun getGroupedTransaction(groupItens: List<Transaction>): Transaction = with(Transaction()) {
@@ -58,24 +50,6 @@ interface HomeReportBusiness {
             refund = groupItens.sumByDouble { it.refund }
             this
         }
-
-        private fun configureSummaryList(transactions: List<Transaction>, tags: List<Tag>): ArrayList<ItemRecyclerView> {
-
-            val finalList = arrayListOf<ItemRecyclerView>()
-            finalList.add(TitleItemVIew("Resumo Geral"))
-
-            tags.forEach { tag ->
-                finalList.add(getSummaredTransaction(tag, transactions.filter { it.tag.equals(tag) }))
-            }
-
-            return finalList
-        }
-
-        private fun getSummaredTransaction(tag: Tag, filteredList: List<Transaction>): ItemRecyclerView = SummaryItemView(
-                tag = tag.name,
-                price = filteredList.sumByDouble { it.moneySpent },
-                refund = filteredList.sumByDouble { it.refund }
-        )
     }
 
     class TagReport {

@@ -127,21 +127,31 @@ class HomePresenter(
 
     override fun onMenuMoveClicked() {
 
-        view.showMonthDialog(utils.getDate(current, Calendar.MONTH)) { dialogItem ->
+        view.showYearDialog(null) { yearItem ->
 
-            view.showLoading()
+            val year = utils.getDate(utils.getDate(yearItem.getDescription(), "yyyy"), Calendar.YEAR)
 
-            GlobalScope.launch(Main) {
+            view.showMonthDialog(null) { monthItem ->
 
-                try {
-                    val month = utils.getDate(utils.getDate(dialogItem.getDescription(), "MMM"), Calendar.MONTH)
-                    transactionBusiness.move(markedItens, month)
-                    markedItens.clear()
-                    view.showError("Transaction Moved!")
-                    requestLoad()
-                } catch (e: Exception) {
-                    view.showError(e.message!!)
-                    view.hideLoading()
+                val month = utils.getDate(utils.getDate(monthItem.getDescription(), "MMM"), Calendar.MONTH)
+
+                view.showLoading()
+
+                GlobalScope.launch(Main) {
+
+                    try {
+
+                        transactionBusiness.move(markedItens, month, year)
+                        markedItens.clear()
+                        view.showError("Transaction Moved!")
+
+                        view.hideLoading()
+                        requestLoad()
+
+                    } catch (e: Exception) {
+                        view.showError(e.message!!)
+                        view.hideLoading()
+                    }
                 }
             }
         }

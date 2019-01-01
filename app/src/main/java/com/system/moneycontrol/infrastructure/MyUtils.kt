@@ -22,8 +22,12 @@ class MyUtils {
         return instance.get(field)
     }
 
-    fun getDate(date: String, pattern: String): Date {
-        return SimpleDateFormat(pattern, Locale.ENGLISH).parse(date)
+    fun getDate(date: String, pattern: String, patternOther: String? = null): Date {
+        return try {
+            SimpleDateFormat(pattern, Locale.ENGLISH).parse(date)
+        } catch (e: Exception) {
+            SimpleDateFormat(patternOther, Locale.ENGLISH).parse(date)
+        }
     }
 
     fun getDate(date: Date, pattern: String): String {

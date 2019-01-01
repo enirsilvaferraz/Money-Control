@@ -121,9 +121,16 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
         myViewUtils.showConfirmDialog(this, "Alert", "Delete transaction?", calback)
     }
 
-    override fun showMonthDialog(checkedItem: Int, calback: (DialogItem) -> Unit) {
+    override fun showMonthDialog(checkedItem: Int?, calback: (DialogItem) -> Unit) {
         val months = resources.getStringArray(R.array.months).map { Month(it) }
-        myViewUtils.showListDialog(this, "Choose a month", months, checkedItem) { calback(it) }
+        myViewUtils.showListDialog(this, "Choose a month", months, (checkedItem ?: months.size
+        -1)) { calback(it) }
+    }
+
+    override fun showYearDialog(checkedItem: Int?, calback: (DialogItem) -> Unit) {
+        val years = resources.getStringArray(R.array.years).map { Month(it) }
+        myViewUtils.showListDialog(this, "Choose a year", years, (checkedItem ?: years.size
+        -1)) { calback(it) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

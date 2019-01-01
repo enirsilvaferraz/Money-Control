@@ -19,6 +19,9 @@ class HomeBusiness(private val repTransaction: TransactionRepository,
 
             val tags = tagBusiness.findAll()
             val tagGroups = repTagGroup.findAll()
+
+            tags.forEach { tag -> tag.group = tagGroups.filter { tag.group.key == it.key }[0] }
+
             val types = typeBusiness.findAll()
 
             transactions.forEach { transaction ->
@@ -28,15 +31,10 @@ class HomeBusiness(private val repTransaction: TransactionRepository,
                 transaction.paymentType = types.filter { it.key == transaction.paymentType.key }[0]
             }
 
-
-            val list = arrayListOf<ItemRecyclerView>()
-
-            list.addAll(HomeReportBusiness.TagReport().getReport(transactions, tags, tagGroups))
-            list.addAll(HomeReportBusiness.TransactionReport().getReport(transactions, tags))
-
-            // HomeReportBusiness.TypeReport().getReport(transactions, types)
-
-            return list
+            return arrayListOf<ItemRecyclerView>().apply {
+                addAll(HomeReportBusiness.TagReport().getReport(transactions, tags, tagGroups))
+                addAll(HomeReportBusiness.TransactionReport().getReport(transactions))
+            }
         }
 
         return arrayListOf()

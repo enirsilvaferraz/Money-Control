@@ -7,15 +7,7 @@ import com.system.moneycontrol.model.entities.TagGroup
 
 class TagBusiness constructor(private val repository: TagRepository, private val groupRepository: TagGroupRepository) {
 
-    suspend fun findAll(): List<Tag> {
-
-        val tags = repository.findAll()
-        val groups = groupRepository.findAll()
-
-        tags.forEach { tag -> tag.group = groups.filter { tag.group.key == it.key }[0] }
-
-        return tags
-    }
+    suspend fun findAll() = repository.findAll()
 
     suspend fun delete(model: Tag) = repository.delete(model)
 

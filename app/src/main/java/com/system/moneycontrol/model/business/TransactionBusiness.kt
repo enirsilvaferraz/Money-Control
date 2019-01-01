@@ -26,8 +26,17 @@ class TransactionBusiness(val repository: TransactionRepository, var myUtils: My
         items.forEach { repository.delete(it) }
     }
 
-    suspend fun move(items: ArrayList<Transaction>, month: Int) {
-        items.forEach { save(it.copy(key = null, paymentDate = myUtils.setDate(it.paymentDate, Calendar.MONTH, month))) }
+    suspend fun move(items: ArrayList<Transaction>, month: Int, year: Int) {
+
+        items.forEach {
+
+            val calendar = Calendar.getInstance()
+            calendar.time = it.paymentDate
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, month)
+
+            save(it.copy(key = null, paymentDate = calendar.time))
+        }
     }
 
     private fun processSave(transaction: Transaction): SaveType = when {

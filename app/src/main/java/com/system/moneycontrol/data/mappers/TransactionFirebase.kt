@@ -19,7 +19,7 @@ class TransactionFirebase(
     override fun toEntity(key: String): Transaction = Transaction(this, key)
 
     constructor(transaction: Transaction) : this(
-            MyUtils().getDate(transaction.paymentDate, "yyyy-MM-dd"),
+            MyUtils().getDate(transaction.paymentDate, "yyyy-MM-dd HH:mm:ss"),
             transaction.moneySpent,
             transaction.refund,
             transaction.tag.key!!,
