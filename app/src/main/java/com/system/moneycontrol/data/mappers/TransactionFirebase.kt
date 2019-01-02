@@ -1,7 +1,7 @@
 package com.system.moneycontrol.data.mappers
 
 import com.system.moneycontrol.infrastructure.Constants
-import com.system.moneycontrol.infrastructure.MyUtils
+import com.system.moneycontrol.infrastructure.functions.DateFunctions
 import com.system.moneycontrol.model.entities.Transaction
 
 class TransactionFirebase(
@@ -19,7 +19,7 @@ class TransactionFirebase(
     override fun toEntity(key: String): Transaction = Transaction(this, key)
 
     constructor(transaction: Transaction) : this(
-            MyUtils().getDate(transaction.paymentDate, "yyyy-MM-dd HH:mm:ss"),
+            DateFunctions.getDate(transaction.paymentDate, "yyyy-MM-dd HH:mm:ss"),
             transaction.moneySpent,
             transaction.refund,
             transaction.tag.key!!,

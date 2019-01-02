@@ -2,7 +2,7 @@ package com.system.moneycontrol.ui.utils
 
 import android.text.Editable
 import android.text.TextWatcher
-import com.system.moneycontrol.infrastructure.MyUtils
+import com.system.moneycontrol.infrastructure.functions.CurrencyFunctions
 
 class CurrencyTextWatcher(val calback: (Double) -> Unit) : TextWatcher {
 
@@ -15,7 +15,7 @@ class CurrencyTextWatcher(val calback: (Double) -> Unit) : TextWatcher {
 
             mEditing = true
 
-            val digits = MyUtils().replaceDigits(string.toString())
+            val digits = CurrencyFunctions.replaceDigits(string.toString())
             string.replace(0, string.length, digits)
 
             calback(digits.replace(",", "").toDouble())

@@ -1,7 +1,7 @@
 package com.system.moneycontrol.infrastructure.koin
 
-import com.system.moneycontrol.infrastructure.MyUtils
-import com.system.moneycontrol.infrastructure.MyViewUtils
+import com.system.moneycontrol.infrastructure.functions.DateFunctions
+import com.system.moneycontrol.infrastructure.functions.ViewFunctions
 import com.system.moneycontrol.model.business.HomeBusiness
 import com.system.moneycontrol.model.business.TagBusiness
 import com.system.moneycontrol.model.business.TransactionBusiness
@@ -13,8 +13,8 @@ import org.koin.dsl.module.module
 object TestKoinModules {
 
     val appModuleMock = module {
-        single { spyk<MyUtils>() }
-        single { spyk<MyViewUtils>() }
+        single { spyk<DateFunctions>() }
+        single { spyk<ViewFunctions>() }
     }
 
     val businessModuleMock = module {

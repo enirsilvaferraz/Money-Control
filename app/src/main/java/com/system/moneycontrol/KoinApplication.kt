@@ -1,7 +1,6 @@
 package com.system.moneycontrol
 
 import android.app.Application
-import com.system.moneycontrol.infrastructure.koin.KoinModules.appModule
 import com.system.moneycontrol.infrastructure.koin.KoinModules.businessModule
 import com.system.moneycontrol.infrastructure.koin.KoinModules.firebaseModule
 import com.system.moneycontrol.infrastructure.koin.KoinModules.presenterModule
@@ -16,8 +15,7 @@ open class KoinApplication : Application() {
     }
 
     protected open fun initDI() {
-        startKoin(this, listOf(appModule, firebaseModule, repositoryModule,
-                businessModule, presenterModule))
+        startKoin(this, listOf(firebaseModule, repositoryModule, businessModule, presenterModule))
     }
 
 }

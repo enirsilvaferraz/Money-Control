@@ -7,7 +7,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.system.moneycontrol.KoinApplication
 import com.system.moneycontrol.R
 import com.system.moneycontrol.infrastructure.BaseRoboletricTest
-import com.system.moneycontrol.infrastructure.MyUtils
+import com.system.moneycontrol.infrastructure.functions.DateFunctions
 import com.system.moneycontrol.model.business.HomeBusiness
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerActivity
@@ -22,13 +22,13 @@ import org.robolectric.Shadows
 
 class HomeActivityTest : BaseRoboletricTest() {
 
-    val myUtils: MyUtils by inject()
+    val dateFunctions: DateFunctions by inject()
     val business: HomeBusiness by inject()
 
     @Before
     fun startActivity() {
 
-        every { myUtils.getDate() } answers { myUtils.getDate("01/11/2018", "dd/MM/yyyy") }
+        every { dateFunctions.getDate() } answers { dateFunctions.getDate("01/11/2018", "dd/MM/yyyy") }
         every { business.getTransactions(any(), any(), any(), any(), any()) } answers
                 { (this.args[2] as ((List<Transaction>) -> Unit)?)?.invoke(listOf()) }
 

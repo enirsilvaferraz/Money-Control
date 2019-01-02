@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.system.moneycontrol.R
-import com.system.moneycontrol.infrastructure.MyViewUtils
+import com.system.moneycontrol.infrastructure.functions.ViewFunctions
 import com.system.moneycontrol.ui.utils.StringTextWatcher
 import kotlinx.android.synthetic.main.fragment_type_manager.*
 import org.koin.android.ext.android.inject
@@ -18,7 +18,6 @@ import org.koin.core.parameter.parametersOf
  */
 class TypeManagerFragment : Fragment(), TypeManagerContract.View {
 
-    val myViewUtils: MyViewUtils by inject()
     val presenter: TypeManagerContract.Presenter by inject { parametersOf(this) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
@@ -41,7 +40,7 @@ class TypeManagerFragment : Fragment(), TypeManagerContract.View {
     }
 
     override fun closeWindow() {
-        myViewUtils.hideKeyboard(activity, view)
+        ViewFunctions.hideKeyboard(activity, view)
         activity?.finish()
     }
 

@@ -1,7 +1,7 @@
 package com.system.moneycontrol.model.business
 
 import com.system.moneycontrol.data.repositories.TransactionRepository
-import com.system.moneycontrol.infrastructure.MyUtils
+import com.system.moneycontrol.infrastructure.functions.DateFunctions
 import com.system.moneycontrol.infrastructure.koin.KoinModules.appModule
 import com.system.moneycontrol.infrastructure.koin.KoinModules.businessModule
 import com.system.moneycontrol.model.entities.Transaction
@@ -26,7 +26,7 @@ class TransactionBusinessTest : KoinTest {
 
     val testModule = module {
 
-        single(override = true) { spyk(MyUtils()) }
+        single(override = true) { spyk(DateFunctions()) }
 
         single(override = true) { mockk<TransactionRepository>() }
 
@@ -46,8 +46,8 @@ class TransactionBusinessTest : KoinTest {
                 key = "***"
                 tag.key = "***"
                 paymentType.key = "***"
-                paymentDate = myUtils.getDate("01/10/2018", "dd/MM/yyyy")
-                paymentDateOlder = myUtils.getDate("01/09/2018", "dd/MM/yyyy")
+                paymentDate = dateFunctions.getDate("01/10/2018", "dd/MM/yyyy")
+                paymentDateOlder = dateFunctions.getDate("01/09/2018", "dd/MM/yyyy")
             }
         }
 
@@ -56,13 +56,13 @@ class TransactionBusinessTest : KoinTest {
                 key = "***"
                 tag.key = "***"
                 paymentType.key = "***"
-                paymentDate = myUtils.getDate("01/10/2018", "dd/MM/yyyy")
-                paymentDateOlder = myUtils.getDate("01/10/2018", "dd/MM/yyyy")
+                paymentDate = dateFunctions.getDate("01/10/2018", "dd/MM/yyyy")
+                paymentDateOlder = dateFunctions.getDate("01/10/2018", "dd/MM/yyyy")
             }
         }
     }
 
-    val myUtils: MyUtils by inject()
+    val dateFunctions: DateFunctions by inject()
     val repository: TransactionRepository by inject()
     val business: TransactionBusiness by inject()
 
@@ -97,7 +97,7 @@ class TransactionBusinessTest : KoinTest {
         val transaction = get<Transaction>("TRANSCTION_UPDATE") // 01/10/2018
 
         every { repository.update(any()) } returns mockk()
-        every { myUtils.getDate() } answers { myUtils.getDate("02/10/2018", "dd/MM/yyyy") }
+        every { dateFunctions.getDate() } answers { dateFunctions.getDate("02/10/2018", "dd/MM/yyyy") }
 
         business.save(transaction)
 
@@ -110,7 +110,7 @@ class TransactionBusinessTest : KoinTest {
         val transaction = get<Transaction>("TRANSCTION_UPDATE") // 01/10/2018
 
         every { repository.update(any()) } returns mockk()
-        every { myUtils.getDate() } answers { myUtils.getDate("01/09/2018", "dd/MM/yyyy") }
+        every { dateFunctions.getDate() } answers { dateFunctions.getDate("01/09/2018", "dd/MM/yyyy") }
 
         business.save(transaction)
 
@@ -123,7 +123,7 @@ class TransactionBusinessTest : KoinTest {
         val transaction = get<Transaction>("TRANSCTION_NEW")
 
         every { repository.save(any()) } returns mockk()
-        every { myUtils.getDate() } answers { myUtils.getDate("01/09/2018", "dd/MM/yyyy") }
+        every { dateFunctions.getDate() } answers { dateFunctions.getDate("01/09/2018", "dd/MM/yyyy") }
 
         business.save(transaction)
 
@@ -139,7 +139,7 @@ class TransactionBusinessTest : KoinTest {
         val transaction = get<Transaction>("TRANSCTION_MOVE")
 
         every { repository.move(any()) } returns mockk()
-        every { myUtils.getDate() } answers { myUtils.getDate("01/09/2018", "dd/MM/yyyy") }
+        every { dateFunctions.getDate() } answers { dateFunctions.getDate("01/09/2018", "dd/MM/yyyy") }
 
         business.save(transaction)
 
@@ -155,7 +155,7 @@ class TransactionBusinessTest : KoinTest {
         val transaction = get<Transaction>("TRANSCTION_UPDATE") // 01/10/2018
 
         every { repository.update(any()) } returns mockk()
-        every { myUtils.getDate() } answers { myUtils.getDate("01/10/2018", "dd/MM/yyyy") }
+        every { dateFunctions.getDate() } answers { dateFunctions.getDate("01/10/2018", "dd/MM/yyyy") }
 
         business.save(transaction)
 

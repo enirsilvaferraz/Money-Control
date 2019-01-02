@@ -6,7 +6,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.system.moneycontrol.R
-import com.system.moneycontrol.infrastructure.MyViewUtils
+import com.system.moneycontrol.infrastructure.functions.ViewFunctions
 import com.system.moneycontrol.model.entities.DialogItem
 import com.system.moneycontrol.ui.presentation.tag.TagManagerActivity
 import com.system.moneycontrol.ui.presentation.typemanager.TypeManagerActivity
@@ -23,7 +23,6 @@ import java.util.*
  */
 class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContract.View {
 
-    private val myViewUtils: MyViewUtils by inject()
     val presenter: TransactionManagerContract.Presenter by inject { parametersOf(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,15 +70,15 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
     }
 
     override fun showTagDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {
-        myViewUtils.showListDialog(this, "Tags", list, -1, callback)
+        ViewFunctions.showListDialog(this, "Tags", list, -1, callback)
     }
 
     override fun showPaymentTypeDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {
-        myViewUtils.showListDialog(this, "Types", list, -1, callback)
+        ViewFunctions.showListDialog(this, "Types", list, -1, callback)
     }
 
     override fun showPaymentDateDialog(paymentDate: Date?, callback: (Date) -> Unit) {
-        myViewUtils.showDatePicker(this, paymentDate, callback)
+        ViewFunctions.showDatePicker(this, paymentDate, callback)
     }
 
     override fun setTag(tagString: String) {

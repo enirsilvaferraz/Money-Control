@@ -6,7 +6,7 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.system.moneycontrol.R
-import com.system.moneycontrol.infrastructure.MyViewUtils
+import com.system.moneycontrol.infrastructure.functions.ViewFunctions
 import com.system.moneycontrol.model.entities.TagGroup
 import com.system.moneycontrol.ui.utils.RightDrawableOnTouchListener
 import com.system.moneycontrol.ui.utils.StringTextWatcher
@@ -20,7 +20,6 @@ import org.koin.core.parameter.parametersOf
  */
 class TagManagerFragment : Fragment(), TagManagerContract.View {
 
-    val myViewUtils: MyViewUtils by inject()
     val presenter: TagManagerContract.Presenter by inject { parametersOf(this) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
@@ -49,7 +48,7 @@ class TagManagerFragment : Fragment(), TagManagerContract.View {
     }
 
     override fun closeWindow() {
-        myViewUtils.hideKeyboard(activity, view)
+        ViewFunctions.hideKeyboard(activity, view)
         activity?.finish()
     }
 

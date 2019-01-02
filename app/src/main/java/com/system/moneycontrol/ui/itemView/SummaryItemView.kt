@@ -1,6 +1,7 @@
 package com.system.moneycontrol.ui.itemView
 
-import com.system.moneycontrol.infrastructure.MyUtils
+import com.system.moneycontrol.infrastructure.functions.CurrencyFunctions
+import com.system.moneycontrol.infrastructure.functions.DateFunctions
 
 data class SummaryItemView(
         val tag: String,
@@ -9,7 +10,7 @@ data class SummaryItemView(
 
     constructor(tag: String, price: Double, refund: Double) : this(
             tag,
-            if (price != 0.0) MyUtils().currencyFormat(price) else "",
-            if (refund != 0.0) MyUtils().currencyFormat(refund) else ""
+            if (price != 0.0) CurrencyFunctions.currencyFormat(price) else "",
+            if (refund != 0.0) CurrencyFunctions.currencyFormat(refund) else ""
     )
 }

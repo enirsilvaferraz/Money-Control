@@ -1,7 +1,8 @@
 package com.system.moneycontrol.ui.itemView
 
 import com.system.moneycontrol.R
-import com.system.moneycontrol.infrastructure.MyUtils
+import com.system.moneycontrol.infrastructure.functions.CurrencyFunctions
+import com.system.moneycontrol.infrastructure.functions.DateFunctions
 import com.system.moneycontrol.model.entities.Transaction
 
 data class TransactionItemView(
@@ -20,10 +21,10 @@ data class TransactionItemView(
     constructor(transaction: Transaction) : this(
             transaction,
             transaction.tag.name,
-            if (transaction.moneySpent != 0.0) MyUtils().currencyFormat(transaction.moneySpent) else "",
-            if (transaction.refund != 0.0) MyUtils().currencyFormat(transaction.refund) else "",
+            if (transaction.moneySpent != 0.0) CurrencyFunctions.currencyFormat(transaction.moneySpent) else "",
+            if (transaction.refund != 0.0) CurrencyFunctions.currencyFormat(transaction.refund) else "",
             if (transaction.alreadyPaid) transaction.paymentType.color else "#c49a0f",
-            MyUtils().getDate(transaction.paymentDate, "MMM, dd"),
+            DateFunctions.getDate(transaction.paymentDate, "MMM, dd"),
             transaction.paymentType.name,
             R.drawable.ic_fiber_manual_record_black_24dp,
             if (transaction.alreadyPaid) R.color.primary_text else R.color.yellow

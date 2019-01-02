@@ -1,6 +1,6 @@
 package com.system.moneycontrol.ui.presentation.home
 
-import com.system.moneycontrol.infrastructure.MyUtils
+import com.system.moneycontrol.infrastructure.functions.DateFunctions
 import com.system.moneycontrol.model.business.HomeBusiness
 import com.system.moneycontrol.model.business.TransactionBusiness
 import com.system.moneycontrol.model.entities.Transaction
@@ -14,30 +14,29 @@ class HomePresenter(
 
         private val view: HomeContract.View,
         private val business: HomeBusiness,
-        private val transactionBusiness: TransactionBusiness,
-        private val utils: MyUtils
+        private val transactionBusiness: TransactionBusiness
 
 ) : HomeContract.Presenter {
 
-    var current: Date = utils.getDate()
+    var current: Date = DateFunctions.getDate()
     var viewValues: Boolean = true
 
     val markedItens = arrayListOf<Transaction>()
 
     override fun init() {
         requestLoad()
-        view.configureMonthSpinner(utils.getDate(current, Calendar.MONTH))
-        view.configureYearSpinner(utils.getDate(current, Calendar.YEAR))
+        view.configureMonthSpinner(DateFunctions.getDate(current, Calendar.MONTH))
+        view.configureYearSpinner(DateFunctions.getDate(current, Calendar.YEAR))
     }
 
     override fun requestLoad() {
 
         configureMenuViewValues(markedItens.isNotEmpty())
 
-        val year = utils.getDate(current, "yyyy")
-        val month = utils.getDate(current, "MM")
+        val year = DateFunctions.getDate(current, "yyyy")
+        val month = DateFunctions.getDate(current, "MM")
 
-        view.setTitle(utils.getDate(current, "MMMM, yyyy"))
+        view.setTitle(DateFunctions.getDate(current, "MMMM, yyyy"))
 
         view.closeBackDrop()
 
@@ -79,12 +78,12 @@ class HomePresenter(
     }
 
     override fun onMonthSelected(position: Int) {
-        current = utils.setDate(current, Calendar.MONTH, position)
+        current = DateFunctions.setDate(current, Calendar.MONTH, position)
         requestLoad()
     }
 
     override fun onYearSelected(position: Int) {
-        current = utils.setDate(current, Calendar.YEAR, position)
+        current = DateFunctions.setDate(current, Calendar.YEAR, position)
         requestLoad()
     }
 
@@ -129,11 +128,11 @@ class HomePresenter(
 
         view.showYearDialog(null) { yearItem ->
 
-            val year = utils.getDate(utils.getDate(yearItem.getDescription(), "yyyy"), Calendar.YEAR)
+            val year = DateFunctions.getDate(DateFunctions.getDate(yearItem.getDescription(), "yyyy"), Calendar.YEAR)
 
             view.showMonthDialog(null) { monthItem ->
 
-                val month = utils.getDate(utils.getDate(monthItem.getDescription(), "MMM"), Calendar.MONTH)
+                val month = DateFunctions.getDate(DateFunctions.getDate(monthItem.getDescription(), "MMM"), Calendar.MONTH)
 
                 view.showLoading()
 

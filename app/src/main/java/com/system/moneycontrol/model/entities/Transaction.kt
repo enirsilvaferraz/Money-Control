@@ -2,7 +2,7 @@ package com.system.moneycontrol.model.entities
 
 import com.system.moneycontrol.data.mappers.TransactionFirebase
 import com.system.moneycontrol.infrastructure.Constants
-import com.system.moneycontrol.infrastructure.MyUtils
+import com.system.moneycontrol.infrastructure.functions.DateFunctions
 import java.util.*
 
 data class Transaction(
@@ -25,8 +25,8 @@ data class Transaction(
 
     constructor(data: TransactionFirebase, key: String) : this(
             key,
-            MyUtils().getDate(data.paymentDate, "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"),
-            MyUtils().getDate(data.paymentDate, "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"),
+            DateFunctions.getDate(data.paymentDate, "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"),
+            DateFunctions.getDate(data.paymentDate, "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"),
             data.moneySpent,
             data.refund,
             Tag(data.tag, Constants.LASY_STRING),

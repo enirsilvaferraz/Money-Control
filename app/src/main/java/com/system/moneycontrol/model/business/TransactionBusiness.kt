@@ -1,7 +1,7 @@
 package com.system.moneycontrol.model.business
 
 import com.system.moneycontrol.data.repositories.TransactionRepository
-import com.system.moneycontrol.infrastructure.MyUtils
+import com.system.moneycontrol.infrastructure.functions.DateFunctions
 import com.system.moneycontrol.model.entities.Transaction
 import java.util.*
 
@@ -9,7 +9,7 @@ class TransactionBusiness(
         private val repository: TransactionRepository,
         private val tagBusiness: TagBusiness,
         private val typeBusiness: TypeBusiness,
-        private val myUtils: MyUtils) {
+        private val dateFunctions: DateFunctions) {
 
     suspend fun save(model: Transaction): Transaction {
 
@@ -17,7 +17,7 @@ class TransactionBusiness(
             throw IllegalArgumentException()
         }
 
-        model.alreadyPaid = !model.paymentDate.after(myUtils.getDate())
+        model.alreadyPaid = !model.paymentDate.after(dateFunctions.getDate())
 
         return when (processSave(model)) {
             SaveType.SAVE_NEW -> repository.save(model)
@@ -57,10 +57,10 @@ class TransactionBusiness(
     }
 
     private fun isSameMonth(transaction: Transaction) =
-            myUtils.getDate(transaction.paymentDateOlder, Calendar.MONTH) == myUtils.getDate(transaction.paymentDate, Calendar.MONTH)
+            dateFunctions.getDate(transaction.paymentDateOlder, Calendar.MONTH) == dateFunctions.getDate(transaction.paymentDate, Calendar.MONTH)
 
     private fun isSameYear(transaction: Transaction) =
-            myUtils.getDate(transaction.paymentDateOlder, Calendar.YEAR) == myUtils.getDate(transaction.paymentDate, Calendar.YEAR)
+            dateFunctions.getDate(transaction.paymentDateOlder, Calendar.YEAR) == dateFunctions.getDate(transaction.paymentDate, Calendar.YEAR)
 
     enum class SaveType { SAVE_NEW, UPDATE, UPDATE_ANOTHER_MONTH }
 }

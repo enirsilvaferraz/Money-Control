@@ -6,7 +6,7 @@ import com.system.moneycontrol.model.entities.Tag
 /**
  * @param collection: Firebase Firestore (tags)
  */
-class TagRepository(val collection: CollectionReference) {
+class TagRepository(private val collection: CollectionReference) {
 
     suspend fun findAll(): List<Tag> = GenericRepository.findAll(collection, "name")
 

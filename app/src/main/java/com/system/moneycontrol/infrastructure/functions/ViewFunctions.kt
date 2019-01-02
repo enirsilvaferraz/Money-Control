@@ -1,4 +1,4 @@
-package com.system.moneycontrol.infrastructure
+package com.system.moneycontrol.infrastructure.functions
 
 import android.app.DatePickerDialog
 import android.content.Context
@@ -13,7 +13,7 @@ import com.system.moneycontrol.R
 import com.system.moneycontrol.model.entities.DialogItem
 import java.util.*
 
-class MyViewUtils {
+object ViewFunctions {
 
     fun showListDialog(context: Context, title: String, list: List<DialogItem>, checkedItem: Int = -1, callback: (DialogItem) -> Unit) {
 

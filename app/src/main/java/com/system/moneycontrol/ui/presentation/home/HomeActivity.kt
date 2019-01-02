@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.system.moneycontrol.R
-import com.system.moneycontrol.infrastructure.MyUtils
-import com.system.moneycontrol.infrastructure.MyViewUtils
+import com.system.moneycontrol.infrastructure.functions.DateFunctions
+import com.system.moneycontrol.infrastructure.functions.ViewFunctions
 import com.system.moneycontrol.model.entities.DialogItem
 import com.system.moneycontrol.model.entities.Month
 import com.system.moneycontrol.model.entities.Transaction
@@ -29,7 +29,6 @@ import org.koin.core.parameter.parametersOf
 class HomeActivity : AppCompatActivity(), HomeContract.View {
 
     val presenter: HomeContract.Presenter by inject { parametersOf(this) }
-    val myViewUtils: MyViewUtils by inject()
 
     private var menuEnableValues: MenuItem? = null
     private var menuMove: MenuItem? = null
@@ -109,8 +108,8 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
 
     override fun showTransactionManager(model: Transaction) {
         val intent = Intent(this, TransactionManagerActivity::class.java)
-        intent.putExtra("MODEL_EDIT_YEAR", MyUtils().getDate(model.paymentDate, "yyyy").toString())
-        intent.putExtra("MODEL_EDIT_MONTH", MyUtils().getDate(model.paymentDate, "MM").toString())
+        intent.putExtra("MODEL_EDIT_YEAR", DateFunctions.getDate(model.paymentDate, "yyyy").toString())
+        intent.putExtra("MODEL_EDIT_MONTH", DateFunctions.getDate(model.paymentDate, "MM").toString())
         intent.putExtra("MODEL_EDIT_KEY", model.key.toString())
         startActivityForResult(intent, 5000)
     }
@@ -121,18 +120,18 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
     }
 
     override fun showConfirmDeleteDialog(calback: () -> Unit) {
-        myViewUtils.showConfirmDialog(this, "Alert", "Delete transaction?", calback)
+        ViewFunctions.showConfirmDialog(this, "Alert", "Delete transaction?", calback)
     }
 
     override fun showMonthDialog(checkedItem: Int?, calback: (DialogItem) -> Unit) {
         val months = resources.getStringArray(R.array.months).map { Month(it) }
-        myViewUtils.showListDialog(this, "Choose a month", months, (checkedItem ?: months.size
+        ViewFunctions.showListDialog(this, "Choose a month", months, (checkedItem ?: months.size
         -1)) { calback(it) }
     }
 
     override fun showYearDialog(checkedItem: Int?, calback: (DialogItem) -> Unit) {
         val years = resources.getStringArray(R.array.years).map { Month(it) }
-        myViewUtils.showListDialog(this, "Choose a year", years, (checkedItem ?: years.size
+        ViewFunctions.showListDialog(this, "Choose a year", years, (checkedItem ?: years.size
         -1)) { calback(it) }
     }
 

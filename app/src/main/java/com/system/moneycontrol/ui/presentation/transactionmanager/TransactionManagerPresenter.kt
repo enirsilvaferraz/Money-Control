@@ -1,7 +1,8 @@
 package com.system.moneycontrol.ui.presentation.transactionmanager
 
 import com.system.moneycontrol.infrastructure.Constants
-import com.system.moneycontrol.infrastructure.MyUtils
+import com.system.moneycontrol.infrastructure.functions.CurrencyFunctions
+import com.system.moneycontrol.infrastructure.functions.DateFunctions
 import com.system.moneycontrol.model.business.TagBusiness
 import com.system.moneycontrol.model.business.TransactionBusiness
 import com.system.moneycontrol.model.business.TypeBusiness
@@ -20,8 +21,7 @@ class TransactionManagerPresenter(
         private val view: TransactionManagerContract.View,
         private val transactionBusiness: TransactionBusiness,
         private val typeBusiness: TypeBusiness,
-        private val tagBusiness: TagBusiness,
-        private val myUtils: MyUtils) : TransactionManagerContract.Presenter {
+        private val tagBusiness: TagBusiness) : TransactionManagerContract.Presenter {
 
     lateinit var transaction: Transaction
 
@@ -36,10 +36,10 @@ class TransactionManagerPresenter(
                     transaction = transactionBusiness.getByKey(year, month, key)
 
                     with(transaction) {
-                        view.setPaymentDate(myUtils.getDate(paymentDate, com.system.moneycontrol.infrastructure.Constants.DATE_SHOW_VIEW))
+                        view.setPaymentDate(DateFunctions.getDate(paymentDate, com.system.moneycontrol.infrastructure.Constants.DATE_SHOW_VIEW))
                         view.setTag(tag.name)
-                        view.setPrice(com.system.moneycontrol.infrastructure.MyUtils().valueFormat(moneySpent))
-                        view.setRefund(com.system.moneycontrol.infrastructure.MyUtils().valueFormat(refund))
+                        view.setPrice(CurrencyFunctions.valueFormat(moneySpent))
+                        view.setRefund(CurrencyFunctions.valueFormat(refund))
                         view.setPaymentType(paymentType.name)
                         view.setContent(description)
                         if (key.isNullOrBlank()) view.disableCopy() else view.enableCopy()
@@ -160,7 +160,7 @@ class TransactionManagerPresenter(
 
         val callback: (Date) -> Unit = {
             transaction.paymentDate = it
-            view.setPaymentDate(myUtils.getDate(it, Constants.DATE_SHOW_VIEW))
+            view.setPaymentDate(DateFunctions.getDate(it, Constants.DATE_SHOW_VIEW))
         }
 
         view.showPaymentDateDialog(transaction.paymentDate, callback)
@@ -180,9 +180,9 @@ class TransactionManagerPresenter(
 
     override fun onPaymentDateSetted(date: String) {
         try {
-            transaction.paymentDate = myUtils.getDate(date, Constants.DATE_SHOW_VIEW)
+            transaction.paymentDate = DateFunctions.getDate(date, Constants.DATE_SHOW_VIEW)
         } catch (e: Exception) {
-            transaction.paymentDate = myUtils.getDate()
+            transaction.paymentDate = DateFunctions.getDate()
         }
     }
 

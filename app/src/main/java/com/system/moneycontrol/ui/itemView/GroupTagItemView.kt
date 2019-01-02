@@ -1,6 +1,7 @@
 package com.system.moneycontrol.ui.itemView
 
-import com.system.moneycontrol.infrastructure.MyUtils
+import com.system.moneycontrol.infrastructure.functions.CurrencyFunctions
+import com.system.moneycontrol.infrastructure.functions.DateFunctions
 import com.system.moneycontrol.model.entities.TagGroup
 
 class GroupTagItemView(
@@ -15,7 +16,7 @@ class GroupTagItemView(
     constructor(group: TagGroup, price: Double, refund: Double) : this(
             self = group,
             tag = group.name,
-            price = if (price != 0.0) MyUtils().currencyFormat(price) else "",
-            refund = if (refund != 0.0) MyUtils().currencyFormat(refund) else ""
+            price = if (price != 0.0) CurrencyFunctions.currencyFormat(price) else "",
+            refund = if (refund != 0.0) CurrencyFunctions.currencyFormat(refund) else ""
     )
 }
