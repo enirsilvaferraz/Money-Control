@@ -28,13 +28,13 @@ object KoinModules {
         single { TagRepository(collection = get(name = ConstantsDI.FIRESTORE_TAG)) }
         single { TagGroupRepository(collection = get(name = ConstantsDI.FIRESTORE_TAGGROUP)) }
         single { TypeRepository(collection = get(name = ConstantsDI.FIRESTORE_PAYMENTTYPE)) }
-        single { TransactionRepository(collection = get(name = ConstantsDI.FIRESTORE_TRANSACTION), dateFunctions = get()) }
+        single { TransactionRepository(collection = get(name = ConstantsDI.FIRESTORE_TRANSACTION)) }
     }
 
     val businessModule = module {
         single { TagBusiness(repository = get(), groupRepository = get()) }
         single { TypeBusiness(repository = get()) }
-        single { TransactionBusiness(repository = get(), tagBusiness = get(), typeBusiness = get(), dateFunctions = get()) }
+        single { TransactionBusiness(repository = get(), tagBusiness = get(), typeBusiness = get()) }
         single { HomeBusiness(repTransaction = get(), tagBusiness = get(), typeBusiness = get(), repTagGroup = get()) }
     }
 

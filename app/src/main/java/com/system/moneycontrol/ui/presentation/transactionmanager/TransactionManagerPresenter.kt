@@ -6,223 +6,89 @@ import com.system.moneycontrol.infrastructure.functions.DateFunctions
 import com.system.moneycontrol.model.business.TagBusiness
 import com.system.moneycontrol.model.business.TransactionBusiness
 import com.system.moneycontrol.model.business.TypeBusiness
-import com.system.moneycontrol.model.entities.DialogItem
 import com.system.moneycontrol.model.entities.PaymentType
 import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
-import com.system.moneycontrol.ui.itemView.ItemSelectCombo
+import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerContract.Action
+import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerContract.ViewComponent
+import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerContract.ViewComponent.*
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 class TransactionManagerPresenter(
+
         private val view: TransactionManagerContract.View,
         private val transactionBusiness: TransactionBusiness,
         private val typeBusiness: TypeBusiness,
-        private val tagBusiness: TagBusiness) : TransactionManagerContract.Presenter {
+        private val tagBusiness: TagBusiness
+
+) : TransactionManagerContract.Presenter {
 
     lateinit var transaction: Transaction
 
-    override fun init(year: String?, month: String?, key: String?) {
+    override fun init(year: String?, month: String?, key: String?) = GlobalScope.launch(Main) {
 
+        transaction = if (!year.isNullOrBlank() && !month.isNullOrBlank() && !key.isNullOrBlank()) {
+            transactionBusiness.getByKey(year, month, key)
+        } else {
+            Transaction()
+        }
+
+        with(transaction) {
+            view.setValue(DATE, DateFunctions.getDate(paymentDate, Constants.DATE_SHOW_VIEW))
+            view.setValue(TAG, tag.name)
+            view.setValue(PRICE, CurrencyFunctions.valueFormat(moneySpent))
+            view.setValue(REFUND, CurrencyFunctions.valueFormat(refund))
+            view.setValue(TYPE, paymentType.name)
+            view.setValue(CONTENT, description)
+            view.enableCopy(!key.isNullOrBlank())
+        }
+    }
+
+    override fun setValue(viewComponent: ViewComponent, value: Any) = when (viewComponent) {
+        DATE -> transaction.paymentDate = value as Date
+        TAG -> transaction.tag.key = (value as Tag).key
+        PRICE -> transaction.moneySpent = value as Double
+        REFUND -> transaction.refund = value as Double
+        TYPE -> transaction.paymentType.key = (value as PaymentType).key
+        CONTENT -> transaction.description = value as String
+    }
+
+    override fun onClicked(action: Action) {
+        when (action) {
+            Action.COPY -> onCopyClicked()
+            Action.SAVE -> onSaveClicked()
+        }
+    }
+
+    override fun onClicked(viewComponent: ViewComponent) {
         GlobalScope.launch(Main) {
-
-            try {
-
-                if (!year.isNullOrBlank() && !month.isNullOrBlank() && !key.isNullOrBlank()) {
-
-                    transaction = transactionBusiness.getByKey(year, month, key)
-
-                    with(transaction) {
-                        view.setPaymentDate(DateFunctions.getDate(paymentDate, com.system.moneycontrol.infrastructure.Constants.DATE_SHOW_VIEW))
-                        view.setTag(tag.name)
-                        view.setPrice(CurrencyFunctions.valueFormat(moneySpent))
-                        view.setRefund(CurrencyFunctions.valueFormat(refund))
-                        view.setPaymentType(paymentType.name)
-                        view.setContent(description)
-                        if (key.isNullOrBlank()) view.disableCopy() else view.enableCopy()
-                        this
-                    }
-                }
-
-                view.configureTagAutofill(tagBusiness.findAll().map { it.name })
-                view.configureTypeAutofill(typeBusiness.findAll().map { it.name })
-
-            } catch (e: Exception) {
-                view.showError(e.message!!)
+            when (viewComponent) {
+                DATE -> view.showManager(viewComponent, Date())
+                TAG -> view.showManager(viewComponent, tagBusiness.findAll())
+                TYPE -> view.showManager(viewComponent, typeBusiness.findAll())
             }
         }
     }
 
-    override fun onSaveClicked() {
+    private fun onSaveClicked() = GlobalScope.launch(Main) {
 
-        GlobalScope.launch(Main) {
+        if (!transaction.tag.key.isNullOrBlank() || !transaction.paymentType.key.isNullOrBlank()) {
 
-            try {
+            transactionBusiness.save(transaction)
+            view.showSuccess("Transação registrada!")
+            view.closeWindow()
 
-                transactionBusiness.save(transaction)
-                view.showSuccess("Transaction registred!")
-                view.closeWindow()
-
-            } catch (e: IllegalArgumentException) {
-
-                if (transaction.tag.key.isNullOrBlank()) {
-                    view.showTagError("Tag is required!")
-                } else {
-                    view.clearTagError()
-                }
-
-                if (transaction.paymentType.key.isNullOrBlank()) {
-                    view.showTypeError("Type is required!")
-                } else {
-                    view.clearTypeError()
-                }
-
-            } catch (e: Exception) {
-                view.showError(e.message!!)
-            }
+        } else {
+            view.showError("Preencha os campos obrigatorios")
         }
     }
 
-    override fun onCopyClicked() {
-
+    private fun onCopyClicked() {
         transaction.key = null
         onSaveClicked()
-    }
-
-    override fun cancel() {
-        view.closeWindow()
-    }
-
-    override fun onPaymentTypeClick() {
-
-        val callback: (DialogItem) -> Unit = {
-            if (it is PaymentType) {
-                transaction.paymentType = it
-                view.setPaymentType(it.name)
-            } else {
-                view.showTypeManager()
-            }
-        }
-
-        view.showLoading()
-
-        GlobalScope.launch(Main) {
-
-            try {
-
-                val list = ArrayList<DialogItem>(typeBusiness.findAll())
-                list.add(ItemSelectCombo())
-                view.showPaymentTypeDialog(list, callback)
-                view.hideLoading()
-                view.clearTypeError()
-
-            } catch (e: Exception) {
-                view.hideLoading()
-                view.showError(e.message!!)
-            }
-        }
-    }
-
-    override fun onTagClick() {
-
-        val callback: (DialogItem) -> Unit = {
-            if (it is Tag) {
-                transaction.tag = it
-                view.setTag(it.name)
-            } else {
-                view.showTagManager()
-            }
-        }
-
-        view.showLoading()
-
-        GlobalScope.launch(Main) {
-
-            try {
-
-                val list = ArrayList<DialogItem>(tagBusiness.findAll())
-                list.add(ItemSelectCombo())
-                view.showTagDialog(list, callback)
-                view.hideLoading()
-                view.clearTypeError()
-
-            } catch (e: Exception) {
-                view.hideLoading()
-                view.showError(e.message!!)
-            }
-        }
-    }
-
-    override fun onPaymentDateClick() {
-
-        val callback: (Date) -> Unit = {
-            transaction.paymentDate = it
-            view.setPaymentDate(DateFunctions.getDate(it, Constants.DATE_SHOW_VIEW))
-        }
-
-        view.showPaymentDateDialog(transaction.paymentDate, callback)
-    }
-
-    override fun onPriceSetted(value: Double) {
-        transaction.moneySpent = value
-    }
-
-    override fun onRefundSetted(value: Double) {
-        transaction.refund = value
-    }
-
-    override fun onContentSetted(content: String) {
-        transaction.description = content
-    }
-
-    override fun onPaymentDateSetted(date: String) {
-        try {
-            transaction.paymentDate = DateFunctions.getDate(date, Constants.DATE_SHOW_VIEW)
-        } catch (e: Exception) {
-            transaction.paymentDate = DateFunctions.getDate()
-        }
-    }
-
-    override fun selectTag(tag: String?) {
-
-        if (!tag.isNullOrBlank()) {
-
-            GlobalScope.launch(Main) {
-
-                try {
-
-                    transaction.tag = tagBusiness.getByName(tag)
-
-                } catch (e: Exception) {
-                    view.showError(e.message!!)
-                }
-            }
-
-        } else {
-            transaction.tag = Tag()
-        }
-    }
-
-    override fun selectType(type: String?) {
-
-        if (!type.isNullOrBlank()) {
-
-            GlobalScope.launch(Main) {
-
-                try {
-
-                    transaction.paymentType = typeBusiness.getByName(type)
-
-                } catch (e: Exception) {
-                    view.showError(e.message!!)
-                }
-            }
-
-        } else {
-            transaction.paymentType = PaymentType()
-        }
     }
 }

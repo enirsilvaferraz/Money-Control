@@ -114,7 +114,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/mTagContainer">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/mPriceValue"
+                    android:id="@+id/priceValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/transaction_price"

@@ -7,7 +7,7 @@ import com.system.moneycontrol.model.entities.Transaction
 /**
  * @param collection: Firebase Firestore (transactions)
  */
-class TransactionRepository(private val collection: CollectionReference, var dateFunctions: DateFunctions) {
+class TransactionRepository(private val collection: CollectionReference) {
 
     suspend fun findAll(year: String, month: String): List<Transaction> = GenericRepository.findAll(getColl(year, month), "paymentDate")
 
@@ -21,9 +21,9 @@ class TransactionRepository(private val collection: CollectionReference, var dat
 
     suspend fun getByKey(year: String, month: String, key: String): Transaction = GenericRepository.getByKey(getColl(year, month), key)
 
-    private fun getMonth(model: Transaction) = dateFunctions.getDate(model.paymentDate, "MM")
+    private fun getMonth(model: Transaction) = DateFunctions.getDate(model.paymentDate, "MM")
 
-    private fun getYear(model: Transaction) = dateFunctions.getDate(model.paymentDate, "yyyy")
+    private fun getYear(model: Transaction) = DateFunctions.getDate(model.paymentDate, "yyyy")
 
     private fun getColl(year: String, month: String) = collection.document(year).collection(month)
 }

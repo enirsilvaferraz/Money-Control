@@ -8,16 +8,11 @@ import java.util.*
 class TransactionBusiness(
         private val repository: TransactionRepository,
         private val tagBusiness: TagBusiness,
-        private val typeBusiness: TypeBusiness,
-        private val dateFunctions: DateFunctions) {
+        private val typeBusiness: TypeBusiness) {
 
     suspend fun save(model: Transaction): Transaction {
 
-        if (model.tag.key.isNullOrBlank() || model.paymentType.key.isNullOrBlank()) {
-            throw IllegalArgumentException()
-        }
-
-        model.alreadyPaid = !model.paymentDate.after(dateFunctions.getDate())
+        model.alreadyPaid = !model.paymentDate.after(DateFunctions.getDate())
 
         return when (processSave(model)) {
             SaveType.SAVE_NEW -> repository.save(model)
@@ -57,10 +52,10 @@ class TransactionBusiness(
     }
 
     private fun isSameMonth(transaction: Transaction) =
-            dateFunctions.getDate(transaction.paymentDateOlder, Calendar.MONTH) == dateFunctions.getDate(transaction.paymentDate, Calendar.MONTH)
+            DateFunctions.getDate(transaction.paymentDateOlder, Calendar.MONTH) == DateFunctions.getDate(transaction.paymentDate, Calendar.MONTH)
 
     private fun isSameYear(transaction: Transaction) =
-            dateFunctions.getDate(transaction.paymentDateOlder, Calendar.YEAR) == dateFunctions.getDate(transaction.paymentDate, Calendar.YEAR)
+            DateFunctions.getDate(transaction.paymentDateOlder, Calendar.YEAR) == DateFunctions.getDate(transaction.paymentDate, Calendar.YEAR)
 
     enum class SaveType { SAVE_NEW, UPDATE, UPDATE_ANOTHER_MONTH }
 }

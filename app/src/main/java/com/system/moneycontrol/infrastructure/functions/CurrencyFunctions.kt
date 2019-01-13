@@ -1,8 +1,6 @@
 package com.system.moneycontrol.infrastructure.functions
 
-import java.text.DecimalFormat
 import java.text.NumberFormat
-import java.text.ParseException
 import java.util.*
 
 object CurrencyFunctions {
@@ -30,15 +28,13 @@ object CurrencyFunctions {
         return valueFormat
     }
 
-    fun removeFormat(valueFormatted: String): Double? {
-        try {
-            val format = NumberFormat.getNumberInstance()
-            if (format is DecimalFormat) {
-                format.isParseBigDecimal = true
-            }
-            return format.parse(valueFormatted.replace("[^\\d.,]".toRegex(), "")).toDouble()
-        } catch (e: ParseException) {
-            return null
-        }
+    fun removeFormat(value: String): Double {
+        val replaceDigitis = value.replace("\\D".toRegex(), "")
+        return if (replaceDigitis.isBlank()) 0.0 else replaceDigitis.toDouble() / 100
+    }
+
+    fun format(value: String): String {
+        val receiver = value.replace("\\D".toRegex(), "")
+        return with(receiver) { if (isBlank()) 0.0 else toDouble() / 100 }.toString()
     }
 }

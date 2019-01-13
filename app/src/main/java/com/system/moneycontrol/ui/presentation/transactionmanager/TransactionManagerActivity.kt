@@ -1,19 +1,22 @@
 package com.system.moneycontrol.ui.presentation.transactionmanager
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.system.moneycontrol.R
+import com.system.moneycontrol.infrastructure.Constants
+import com.system.moneycontrol.infrastructure.functions.DateFunctions
 import com.system.moneycontrol.infrastructure.functions.ViewFunctions
 import com.system.moneycontrol.model.entities.DialogItem
-import com.system.moneycontrol.ui.presentation.tag.TagManagerActivity
-import com.system.moneycontrol.ui.presentation.typemanager.TypeManagerActivity
+import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerContract.Action.COPY
+import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerContract.Action.SAVE
+import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerContract.ViewComponent
+import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerContract.ViewComponent.*
 import com.system.moneycontrol.ui.utils.CurrencyTextWatcher
-import com.system.moneycontrol.ui.utils.RightDrawableOnTouchListener
 import com.system.moneycontrol.ui.utils.StringTextWatcher
-import kotlinx.android.synthetic.main.activity_transaction_manager.*
+import kotlinx.android.synthetic.main.activity_transaction_manager_v2.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 import java.util.*
@@ -26,38 +29,27 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
     val presenter: TransactionManagerContract.Presenter by inject { parametersOf(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_transaction_manager)
+        setContentView(R.layout.activity_transaction_manager_v2)
 
-        mPriceValue.addTextChangedListener(CurrencyTextWatcher { presenter.onPriceSetted(it) })
-        mPriceValue.requestFocus()
+        paymentDate.setOnClickListener { presenter.onClicked(DATE) }
+        tag.setOnClickListener { presenter.onClicked(TAG) }
+        price.setOnClickListener { presenter.onClicked(PRICE) }
+        refund.setOnClickListener { presenter.onClicked(REFUND) }
+        paymentType.setOnClickListener { presenter.onClicked(TYPE) }
+        content.setOnClickListener { presenter.onClicked(CONTENT) }
 
-        mPaymentDateValue.addTextChangedListener(StringTextWatcher { presenter.onPaymentDateSetted(it) })
-        mRefundValue.addTextChangedListener(CurrencyTextWatcher { presenter.onRefundSetted(it) })
-        mContentValue.addTextChangedListener(StringTextWatcher { presenter.onContentSetted(it) })
-        mTagValue.addTextChangedListener(StringTextWatcher { presenter.selectTag(it) })
-        mTypeValue.addTextChangedListener(StringTextWatcher { presenter.selectType(it) })
+        price.setWatcher(CurrencyTextWatcher { presenter.setValue(PRICE, it) })
+        refund.setWatcher(CurrencyTextWatcher { presenter.setValue(REFUND, it) })
+        content.setWatcher(StringTextWatcher { presenter.setValue(CONTENT, it) })
 
-        mPaymentDateValue.setOnTouchListener(object : RightDrawableOnTouchListener() {
-            override fun onDrawableTouch() {
-                presenter.onPaymentDateClick()
-            }
-        })
+        paymentDate.setOnClickListener { presenter.onClicked(DATE) }
+        tag.setOnClickListener { presenter.onClicked(TAG) }
+        paymentType.setOnClickListener { presenter.onClicked(TYPE) }
 
-        mTagValue.setOnTouchListener(object : RightDrawableOnTouchListener() {
-            override fun onDrawableTouch() {
-                presenter.onTagClick()
-            }
-        })
-
-        mTypeValue.setOnTouchListener(object : RightDrawableOnTouchListener() {
-            override fun onDrawableTouch() {
-                presenter.onPaymentTypeClick()
-            }
-        })
-
-        mSaveButtom.setOnClickListener { presenter.onSaveClicked() }
-        mCopyButtom.setOnClickListener { presenter.onCopyClicked() }
+        mSaveButtom.setOnClickListener { presenter.onClicked(SAVE) }
+        mCopyButtom.setOnClickListener { presenter.onClicked(COPY) }
     }
 
     override fun onStart() {
@@ -69,42 +61,24 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
         )
     }
 
-    override fun showTagDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {
-        ViewFunctions.showListDialog(this, "Tags", list, -1, callback)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            presenter.setValue(ViewComponent.values()[requestCode], data!!.getStringExtra("result"))
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun showPaymentTypeDialog(list: List<DialogItem>, callback: (DialogItem) -> Unit) {
-        ViewFunctions.showListDialog(this, "Types", list, -1, callback)
-    }
-
-    override fun showPaymentDateDialog(paymentDate: Date?, callback: (Date) -> Unit) {
-        ViewFunctions.showDatePicker(this, paymentDate, callback)
-    }
-
-    override fun setTag(tagString: String) {
-        mTagValue.setText(tagString)
-    }
-
-    override fun setPaymentType(paymentTypeString: String) {
-        mTypeValue.setText(paymentTypeString)
-    }
-
-    override fun setPaymentDate(paymentDateString: String) {
-        mPaymentDateValue.setText(paymentDateString)
-    }
-
-    override fun setPrice(priceString: String) {
-        mPriceValue.setText(priceString)
-        mPriceValue.setSelection(mPriceValue.text.toString().length)
-    }
-
-    override fun setRefund(refundString: String) {
-        mRefundValue.setText(refundString)
-        mRefundValue.setSelection(mRefundValue.text.toString().length)
-    }
-
-    override fun setContent(description: String) {
-        mContentValue.setText(description)
+    override fun setValue(viewComponent: ViewComponent, value: String) {
+        when (viewComponent) {
+            DATE -> paymentDate
+            TAG -> tag
+            PRICE -> price
+            REFUND -> refund
+            TYPE -> paymentType
+            CONTENT -> content
+        }.apply {
+            setValue(value)
+        }
     }
 
     override fun showError(message: String) {
@@ -119,53 +93,29 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
         finish()
     }
 
-    override fun showLoading() {
+    override fun showManager(viewComponent: ViewComponent, value: Any) {
+        //startActivityForResult(Intent(this, ManagerActivity::class.java), viewComponent.ordinal)
+
+        when (viewComponent) {
+
+            DATE -> ViewFunctions.showDatePicker(this, value as Date) {
+                presenter.setValue(viewComponent, it)
+                setValue(viewComponent, DateFunctions.getDate(it, Constants.DATE_SHOW_VIEW))
+            }
+
+            TAG -> ViewFunctions.showListDialog(this, "Selecione a Tag", value as List<DialogItem>) {
+                presenter.setValue(viewComponent, it)
+                setValue(viewComponent, it.getDescription())
+            }
+
+            TYPE -> ViewFunctions.showListDialog(this, "Selecione a tipo de pagamento", value as List<DialogItem>) {
+                presenter.setValue(viewComponent, it)
+                setValue(viewComponent, it.getDescription())
+            }
+        }
     }
 
-    override fun hideLoading() {
-    }
-
-    override fun showTagManager() {
-        startActivity(Intent(this, TagManagerActivity::class.java))
-    }
-
-    override fun showTypeManager() {
-        startActivity(Intent(this, TypeManagerActivity::class.java))
-    }
-
-    override fun showTagError(s: String) {
-        mTagContainer.isErrorEnabled = true
-        mTagContainer.error = s
-    }
-
-    override fun clearTagError() {
-        mTagContainer.isErrorEnabled = false
-    }
-
-    override fun showTypeError(s: String) {
-        mTypeContainer.isErrorEnabled = true
-        mTypeContainer.error = s
-    }
-
-    override fun clearTypeError() {
-        mTypeContainer.isErrorEnabled = false
-    }
-
-    override fun configureTagAutofill(list: List<String>) {
-        mTagValue.threshold = 1
-        mTagValue.setAdapter(ArrayAdapter<String>(this, android.R.layout.select_dialog_item, list))
-    }
-
-    override fun configureTypeAutofill(list: List<String>) {
-        mTypeValue.threshold = 1
-        mTypeValue.setAdapter(ArrayAdapter<String>(this, android.R.layout.select_dialog_item, list))
-    }
-
-    override fun disableCopy() {
-        mCopyButtom.isEnabled = false
-    }
-
-    override fun enableCopy() {
-        mCopyButtom.isEnabled = true
+    override fun enableCopy(isEnabled: Boolean) {
+        mCopyButtom.isEnabled = isEnabled
     }
 }

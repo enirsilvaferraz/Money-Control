@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.presentation.transactionmanager.TransactionManagerActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:liftOnScroll="true">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="128dp">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="72dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="bottom"
+                android:paddingBottom="18dp"
+                android:text="Nova transação"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="12dp">
+
+            <com.system.moneycontrol.ui.custom.ItemManager
+                android:id="@+id/paymentDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:enabled="false"
+                custom:icon="@drawable/ic_event_black_24dp_alpha"
+                custom:label="Data de pagamento"
+                custom:value="--" />
+
+            <com.system.moneycontrol.ui.custom.ItemManager
+                android:id="@+id/tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:enabled="false"
+                custom:icon="@drawable/ic_loyalty_black_24dp"
+                custom:label="Tag"
+                custom:value="--" />
+
+            <com.system.moneycontrol.ui.custom.ItemManager
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:icon="@drawable/ic_attach_money_black_24dp"
+                custom:label="Valor gasto"
+                custom:onlyDigits="true"
+                custom:value="--" />
+
+            <com.system.moneycontrol.ui.custom.ItemManager
+                android:id="@+id/refund"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:icon="@drawable/ic_attach_money_black_24dp"
+                custom:label="Valor retornado"
+                custom:onlyDigits="true"
+                custom:value="--" />
+
+            <com.system.moneycontrol.ui.custom.ItemManager
+                android:id="@+id/paymentType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:enabled="false"
+                custom:icon="@drawable/ic_account_balance_black_24dp"
+                custom:label="Forma de pagamento"
+                custom:value="--" />
+
+            <com.system.moneycontrol.ui.custom.ItemManager
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:icon="@drawable/ic_content_paste_black_24dp_alpha"
+                custom:label="Observações"
+                custom:value="--" />
+
+            <LinearLayout
+                android:id="@+id/footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="horizontal"
+                app:layout_anchor="@+id/scrollView2"
+                app:layout_anchorGravity="bottom|center">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mSaveButtom"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/system_save" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mCopyButtom"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/system_copy" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
