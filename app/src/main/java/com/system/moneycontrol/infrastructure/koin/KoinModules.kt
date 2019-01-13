@@ -7,6 +7,8 @@ import com.system.moneycontrol.model.business.TransactionBusiness
 import com.system.moneycontrol.model.business.TypeBusiness
 import com.system.moneycontrol.ui.presentation.home.HomeContract
 import com.system.moneycontrol.ui.presentation.home.HomePresenter
+import com.system.moneycontrol.ui.presentation.search.SearchContract
+import com.system.moneycontrol.ui.presentation.search.SearchPresenter
 import com.system.moneycontrol.ui.presentation.tag.TagManagerContract
 import com.system.moneycontrol.ui.presentation.tag.TagManagerPresenter
 import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerContract
@@ -58,6 +60,11 @@ object KoinModules {
         factory { (view: TransactionManagerContract.View) ->
             TransactionManagerPresenter(view = view, typeBusiness = get(), tagBusiness = get(), transactionBusiness = get())
                     as TransactionManagerContract.Presenter
+        }
+
+        factory { (view: SearchContract.View) ->
+            SearchPresenter(view = view, tagBusiness = get(), typeBusiness = get())
+                    as SearchContract.Presenter
         }
     }
 

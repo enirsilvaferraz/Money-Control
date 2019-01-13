@@ -16,7 +16,7 @@ interface TransactionManagerContract {
     interface Presenter {
 
         fun init(year: String?, month: String?, key: String?): Job
-        fun setValue(viewComponent: ViewComponent, value: Any)
+        fun setValue(viewComponent: ViewComponent, value: Any): Job
         fun onClicked(viewComponent: ViewComponent)
         fun onClicked(action: Action)
     }

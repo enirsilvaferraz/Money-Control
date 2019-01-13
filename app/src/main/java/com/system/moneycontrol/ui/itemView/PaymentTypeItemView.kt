@@ -4,7 +4,7 @@ import com.system.moneycontrol.model.entities.PaymentType
 
 class PaymentTypeItemView(
 
-        val self: PaymentType,
-        val name: String = self.name
+        override val self: PaymentType,
+        override val description: String = self.name
 
-) : ItemRecyclerView
+) : ItemRecyclerView, SearchItem<PaymentType>

@@ -30,7 +30,7 @@ class HomeAdapter(
         0 -> TitleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_title, parent, false))
         1 -> TransactionViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_transaction_v6, parent, false), onClick, onLongClick)
         2 -> SummaryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_summary, parent, false))
-        3 -> TagViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_tag, parent, false))
+        3 -> TagViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_tag_summary, parent, false))
         4 -> GroupTagViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_taggroup, parent, false))
         else -> throw RuntimeException("No type selected")
     }
@@ -69,7 +69,7 @@ class HomeAdapter(
 
         fun bind(item: SummaryItemView) {
 
-            val tag = itemView.findViewById<TextView>(R.id.mTag)
+            val tag = itemView.findViewById<TextView>(R.id.name)
             tag.text = item.tag
 
             val price = itemView.findViewById<TextView>(R.id.mPrice)
@@ -92,7 +92,7 @@ class HomeAdapter(
             mContainer.setBackgroundColor(ContextCompat.getColor(itemView.context,
                     if (item.isMarked) R.color.primary_light else R.color.white))
 
-            val tag = itemView.findViewById<TextView>(R.id.mTag)
+            val tag = itemView.findViewById<TextView>(R.id.name)
             tag.text = item.tag
             tag.setTextColor(ContextCompat.getColor(itemView.context, item.tagColor))
 
@@ -129,7 +129,7 @@ class HomeAdapter(
 
         fun bind(item: GroupTagItemView) {
 
-            val tag = itemView.findViewById<TextView>(R.id.mTag)
+            val tag = itemView.findViewById<TextView>(R.id.name)
             tag.text = item.tag
 
             val price = itemView.findViewById<TextView>(R.id.mPrice)
@@ -146,8 +146,8 @@ class HomeAdapter(
 
         fun bind(item: TagItemView) {
 
-            val tag = itemView.findViewById<TextView>(R.id.mTag)
-            tag.text = item.tag
+            val tag = itemView.findViewById<TextView>(R.id.name)
+            tag.text = item.description
 
             val price = itemView.findViewById<TextView>(R.id.mPrice)
             price.text = if (item.price.isBlank() && item.refund.isBlank()) "--" else item.price

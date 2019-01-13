@@ -6,8 +6,6 @@ import com.system.moneycontrol.infrastructure.functions.DateFunctions
 import com.system.moneycontrol.model.business.TagBusiness
 import com.system.moneycontrol.model.business.TransactionBusiness
 import com.system.moneycontrol.model.business.TypeBusiness
-import com.system.moneycontrol.model.entities.PaymentType
-import com.system.moneycontrol.model.entities.Tag
 import com.system.moneycontrol.model.entities.Transaction
 import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerContract.Action
 import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerContract.ViewComponent
@@ -47,13 +45,23 @@ class TransactionManagerPresenter(
         }
     }
 
-    override fun setValue(viewComponent: ViewComponent, value: Any) = when (viewComponent) {
-        DATE -> transaction.paymentDate = value as Date
-        TAG -> transaction.tag.key = (value as Tag).key
-        PRICE -> transaction.moneySpent = value as Double
-        REFUND -> transaction.refund = value as Double
-        TYPE -> transaction.paymentType.key = (value as PaymentType).key
-        CONTENT -> transaction.description = value as String
+    override fun setValue(viewComponent: ViewComponent, value: Any) = GlobalScope.launch(Main) {
+        with(transaction) {
+            when (viewComponent) {
+                DATE -> paymentDate = value as Date
+                PRICE -> moneySpent = value as Double
+                REFUND -> refund = value as Double
+                CONTENT -> description = value as String
+                TAG -> {
+                    tag = tagBusiness.getByKey(value as String)
+                    view.setValue(TAG, tag.name)
+                }
+                TYPE -> {
+                    paymentType = typeBusiness.getByKey(value as String)
+                    view.setValue(TYPE, paymentType.name)
+                }
+            }
+        }
     }
 
     override fun onClicked(action: Action) {
@@ -67,8 +75,8 @@ class TransactionManagerPresenter(
         GlobalScope.launch(Main) {
             when (viewComponent) {
                 DATE -> view.showManager(viewComponent, Date())
-                TAG -> view.showManager(viewComponent, tagBusiness.findAll())
-                TYPE -> view.showManager(viewComponent, typeBusiness.findAll())
+                TAG -> view.showManager(viewComponent, transaction.tag)
+                TYPE -> view.showManager(viewComponent, transaction.paymentType)
             }
         }
     }

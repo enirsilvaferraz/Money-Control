@@ -12,32 +12,38 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.system.moneycontrol.ui.presentation.home.HomeActivity"
+            android:name=".ui.presentation.home.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name="com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerActivity"
+            android:name=".ui.presentation.transactionmanager.TransactionManagerActivity"
             android:label="@string/transaction_manager_title"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name="com.system.moneycontrol.ui.presentation.tag.TagManagerActivity"
+            android:name=".ui.presentation.tag.TagManagerActivity"
             android:label="@string/title_activity_tag"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name="com.system.moneycontrol.ui.presentation.typemanager.TypeManagerActivity"
+            android:name=".ui.presentation.typemanager.TypeManagerActivity"
             android:label="@string/title_activity_type_manager"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.presentation.search.SearchActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
 

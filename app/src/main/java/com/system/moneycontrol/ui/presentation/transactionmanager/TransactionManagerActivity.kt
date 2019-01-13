@@ -8,10 +8,9 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.system.moneycontrol.R
-import com.system.moneycontrol.infrastructure.Constants
-import com.system.moneycontrol.infrastructure.functions.DateFunctions
 import com.system.moneycontrol.infrastructure.functions.ViewFunctions
-import com.system.moneycontrol.model.entities.DialogItem
+import com.system.moneycontrol.ui.presentation.search.SearchActivity
+import com.system.moneycontrol.ui.presentation.search.SearchContract
 import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerContract.Action.COPY
 import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerContract.Action.SAVE
 import com.system.moneycontrol.ui.presentation.transactionmanager.TransactionManagerContract.ViewComponent
@@ -63,7 +62,11 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
-            presenter.setValue(ViewComponent.values()[requestCode], data!!.getStringExtra("result"))
+
+            val component = ViewComponent.values()[requestCode]
+            val value = data!!.getStringExtra("result")
+
+            presenter.setValue(component, value)
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -111,17 +114,18 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
 
             DATE -> ViewFunctions.showDatePicker(this, value as Date) {
                 presenter.setValue(viewComponent, it)
-                setValue(viewComponent, DateFunctions.getDate(it, Constants.DATE_SHOW_VIEW))
             }
 
-            TAG -> ViewFunctions.showListDialog(this, "Selecione a Tag", value as List<DialogItem>) {
-                presenter.setValue(viewComponent, it)
-                setValue(viewComponent, it.getDescription())
+            TAG -> {
+                val intent = Intent(this, SearchActivity::class.java)
+                intent.putExtra("SEARCH_TYPE", SearchContract.SearchType.TAG)
+                startActivityForResult(intent, viewComponent.ordinal)
             }
 
-            TYPE -> ViewFunctions.showListDialog(this, "Selecione a tipo de pagamento", value as List<DialogItem>) {
-                presenter.setValue(viewComponent, it)
-                setValue(viewComponent, it.getDescription())
+            TYPE -> {
+                val intent = Intent(this, SearchActivity::class.java)
+                intent.putExtra("SEARCH_TYPE", SearchContract.SearchType.TYPE)
+                startActivityForResult(intent, viewComponent.ordinal)
             }
 
             else -> {
