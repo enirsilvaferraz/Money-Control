@@ -7,8 +7,6 @@ interface TransactionManagerContract {
     interface View {
 
         fun setValue(viewComponent: ViewComponent, value: String)
-        fun enableCopy(isEnabled: Boolean)
-
         fun showManager(viewComponent: ViewComponent, value: Any)
         fun showSuccess(message: String)
         fun showError(message: String)

@@ -4,12 +4,14 @@ import android.content.Context
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.widget.EditText
+import android.view.View
 import android.widget.FrameLayout
 import com.system.moneycontrol.R
 import kotlinx.android.synthetic.main.item_manager.view.*
 
 class ItemManager(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
+
+    private var attrEnabled: Boolean = true
 
     init {
 
@@ -19,16 +21,34 @@ class ItemManager(context: Context, attrs: AttributeSet) : FrameLayout(context, 
 
             try {
 
-                label.text = getString(R.styleable.ItemManager_label)
+                attrEnabled = getBoolean(R.styleable.ItemManager_enabled, true)
 
-                value.setText(getString(R.styleable.ItemManager_value))
-                value.isEnabled = getBoolean(R.styleable.ItemManager_enabled, true)
-                value.inputType = if (getBoolean(R.styleable.ItemManager_onlyDigits, false))
-                    InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-                else
-                    InputType.TYPE_CLASS_TEXT
+                val attrLabel = getString(R.styleable.ItemManager_label)
+                val attrValue = getString(R.styleable.ItemManager_value)
+                val attrOnlyDigits = getBoolean(R.styleable.ItemManager_onlyDigits, false)
+                val attrIcon = getResourceId(R.styleable.ItemManager_icon, R.drawable.ic_content_paste_black_24dp)
 
-                icon.setBackgroundResource(getResourceId(R.styleable.ItemManager_icon, R.drawable.ic_content_paste_black_24dp))
+                label.text = attrLabel
+
+                if (attrEnabled) {
+
+                    valueEnabled.hint = attrValue
+                    valueEnabled.isEnabled = true
+                    valueEnabled.inputType = if (attrOnlyDigits) InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL else InputType.TYPE_CLASS_TEXT
+
+                    valueEnabled.visibility = View.VISIBLE
+                    valueDisabled.visibility = View.INVISIBLE
+
+                } else {
+
+                    valueDisabled.hint = attrValue
+
+                    valueEnabled.isEnabled = false
+                    valueEnabled.visibility = View.INVISIBLE
+                    valueDisabled.visibility = View.VISIBLE
+                }
+
+                icon.setBackgroundResource(attrIcon)
 
             } finally {
                 recycle()
@@ -37,18 +57,20 @@ class ItemManager(context: Context, attrs: AttributeSet) : FrameLayout(context, 
     }
 
     fun setValue(value: String) {
-        this.value.setText(if (value.isNotBlank()) value else "--")
+        if (attrEnabled) {
+            this.valueEnabled.setText(value)
+        } else {
+            this.valueDisabled.text = value
+        }
     }
 
     fun setWatcher(watcher: TextWatcher) {
-        this.value.addTextChangedListener(watcher)
+        if (attrEnabled) {
+            this.valueEnabled.addTextChangedListener(watcher)
+        }
     }
 
     override fun setOnClickListener(l: OnClickListener?) {
         this.container.setOnClickListener(l)
-    }
-
-    fun getEditText(): EditText {
-        return value
     }
 }

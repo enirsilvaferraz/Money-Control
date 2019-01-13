@@ -30,16 +30,17 @@
                 android:paddingBottom="18dp"
                 android:text="Nova transação"
                 android:textColor="#000000"
-                android:textSize="24sp" />
+                android:textSize="30sp" />
 
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="56dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -101,37 +102,25 @@
                 custom:label="Observações"
                 custom:value="--" />
 
-            <LinearLayout
-                android:id="@+id/footer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:orientation="horizontal"
-                app:layout_anchor="@+id/scrollView2"
-                app:layout_anchorGravity="bottom|center">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/mSaveButtom"
-                    style="@style/Widget.MaterialComponents.Button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/system_save" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/mCopyButtom"
-                    style="@style/Widget.MaterialComponents.Button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/system_copy" />
-
-            </LinearLayout>
-
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:backgroundTint="@color/accent"
+        app:fabAlignmentMode="end"
+        app:liftOnScroll="true" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/mSaveButtom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#000000"
+        android:src="@drawable/ic_save_white_24dp"
+        app:layout_anchor="@id/bar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

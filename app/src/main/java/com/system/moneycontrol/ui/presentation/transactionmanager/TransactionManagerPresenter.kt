@@ -44,7 +44,6 @@ class TransactionManagerPresenter(
             view.setValue(REFUND, CurrencyFunctions.valueFormat(refund))
             view.setValue(TYPE, paymentType.name)
             view.setValue(CONTENT, description)
-            view.enableCopy(!key.isNullOrBlank())
         }
     }
 

@@ -3,6 +3,8 @@ package com.system.moneycontrol.ui.presentation.transactionmanager
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.system.moneycontrol.R
@@ -33,6 +35,8 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction_manager_v2)
 
+        setSupportActionBar(bar)
+
         paymentDate.setOnClickListener { presenter.onClicked(DATE) }
         tag.setOnClickListener { presenter.onClicked(TAG) }
         price.setOnClickListener { presenter.onClicked(PRICE) }
@@ -49,11 +53,7 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
         paymentType.setOnClickListener { presenter.onClicked(TYPE) }
 
         mSaveButtom.setOnClickListener { presenter.onClicked(SAVE) }
-        mCopyButtom.setOnClickListener { presenter.onClicked(COPY) }
-    }
 
-    override fun onStart() {
-        super.onStart()
         presenter.init(
                 intent.getStringExtra("MODEL_EDIT_YEAR"),
                 intent.getStringExtra("MODEL_EDIT_MONTH"),
@@ -66,6 +66,18 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
             presenter.setValue(ViewComponent.values()[requestCode], data!!.getStringExtra("result"))
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.transaction_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            R.id.mCopy -> presenter.onClicked(COPY)
+        }
+        return true
     }
 
     override fun setValue(viewComponent: ViewComponent, value: String) {
@@ -94,7 +106,6 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
     }
 
     override fun showManager(viewComponent: ViewComponent, value: Any) {
-        //startActivityForResult(Intent(this, ManagerActivity::class.java), viewComponent.ordinal)
 
         when (viewComponent) {
 
@@ -112,10 +123,10 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
                 presenter.setValue(viewComponent, it)
                 setValue(viewComponent, it.getDescription())
             }
-        }
-    }
 
-    override fun enableCopy(isEnabled: Boolean) {
-        mCopyButtom.isEnabled = isEnabled
+            else -> {
+                // DO NOTHING
+            }
+        }
     }
 }
