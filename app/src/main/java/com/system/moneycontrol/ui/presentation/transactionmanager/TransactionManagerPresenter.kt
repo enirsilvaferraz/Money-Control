@@ -32,6 +32,7 @@ class TransactionManagerPresenter(
         transaction = if (!year.isNullOrBlank() && !month.isNullOrBlank() && !key.isNullOrBlank()) {
             transactionBusiness.getByKey(year, month, key)
         } else {
+            view.setCopyEnabled(false)
             Transaction()
         }
 
@@ -48,7 +49,10 @@ class TransactionManagerPresenter(
     override fun setValue(viewComponent: ViewComponent, value: Any) = GlobalScope.launch(Main) {
         with(transaction) {
             when (viewComponent) {
-                DATE -> paymentDate = value as Date
+                DATE -> {
+                    paymentDate = value as Date
+                    view.setValue(DATE, DateFunctions.getDate(value, "dd/MM/yyyy"))
+                }
                 PRICE -> moneySpent = value as Double
                 REFUND -> refund = value as Double
                 CONTENT -> description = value as String

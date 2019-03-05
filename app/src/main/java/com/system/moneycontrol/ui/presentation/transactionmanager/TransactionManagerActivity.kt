@@ -3,8 +3,6 @@ package com.system.moneycontrol.ui.presentation.transactionmanager
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.system.moneycontrol.R
@@ -34,8 +32,6 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction_manager_v2)
 
-        setSupportActionBar(bar)
-
         paymentDate.setOnClickListener { presenter.onClicked(DATE) }
         tag.setOnClickListener { presenter.onClicked(TAG) }
         price.setOnClickListener { presenter.onClicked(PRICE) }
@@ -51,7 +47,7 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
         tag.setOnClickListener { presenter.onClicked(TAG) }
         paymentType.setOnClickListener { presenter.onClicked(TYPE) }
 
-        mSaveButtom.setOnClickListener { presenter.onClicked(SAVE) }
+        mSaveButtom.setOnClickListener { presenter.onClicked(if (mCopyEnabled.isChecked) COPY else SAVE) }
 
         presenter.init(
                 intent.getStringExtra("MODEL_EDIT_YEAR"),
@@ -71,18 +67,6 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.transaction_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
-            R.id.mCopy -> presenter.onClicked(COPY)
-        }
-        return true
-    }
-
     override fun setValue(viewComponent: ViewComponent, value: String) {
         when (viewComponent) {
             DATE -> paymentDate
@@ -96,6 +80,10 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
         }
     }
 
+    override fun setCopyEnabled(isEnabled: Boolean) {
+        mCopyEnabled.isEnabled = isEnabled
+    }
+
     override fun showError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
@@ -105,7 +93,9 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
     }
 
     override fun closeWindow() {
-        finish()
+        if (!mContinueEnabled.isChecked) {
+            finish()
+        }
     }
 
     override fun showManager(viewComponent: ViewComponent, value: Any) {

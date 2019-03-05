@@ -1,7 +1,9 @@
 package com.system.moneycontrol.data.repositories
 
+import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 import com.system.moneycontrol.data.mappers.DataFire
+import com.system.moneycontrol.infrastructure.Constants.LOG_TAG
 import com.system.moneycontrol.model.entities.EntityFire
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -13,11 +15,16 @@ object GenericRepository {
 
         collection.orderBy(order).get()
                 .addOnSuccessListener { task ->
+
+                    Log.d(LOG_TAG, "${DF::class.java}::${task.documents.size}")
+
                     it.resume(task.documents.map { model ->
                         model.toObject(DF::class.java)!!.toEntity(model.id)
                     })
+
                 }
                 .addOnFailureListener { exception ->
+                    Log.d(LOG_TAG, "${DF::class.java}::${exception.message}")
                     it.resumeWithException(exception)
                 }
     }

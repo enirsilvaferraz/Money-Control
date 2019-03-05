@@ -52,6 +52,8 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
         mRecyclerView.adapter = HomeAdapter(arrayListOf(),
                 { presenter.onItemSelectedByClick(it) },
                 { transaction, isMarked -> presenter.onItemSelectedByLongClick(transaction, isMarked) })
+
+        presenter.init()
     }
 
     override fun configureMonthSpinner(selection: Int) {
@@ -112,11 +114,6 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
         intent.putExtra("MODEL_EDIT_MONTH", DateFunctions.getDate(model.paymentDate, "MM").toString())
         intent.putExtra("MODEL_EDIT_KEY", model.key.toString())
         startActivityForResult(intent, 5000)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        presenter.init()
     }
 
     override fun showConfirmDeleteDialog(calback: () -> Unit) {

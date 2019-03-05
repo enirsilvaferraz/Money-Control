@@ -7,4 +7,6 @@ object Constants {
 
     val DATE_SHOW_VIEW = "dd/MM/yyyy"
     val MONTH_SHOW_VIEW = "MMMM / yyyy"
+
+    val LOG_TAG = "MC_LOG"
 }

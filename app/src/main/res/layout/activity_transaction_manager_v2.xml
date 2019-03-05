@@ -40,7 +40,6 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="56dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -102,25 +101,46 @@
                 custom:label="Observações"
                 custom:value="--" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="68dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <CheckBox
+                    android:id="@+id/mCopyEnabled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="Manter cópia" />
+
+                <CheckBox
+                    android:id="@+id/mContinueEnabled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Continuar editando" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:paddingTop="32dp"
+                android:paddingEnd="16dp">
+
+                <Button
+                    android:id="@+id/mSaveButtom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Salvar"
+                    android:textAllCaps="false" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:backgroundTint="@color/accent"
-        app:fabAlignmentMode="end"
-        app:liftOnScroll="true" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/mSaveButtom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#000000"
-        android:src="@drawable/ic_save_white_24dp"
-        app:layout_anchor="@id/bar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

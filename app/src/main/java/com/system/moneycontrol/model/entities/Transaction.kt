@@ -25,8 +25,8 @@ data class Transaction(
 
     constructor(data: TransactionFirebase, key: String) : this(
             key,
-            DateFunctions.getDate(data.paymentDate, "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"),
-            DateFunctions.getDate(data.paymentDate, "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"),
+            DateFunctions.getDate(data.paymentDate, "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm:ss"),
+            DateFunctions.getDate(data.paymentDate, "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm:ss"),
             data.moneySpent,
             data.refund,
             Tag(data.tag, Constants.LASY_STRING),
