@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".v3.presenter.transaction.TransactionListActivity"></activity>
         <activity
             android:name=".ui.presentation.home.HomeActivity"
             android:label="@string/title_activity_home"
@@ -23,30 +23,25 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.presentation.transactionmanager.TransactionManagerActivity"
             android:label="@string/transaction_manager_title"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-
         <activity
             android:name=".ui.presentation.tag.TagManagerActivity"
             android:label="@string/title_activity_tag"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".ui.presentation.typemanager.TypeManagerActivity"
             android:label="@string/title_activity_type_manager"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".ui.presentation.search.SearchActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
-
     </application>
 
 </manifest>

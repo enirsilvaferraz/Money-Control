@@ -1,4 +1,4 @@
-package com.system.moneycontrol.data.repositories
+package com.system.moneycontrol.v3.infrastructure
 
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -10,6 +10,6 @@ object FirebaseFactory {
         val instance = FirebaseFirestore.getInstance()
         instance.firestoreSettings = FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true).setTimestampsInSnapshotsEnabled(true).build()
-        return instance.collection("APP").document("release")
+        return instance.collection("APP").document("v3")
     }
 }

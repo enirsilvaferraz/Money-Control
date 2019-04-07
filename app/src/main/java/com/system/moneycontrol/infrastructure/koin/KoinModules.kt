@@ -20,10 +20,10 @@ import org.koin.dsl.module.module
 object KoinModules {
 
     val firebaseModule = module {
-        single(name = ConstantsDI.FIRESTORE_TAG) { FirebaseFactory.instence().collection("tags") }
-        single(name = ConstantsDI.FIRESTORE_TAGGROUP) { FirebaseFactory.instence().collection("tagGroup") }
-        single(name = ConstantsDI.FIRESTORE_PAYMENTTYPE) { FirebaseFactory.instence().collection("types") }
-        single(name = ConstantsDI.FIRESTORE_TRANSACTION) { FirebaseFactory.instence().collection("transactions") }
+        single(name = ConstantsDI.FIRESTORE_TAG) { FirebaseFactory.instance().collection("tags") }
+        single(name = ConstantsDI.FIRESTORE_TAGGROUP) { FirebaseFactory.instance().collection("tagGroup") }
+        single(name = ConstantsDI.FIRESTORE_PAYMENTTYPE) { FirebaseFactory.instance().collection("types") }
+        single(name = ConstantsDI.FIRESTORE_TRANSACTION) { FirebaseFactory.instance().collection("transactions") }
     }
 
     val repositoryModule = module {
