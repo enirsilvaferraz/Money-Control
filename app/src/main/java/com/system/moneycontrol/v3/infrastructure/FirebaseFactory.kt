@@ -10,6 +10,6 @@ object FirebaseFactory {
         val instance = FirebaseFirestore.getInstance()
         instance.firestoreSettings = FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true).setTimestampsInSnapshotsEnabled(true).build()
-        return instance.collection("APP").document("v3")
+        return instance.collection("APP").document("V3")
     }
 }

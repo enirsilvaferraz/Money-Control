@@ -10,8 +10,8 @@ android {
         applicationId "com.system.moneycontrol"
         minSdkVersion 25
         targetSdkVersion 28
-        versionCode 30
-        versionName "v0.30"
+        versionCode 32
+        versionName "v0.32"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -38,11 +38,11 @@ dependencies {
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
 
     // Koin
-    implementation 'org.koin:koin-core:1.0.1'
-    implementation 'org.koin:koin-android:1.0.1'
+    implementation 'org.koin:koin-core:1.0.2'
+    implementation 'org.koin:koin-android:1.0.2'
     implementation 'org.koin:koin-androidx-scope:1.0.1'
 
     // UI
@@ -62,13 +62,13 @@ dependencies {
     // ....................................................................
 
     // Koin
-    testImplementation 'org.koin:koin-test:1.0.1'
+    testImplementation 'org.koin:koin-test:1.0.2'
 
     // Local unit tests
     testImplementation "junit:junit:4.12"
 
     // Mockk
-    testImplementation "io.mockk:mockk:1.9"
+    testImplementation "io.mockk:mockk:1.9.1"
 
     // Roboletric
     testImplementation 'org.robolectric:robolectric:4.1'

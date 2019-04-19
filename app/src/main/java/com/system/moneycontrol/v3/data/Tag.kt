@@ -1,3 +1,5 @@
 package com.system.moneycontrol.v3.data
 
-data class Tag(private val name: String)
+data class Tag(val key: String = "", val name: String) {
+    constructor() : this("", "LAZY")
+}
