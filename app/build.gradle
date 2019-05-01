@@ -57,6 +57,8 @@ dependencies {
     // Backdrop
     implementation 'com.github.pedromassango:IBackdrop:2.1.0'
 
+    implementation project(':v3')
+
     // ....................................................................
     // ................. Unit tests
     // ....................................................................

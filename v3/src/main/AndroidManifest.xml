@@ -1,10 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.system.moneycontrol.v3">
+    package="com.system.moneycontrol">
 
     <application>
 
         <activity
-            android:name=".presenter.transaction.TransactionListActivity"
+            android:name=".view.transaction.TransactionListActivity"
             android:theme="@style/AppTheme" />
 
     </application>

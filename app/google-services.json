@@ -15,15 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "254199483388-mfeekon41eiv9jr5as230ncadencvagh.apps.googleusercontent.com",
+          "client_id": "254199483388-p2h9osguf2jqerlpi6dhocon3uc11gsq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.system.moneycontrol",
-            "certificate_hash": "e29af3648984adcc827e5c47dc1594b763c86d87"
+            "certificate_hash": "edf16c5ab8d9b937929947a53117b7b195ee09e2"
           }
         },
         {
-          "client_id": "254199483388-uth7c67evml422jhossjpv7us2955cem.apps.googleusercontent.com",
+          "client_id": "254199483388-gmfeo6dnabl67ajnjo4ogemo9flp0o6f.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -33,20 +33,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "254199483388-uth7c67evml422jhossjpv7us2955cem.apps.googleusercontent.com",
+              "client_id": "254199483388-gmfeo6dnabl67ajnjo4ogemo9flp0o6f.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }
