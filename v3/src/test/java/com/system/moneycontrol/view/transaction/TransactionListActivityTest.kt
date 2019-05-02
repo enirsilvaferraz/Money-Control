@@ -122,4 +122,19 @@ class TransactionListActivityTest : BaseRoboletricTest() {
         val recyclerView = activity.findViewById<RecyclerView>(R.id.recyclerview)
         Assert.assertNull(recyclerView.findViewHolderForAdapterPosition(0))
     }
+
+    @Test
+    fun `Deve exibir a tela de empty state`() {
+        Assert.fail()
+    }
+
+    @Test
+    fun `Deve chamar o presenter ao tocar no botao cadastrar nova transacao`() {
+        Assert.fail()
+    }
+
+    @Test
+    fun `Deve chamar o presenter ao tocar no botao em editar`() {
+        Assert.fail()
+    }
 }
