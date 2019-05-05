@@ -11,7 +11,19 @@ class TransactionManagerPresenter(
 ) : TransactionManagerContract.Presenter {
 
     override suspend fun save(model: Transaction) {
-        business.save(model)
-        view.showSuccess()
+
+        try {
+
+            view.showLoading()
+            business.save(model)
+            view.showSuccess()
+
+        } catch (e: Exception) {
+
+            view.showFailure()
+
+        } finally {
+            view.hideLoading()
+        }
     }
 }

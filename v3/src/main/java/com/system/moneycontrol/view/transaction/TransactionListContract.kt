@@ -6,7 +6,9 @@ interface TransactionListContract {
 
     interface Presenter {
         suspend fun start(year: Int, month: Int)
-        suspend fun onLongPressItem(transaction: Transaction)
+        suspend fun onDeleteClicked(transaction: Transaction)
+        suspend fun onEditClicked(transaction: Transaction)
+        suspend fun onNewItemClicked()
     }
 
     interface View {
@@ -16,6 +18,8 @@ interface TransactionListContract {
         fun removeItem(transaction: Transaction)
         fun showSuccessMessage()
         fun showErrorMessage()
+        fun showEmptyState()
+        fun goToManager(transaction: String? = null)
     }
 
 }

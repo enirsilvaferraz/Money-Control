@@ -7,7 +7,7 @@ import java.util.*
 class AppFunctionsTest {
 
     @Test
-    fun `FirstDay - Deve retornar o primeiro dia do mes`() {
+    fun `FirstDay - Deve retornar o primeiro dia do mes de janeiro`() {
 
         val time = Calendar.getInstance().apply {
             set(Calendar.SECOND, 0)
@@ -22,7 +22,7 @@ class AppFunctionsTest {
     }
 
     @Test
-    fun `LastDay - Deve retornar o primeiro dia do mes de janeiro`() {
+    fun `LastDay - Deve retornar o ultimo dia do mes de janeiro`() {
 
         val time = Calendar.getInstance().apply {
             set(Calendar.SECOND, 0)
@@ -37,7 +37,7 @@ class AppFunctionsTest {
     }
 
     @Test
-    fun `LastDay - Deve retornar o primeiro dia do mes de fevereiro`() {
+    fun `LastDay - Deve retornar o ultimo dia do mes de fevereiro`() {
 
         val time = Calendar.getInstance().apply {
             set(Calendar.SECOND, 0)

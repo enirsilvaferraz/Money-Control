@@ -6,6 +6,9 @@ interface TransactionManagerContract {
 
     interface View {
         fun showSuccess()
+        fun showLoading()
+        fun hideLoading()
+        fun showFailure()
 
     }
 

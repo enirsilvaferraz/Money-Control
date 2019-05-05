@@ -5,11 +5,8 @@ import com.system.moneycontrol.data.Account
 import com.system.moneycontrol.data.Tag
 import com.system.moneycontrol.data.Transaction
 import com.system.moneycontrol.data.TransactionType
-import io.mockk.MockKAnnotations
-import io.mockk.coVerify
+import io.mockk.*
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.spyk
-import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -41,12 +38,29 @@ class TransactionManagerPresenterTest {
     }
 
     @Test
-    fun `save - Deve chamar o business e retornar sucesso quando o business retornar sucesso`() = runBlocking {
+    fun `Deve chamar o business para salvar os dados, exibir o loading, exibir mensagem de sucesso e esconder o loading`() = runBlocking {
 
         presenter.save(validTransaction)
 
+        verify { view.showLoading() }
         coVerify { business.save(validTransaction) }
         verify { view.showSuccess() }
+        verify(exactly = 0) { view.showFailure() }
+        verify { view.hideLoading() }
+    }
+
+    @Test
+    fun `Deve chamar o business para salvar os dados, exibir o loading, exibir mensagem de falha e esconder o loading`() = runBlocking {
+
+        coEvery { business.save(validTransaction) } throws Exception()
+
+        presenter.save(validTransaction)
+
+        verify { view.showLoading() }
+        coVerify { business.save(validTransaction) }
+        verify(exactly = 0) { view.showSuccess() }
+        verify { view.showFailure() }
+        verify { view.hideLoading() }
     }
 
 
