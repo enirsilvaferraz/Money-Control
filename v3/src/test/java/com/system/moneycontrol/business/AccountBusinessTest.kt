@@ -3,8 +3,8 @@ package com.system.moneycontrol.business
 import com.system.moneycontrol.data.Account
 import com.system.moneycontrol.infrastructure.KoinModule
 import com.system.moneycontrol.infrastructure.koin.KoinModuleTest
-import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.NEW_ACCOUNT
-import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.SAVED_ACCOUNT
+import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.ACCOUNT_NEW
+import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.ACCOUNT_SAVED
 import com.system.moneycontrol.repositories.AccountRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -37,19 +37,19 @@ class AccountBusinessTest : KoinTest {
     @Test
     fun `Save - Deve chamar o metodo save do repository quando nao ha chave`() = runBlocking {
 
-        val param = get<Account>(NEW_ACCOUNT)
+        val param = get<Account>(ACCOUNT_NEW)
         coEvery { repository.save(param) } returns param.copy(key = "KEY")
 
         val retorno = business.save(param)
 
         coVerify { repository.save(param) }
-        Assert.assertEquals(get<Account>(SAVED_ACCOUNT), retorno.copy(key = "KEY"))
+        Assert.assertEquals(get<Account>(ACCOUNT_SAVED), retorno.copy(key = "KEY"))
     }
 
     @Test
     fun `Save - Deve chamar o metodo update do repository quando ha chave`() = runBlocking {
 
-        val param = get<Account>(SAVED_ACCOUNT)
+        val param = get<Account>(ACCOUNT_SAVED)
         coEvery { repository.update(param.key, param) } returns param
 
         val retorno = business.save(param)
@@ -61,7 +61,7 @@ class AccountBusinessTest : KoinTest {
     @Test
     fun `Delete - Deve chamar o metodo delete do repository`() = runBlocking {
 
-        val param = get<Account>(SAVED_ACCOUNT)
+        val param = get<Account>(ACCOUNT_SAVED)
         coEvery { repository.delete(param.key, param) } returns param
 
         val retorno = business.delete(param)
@@ -73,7 +73,7 @@ class AccountBusinessTest : KoinTest {
     @Test
     fun `FindAll - Deve chamar o metodo findAll do repository`() = runBlocking {
 
-        coEvery { repository.findAll(any()) } returns listOf(get(SAVED_ACCOUNT))
+        coEvery { repository.findAll(any()) } returns listOf(get(ACCOUNT_SAVED))
 
         val retorno = business.findAll()
 

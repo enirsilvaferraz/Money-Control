@@ -3,52 +3,46 @@ package com.system.moneycontrol.view.transaction
 import com.google.gson.Gson
 import com.system.moneycontrol.business.TransactionBusiness
 import com.system.moneycontrol.data.Transaction
-import com.system.moneycontrol.infrastructure.koin.KoinModuleTest
-import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.SAVED_TRANSAC
-import io.mockk.*
-import io.mockk.impl.annotations.RelaxedMockK
+import com.system.moneycontrol.infrastructure.BaseUnitTest
+import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.TRANSAC_SAVED
+import io.mockk.coEvery
+import io.mockk.coVerifySequence
+import io.mockk.spyk
+import io.mockk.verify
 import kotlinx.coroutines.runBlocking
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.koin.standalone.StandAloneContext
 import org.koin.standalone.get
-import org.koin.test.KoinTest
+import org.koin.standalone.inject
 
-class TransactionListPresenterTest : KoinTest {
+class TransactionListPresenterTest : BaseUnitTest() {
 
-    @RelaxedMockK
-    lateinit var business: TransactionBusiness
+    private val business: TransactionBusiness by inject()
 
-    @RelaxedMockK
-    lateinit var view: TransactionListContract.View
+    private val view: TransactionListContract.View by inject()
 
-    lateinit var presenter: TransactionListContract.Presenter
+    private lateinit var presenter: TransactionListContract.Presenter
 
     @Before
-    fun setUp() {
-        StandAloneContext.startKoin(listOf(KoinModuleTest.model))
-        MockKAnnotations.init(this, relaxUnitFun = true)
+    fun setup() {
         presenter = spyk(TransactionListPresenter(view, business))
-    }
-
-    @After
-    fun tearDown() {
-        StandAloneContext.stopKoin()
     }
 
     @Test
     fun `Deve iniciar o loading, consultar a listagem, mostrar os dados e finalizar o loading`() = runBlocking {
 
-        coEvery { business.findAll(any(), any()) } returns listOf(get(SAVED_TRANSAC))
+        coEvery { business.findAll(any(), any()) } returns listOf(get(TRANSAC_SAVED))
 
         presenter.start(2019, 1)
 
-        verify { view.startLoading() }
-        coVerify { business.findAll(any(), any()) }
-        verify { view.showData(any()) }
+        coVerifySequence {
+            view.startLoading()
+            business.findAll(any(), any())
+            view.showData(any())
+            view.stopLoading()
+        }
+
         verify(exactly = 0) { view.showEmptyState() }
-        verify { view.stopLoading() }
         verify(exactly = 0) { view.showErrorMessage() }
     }
 
@@ -59,11 +53,14 @@ class TransactionListPresenterTest : KoinTest {
 
         presenter.start(2019, 1)
 
-        verify { view.startLoading() }
-        coVerify { business.findAll(any(), any()) }
+        coVerifySequence {
+            view.startLoading()
+            business.findAll(any(), any())
+            view.showEmptyState()
+            view.stopLoading()
+        }
+
         verify(exactly = 0) { view.showData(any()) }
-        verify { view.showEmptyState() }
-        verify { view.stopLoading() }
         verify(exactly = 0) { view.showErrorMessage() }
     }
 
@@ -74,18 +71,21 @@ class TransactionListPresenterTest : KoinTest {
 
         presenter.start(2019, 1)
 
-        verify { view.startLoading() }
-        coVerify { business.findAll(any(), any()) }
+        coVerifySequence {
+            view.startLoading()
+            business.findAll(any(), any())
+            view.showErrorMessage()
+            view.stopLoading()
+        }
+
         verify(exactly = 0) { view.showData(any()) }
         verify(exactly = 0) { view.showEmptyState() }
-        verify { view.stopLoading() }
-        verify { view.showErrorMessage() }
     }
 
     @Test
     fun `Deve chamar o business ao deletar um item, atualizar a lista e mostrar uma mensagem de sucesso`() = runBlocking {
 
-        val transaction: Transaction = get(SAVED_TRANSAC)
+        val transaction: Transaction = get(TRANSAC_SAVED)
         coEvery { business.delete(transaction) } returns transaction
 
         presenter.onDeleteClicked(transaction)
@@ -104,7 +104,7 @@ class TransactionListPresenterTest : KoinTest {
     @Test
     fun `Deve chamar o business ao deletar um item e mostrar uma mensagem de erro`() = runBlocking {
 
-        val transaction: Transaction = get(SAVED_TRANSAC)
+        val transaction: Transaction = get(TRANSAC_SAVED)
         coEvery { business.delete(transaction) } throws Exception()
 
         presenter.onDeleteClicked(transaction)
@@ -133,7 +133,7 @@ class TransactionListPresenterTest : KoinTest {
     @Test
     fun `Deve chamar abrir a tela de manager e passar o item`() = runBlocking {
 
-        val transaction: Transaction = get(SAVED_TRANSAC)
+        val transaction: Transaction = get(TRANSAC_SAVED)
 
         presenter.onEditClicked(transaction)
 

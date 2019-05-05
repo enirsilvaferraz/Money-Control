@@ -13,6 +13,6 @@ class TestKoinApplication : Application() {
     }
 
     fun initDI() {
-        startKoin(this, listOf(KoinModuleTest.presenter, KoinModuleTest.model))
+        startKoin(this, listOf(KoinModuleTest.model, KoinModuleTest.view, KoinModuleTest.business))
     }
 }

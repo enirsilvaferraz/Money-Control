@@ -1,66 +1,61 @@
 package com.system.moneycontrol.view.transaction
 
 import com.system.moneycontrol.business.TransactionBusiness
-import com.system.moneycontrol.data.Account
-import com.system.moneycontrol.data.Tag
-import com.system.moneycontrol.data.Transaction
-import com.system.moneycontrol.data.TransactionType
-import io.mockk.*
-import io.mockk.impl.annotations.RelaxedMockK
+import com.system.moneycontrol.infrastructure.BaseUnitTest
+import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.TRANSAC_SAVED
+import io.mockk.coEvery
+import io.mockk.coVerifySequence
+import io.mockk.spyk
+import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
-import java.util.*
+import org.koin.standalone.get
+import org.koin.standalone.inject
 
-class TransactionManagerPresenterTest {
+class TransactionManagerPresenterTest : BaseUnitTest() {
 
-    @RelaxedMockK
-    lateinit var business: TransactionBusiness
+    private val business: TransactionBusiness by inject()
 
-    @RelaxedMockK
-    lateinit var view: TransactionManagerContract.View
+    private val view: TransactionManagerContract.View by inject()
 
-    lateinit var presenter: TransactionManagerContract.Presenter
-
-    val validTransaction = Transaction(
-            value = 10.0,
-            date = Date(),
-            description = "Description",
-            tag = Tag("", "TAG1"),
-            account = Account("", "CC"),
-            type = TransactionType.EXPENDITURE
-    )
+    private lateinit var presenter: TransactionManagerContract.Presenter
 
     @Before
-    fun setUp() {
-        MockKAnnotations.init(this, relaxUnitFun = true)
+    fun setup() {
         presenter = spyk(TransactionManagerPresenter(view, business))
     }
 
     @Test
     fun `Deve chamar o business para salvar os dados, exibir o loading, exibir mensagem de sucesso e esconder o loading`() = runBlocking {
 
-        presenter.save(validTransaction)
+        presenter.save(get(TRANSAC_SAVED))
 
-        verify { view.showLoading() }
-        coVerify { business.save(validTransaction) }
-        verify { view.showSuccess() }
+        coVerifySequence {
+            view.showLoading()
+            business.save(any())
+            view.showSuccess()
+            view.hideLoading()
+        }
+
         verify(exactly = 0) { view.showFailure() }
-        verify { view.hideLoading() }
     }
 
     @Test
     fun `Deve chamar o business para salvar os dados, exibir o loading, exibir mensagem de falha e esconder o loading`() = runBlocking {
 
-        coEvery { business.save(validTransaction) } throws Exception()
+        coEvery { business.save(any()) } throws Exception()
 
-        presenter.save(validTransaction)
+        presenter.save(get(TRANSAC_SAVED))
 
-        verify { view.showLoading() }
-        coVerify { business.save(validTransaction) }
+        coVerifySequence {
+            view.showLoading()
+            business.save(any())
+            view.showFailure()
+            view.hideLoading()
+        }
+
         verify(exactly = 0) { view.showSuccess() }
-        verify { view.showFailure() }
-        verify { view.hideLoading() }
     }
 
 

@@ -3,8 +3,8 @@ package com.system.moneycontrol.business
 import com.system.moneycontrol.data.Tag
 import com.system.moneycontrol.infrastructure.KoinModule
 import com.system.moneycontrol.infrastructure.koin.KoinModuleTest
-import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.NEW_TAG
-import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.SAVED_TAG
+import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.TAG_NEW
+import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.TAG_SAVED
 import com.system.moneycontrol.repositories.TagRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -37,19 +37,19 @@ class TagBusinessTest : KoinTest {
     @Test
     fun `Save - Deve chamar o metodo save do repository quando nao ha chave`() = runBlocking {
 
-        val param = get<Tag>(NEW_TAG)
+        val param = get<Tag>(TAG_NEW)
         coEvery { repository.save(param) } returns param.copy(key = "KEY")
 
         val retorno = business.save(param)
 
         coVerify { repository.save(param) }
-        Assert.assertEquals(get<Tag>(SAVED_TAG), retorno.copy(key = "KEY"))
+        Assert.assertEquals(get<Tag>(TAG_SAVED), retorno.copy(key = "KEY"))
     }
 
     @Test
     fun `Save - Deve chamar o metodo update do repository quando ha chave`() = runBlocking {
 
-        val param = get<Tag>(SAVED_TAG)
+        val param = get<Tag>(TAG_SAVED)
         coEvery { repository.update(param.key, param) } returns param
 
         val retorno = business.save(param)
@@ -61,7 +61,7 @@ class TagBusinessTest : KoinTest {
     @Test
     fun `Delete - Deve chamar o metodo delete do repository`() = runBlocking {
 
-        val param = get<Tag>(SAVED_TAG)
+        val param = get<Tag>(TAG_SAVED)
         coEvery { repository.delete(param.key, param) } returns param
 
         val retorno = business.delete(param)
@@ -73,7 +73,7 @@ class TagBusinessTest : KoinTest {
     @Test
     fun `FindAll - Deve chamar o metodo findAll do repository`() = runBlocking {
 
-        coEvery { repository.findAll(any()) } returns listOf(get(SAVED_TAG))
+        coEvery { repository.findAll(any()) } returns listOf(get(TAG_SAVED))
 
         val retorno = business.findAll()
 

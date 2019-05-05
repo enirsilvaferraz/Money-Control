@@ -10,8 +10,8 @@ import com.system.moneycontrol.R
 import com.system.moneycontrol.data.Transaction
 import com.system.moneycontrol.infrastructure.BaseRoboletricTest
 import com.system.moneycontrol.infrastructure.functions.AppFunctions
-import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.SAVED_TRANSAC
-import io.mockk.coVerify
+import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.TRANSAC_SAVED
+import io.mockk.coVerifySequence
 import io.mockk.every
 import io.mockk.mockkObject
 import kotlinx.coroutines.runBlocking
@@ -37,7 +37,7 @@ class TransactionListActivityTest : BaseRoboletricTest() {
 
         val presenter = get<TransactionListContract.Presenter>()
 
-        coVerify { presenter.start(2019, 1) }
+        coVerifySequence { presenter.start(2019, 1) }
     }
 
     @Test
@@ -78,7 +78,7 @@ class TransactionListActivityTest : BaseRoboletricTest() {
     @Test
     fun `Deve preencher a lista com os dados`() {
 
-        val transaction = get<Transaction>(SAVED_TRANSAC)
+        val transaction = get<Transaction>(TRANSAC_SAVED)
         val data = listOf(transaction.copy())
 
         val activity = getActivity<TransactionListActivity>()
@@ -102,13 +102,13 @@ class TransactionListActivityTest : BaseRoboletricTest() {
         activity.findViewById<FloatingActionButton>(R.id.newItem).performClick()
 
         val presenter = get<TransactionListContract.Presenter>()
-        coVerify { presenter.onNewItemClicked() }
+        coVerifySequence { presenter.onNewItemClicked() }
     }
 
     @Test
     fun `Deve chamar o presenter ao tocar no botao em editar`() {
 
-        val transaction = get<Transaction>(SAVED_TRANSAC)
+        val transaction = get<Transaction>(TRANSAC_SAVED)
         val data = listOf(transaction.copy())
 
         val activity = getActivity<TransactionListActivity>()
@@ -120,13 +120,13 @@ class TransactionListActivityTest : BaseRoboletricTest() {
         activity.bottomSheet.findViewById<TextView>(R.id.sheetEdit)!!.performClick()
 
         val presenter = get<TransactionListContract.Presenter>()
-        coVerify { presenter.onEditClicked(transaction) }
+        coVerifySequence { presenter.onEditClicked(transaction) }
     }
 
     @Test
     fun `Deve chamar o presenter ao tocar no botao em delete`() {
 
-        val transaction = get<Transaction>(SAVED_TRANSAC)
+        val transaction = get<Transaction>(TRANSAC_SAVED)
         val data = listOf(transaction.copy())
 
         val activity = getActivity<TransactionListActivity>()
@@ -138,13 +138,13 @@ class TransactionListActivityTest : BaseRoboletricTest() {
         activity.bottomSheet.findViewById<TextView>(R.id.sheetDelete)!!.performClick()
 
         val presenter = get<TransactionListContract.Presenter>()
-        coVerify { presenter.onDeleteClicked(transaction) }
+        coVerifySequence { presenter.onDeleteClicked(transaction) }
     }
 
     @Test
     fun `Deve remover o item da lista`() {
 
-        val transaction = get<Transaction>(SAVED_TRANSAC)
+        val transaction = get<Transaction>(TRANSAC_SAVED)
         val data = listOf(transaction.copy())
 
         val activity = getActivity<TransactionListActivity>()

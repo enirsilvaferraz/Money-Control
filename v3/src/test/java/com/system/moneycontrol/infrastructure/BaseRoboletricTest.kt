@@ -21,7 +21,7 @@ abstract class BaseRoboletricTest : KoinTest {
     }
 
     protected inline fun <reified TActivity : AppCompatActivity> getActivityController():
-            ActivityController<TActivity> = Robolectric.buildActivity(TActivity::class.java).setup()
+            ActivityController<TActivity> = Robolectric.buildActivity(TActivity::class.java).create().visible()
 
     protected inline fun <reified TActivity : AppCompatActivity> getActivity():
             TActivity = getActivityController<TActivity>().get()

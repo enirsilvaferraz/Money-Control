@@ -5,9 +5,9 @@ import com.system.moneycontrol.data.Tag
 import com.system.moneycontrol.data.Transaction
 import com.system.moneycontrol.infrastructure.KoinModule
 import com.system.moneycontrol.infrastructure.koin.KoinModuleTest
-import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.SAVED_ACCOUNT
-import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.SAVED_TAG
-import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.SAVED_TRANSAC
+import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.ACCOUNT_SAVED
+import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.TAG_SAVED
+import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.TRANSAC_SAVED
 import com.system.moneycontrol.repositories.AccountRepository
 import com.system.moneycontrol.repositories.TagRepository
 import com.system.moneycontrol.repositories.TransactionRepository
@@ -47,9 +47,9 @@ class TransactionBusinessTest : KoinTest {
     @Test
     fun `FindAll - Deve retornar uma lista de transacoes`() = runBlocking {
 
-        val transaction = get<Transaction>(SAVED_TRANSAC)
-        val tag = get<Tag>(SAVED_TAG)
-        val account = get<Account>(SAVED_ACCOUNT)
+        val transaction = get<Transaction>(TRANSAC_SAVED)
+        val tag = get<Tag>(TAG_SAVED)
+        val account = get<Account>(ACCOUNT_SAVED)
 
         coEvery { transactionRep.findAll(any(), any(), any()) } returns arrayListOf(transaction)
         coEvery { tagRep.findAll(any()) } returns arrayListOf(tag)
@@ -70,7 +70,7 @@ class TransactionBusinessTest : KoinTest {
     @Test
     fun `Save - Deve enviar e retornar o modelo com uma KEY do repository quando estiver salvando um novo item`() = runBlocking {
 
-        val param = get<Transaction>(KoinModuleTest.NEW_TRANSAC)
+        val param = get<Transaction>(KoinModuleTest.TRANSAC_NEW)
         coEvery { transactionRep.save(param) } returns param.copy(key = "KEY")
 
         val retorno = business.save(param)
@@ -89,7 +89,7 @@ class TransactionBusinessTest : KoinTest {
     @Test
     fun `Save - Deve enviar e retornar o mesmo modelo do repository quando estiver editando`() = runBlocking {
 
-        val param = get<Transaction>(KoinModuleTest.SAVED_TRANSAC)
+        val param = get<Transaction>(KoinModuleTest.TRANSAC_SAVED)
         coEvery { transactionRep.update(param.key, param) } returns param
 
         val retorno = business.save(param)
@@ -101,7 +101,7 @@ class TransactionBusinessTest : KoinTest {
     @Test
     fun `Delete - Deve enviar e retornar o modelo do repository`() = runBlocking {
 
-        val param = get<Transaction>(KoinModuleTest.SAVED_TRANSAC)
+        val param = get<Transaction>(KoinModuleTest.TRANSAC_SAVED)
         coEvery { transactionRep.delete(param.key, param) } returns param
 
         val retorno = business.delete(param)
