@@ -1,0 +1,113 @@
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.3"
+}
+
+android {
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+    }
+}
+
+final testBuildType = 'debug'
+
+final fileFilter = ['**/R.class',
+                  '**/R$*.class',
+                  '**/BuildConfig.*',
+                  '**/Manifest*.*',
+                  '**/*$ViewInjector*.*',
+                  '**/*$ViewBinder*.*',
+                  '**/*Builder.*',
+                  '**/*Contract.*',
+                  '**/*_MembersInjector.class',
+                  '**/*_MembersInjector*.*',
+                  '**/*_*Factory*.*',
+                  '**/*Component*.*',
+                  '**/*Module*.*',
+                  '**/*Binding*.*',
+                  '**/*_*Provide*.*',
+                  '**/*Test*.*',
+                  'android/**/*.*']
+
+final coverageTree = fileTree(dir: "${buildDir}/intermediates/classes/${testBuildType}", excludes: fileFilter)
+final kotlinCoverageTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/${testBuildType}", excludes: fileFilter)
+final mainSrc = "${project.projectDir}/src/main/java"
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ["test${testBuildType.capitalize()}UnitTest"]) {
+    group = 'coverage'
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        html.setDestination(file("${buildDir}/reports/jacoco/unitTest"))
+    }
+
+    jacocoClasspath = configurations['jacocoAnt']
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([coverageTree])
+    additionalClassDirs = files([kotlinCoverageTree])
+    executionData = fileTree(dir: "$buildDir", includes: ["jacoco/test${testBuildType.capitalize()}UnitTest.exec"])
+
+    doLast {
+        println "jacoco unit report has been generated to file://${reports.html.destination}/index.html"
+    }
+}
+
+task jacocoAndroidTestReport(type: JacocoReport, dependsOn: "create${testBuildType.capitalize()}CoverageReport") {
+    group = 'coverage'
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        html.setDestination(file("${buildDir}/reports/jacoco/androidTest"))
+    }
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([coverageTree])
+    additionalClassDirs = files([kotlinCoverageTree])
+    executionData = fileTree(dir: "$buildDir", includes: ['**/*.ec'])
+
+    doLast {
+        println "jacoco android report has been generated to file://${reports.html.destination}/index.html"
+    }
+}
+
+task jacocoFullCoverageReport(type: JacocoReport) {
+    group = 'coverage'
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        html.setDestination(file("${buildDir}/reports/jacoco/fullCoverage"))
+    }
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([coverageTree])
+    additionalClassDirs = files([kotlinCoverageTree])
+    executionData = fileTree(dir: "$buildDir",  includes: ['**/*.exec', '**/*.ec'])
+
+    doLast {
+        println "jacoco full coverage report has been generated to file://${reports.html.destination}/index.html"
+    }
+}
+
+task jacocoFullTestReport(type: JacocoReport, dependsOn: ["jacocoTestReport", "jacocoAndroidTestReport"]) {
+    group = 'coverage'
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        html.setDestination(file("${buildDir}/reports/jacoco/fullTest"))
+    }
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([coverageTree])
+    additionalClassDirs = files([kotlinCoverageTree])
+    executionData = fileTree(dir: "$buildDir", includes: ["jacoco/test${testBuildType.capitalize()}UnitTest.exec", '**/*.ec'])
+
+    doLast {
+        println "jacoco full report has been generated to file://${reports.html.destination}/index.html"
+    }
+}
