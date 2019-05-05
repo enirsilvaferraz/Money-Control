@@ -1,5 +1,7 @@
 package com.system.moneycontrol.infrastructure.koin
 
+import com.system.moneycontrol.business.AccountBusiness
+import com.system.moneycontrol.business.TagBusiness
 import com.system.moneycontrol.business.TransactionBusiness
 import com.system.moneycontrol.data.Account
 import com.system.moneycontrol.data.Tag
@@ -25,6 +27,8 @@ object KoinModuleTest {
 
     val business = module {
         single<TransactionBusiness> { mockk(relaxed = true) }
+        single<TagBusiness> { mockk(relaxed = true) }
+        single<AccountBusiness> { mockk(relaxed = true) }
     }
 
     val presenter = module {
@@ -44,8 +48,8 @@ object KoinModuleTest {
                     value = 10.0,
                     date = Date(),
                     description = "Description",
-                    tag = get(TAG_SAVED),
-                    account = get(ACCOUNT_SAVED),
+                    tag = get(TAG_LAZY),
+                    account = get(ACCOUNT_LAZY),
                     type = TransactionType.EXPENDITURE
             )
         }
@@ -64,15 +68,19 @@ object KoinModuleTest {
 
         single(TAG_NEW) { Tag(name = "TAG1") }
         single(TAG_SAVED) { Tag(key = "KEY", name = "TAG1") }
+        single(TAG_LAZY) { Tag(key = "KEY") }
 
         single(ACCOUNT_NEW) { Account(name = "ACCOUNT1") }
         single(ACCOUNT_SAVED) { Account(key = "KEY", name = "ACCOUNT1") }
+        single(ACCOUNT_LAZY) { Account(key = "KEY") }
     }
 
     val TRANSAC_NEW = "TRANSAC_NEW"
     val TRANSAC_SAVED = "TRANSAC_SAVED"
     val TAG_SAVED = "TAG_SAVED"
     val TAG_NEW = "TAG_NEW"
+    val TAG_LAZY = "TAG_LAZY"
     val ACCOUNT_SAVED = "ACCOUNT_SAVED"
     val ACCOUNT_NEW = "ACCOUNT_NEW"
+    val ACCOUNT_LAZY = "ACCOUNT_LAZY"
 }

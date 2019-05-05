@@ -14,6 +14,8 @@ import com.system.moneycontrol.repositories.firebase.TagRepositoryImpl
 import com.system.moneycontrol.repositories.firebase.TransactionRepositoryImpl
 import com.system.moneycontrol.view.transaction.TransactionListContract
 import com.system.moneycontrol.view.transaction.TransactionListPresenter
+import com.system.moneycontrol.view.transaction.TransactionManagerContract
+import com.system.moneycontrol.view.transaction.TransactionManagerPresenter
 import org.koin.dsl.module.module
 
 object KoinModule {
@@ -36,9 +38,14 @@ object KoinModule {
         factory { TransactionBusiness(transactionRepository = get(), tagRepository = get(), accountRepository = get()) }
     }
 
-    val presenterModule = module {
-        factory { (view: TransactionListContract.View) ->
-            TransactionListPresenter(view = view, business = get()) as TransactionListContract.Presenter
+    val presenter = module {
+
+        factory<TransactionListContract.Presenter> { (view: TransactionListContract.View) ->
+            TransactionListPresenter(view = view, business = get())
+        }
+
+        factory<TransactionManagerContract.Presenter> { (view: TransactionManagerContract.View) ->
+            TransactionManagerPresenter(view = view, transacBusiness = get(), tagBusiness = get(), accountBusiness = get())
         }
     }
 }

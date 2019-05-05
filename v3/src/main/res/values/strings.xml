@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">V3</string>
+    <string name="system_required_field">Required Field!</string>
 </resources>

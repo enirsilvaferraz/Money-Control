@@ -117,7 +117,7 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
     }
 
     override fun showConfirmDeleteDialog(calback: () -> Unit) {
-        ViewFunctions.showConfirmDialog(this, "Alert", "Delete transaction?", calback)
+        ViewFunctions.showConfirmDialog(this, "Alert", "Delete data?", calback)
     }
 
     override fun showMonthDialog(checkedItem: Int?, calback: (DialogItem) -> Unit) {

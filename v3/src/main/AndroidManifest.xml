@@ -3,10 +3,15 @@
     package="com.system.moneycontrol">
 
     <application>
-        <activity android:name=".view.transaction.TransactionManagerActivity"></activity>
+
         <activity
             android:name=".view.transaction.TransactionListActivity"
             android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".view.transaction.TransactionManagerActivity"
+            android:theme="@style/AppTheme" />
+
     </application>
 
 </manifest>

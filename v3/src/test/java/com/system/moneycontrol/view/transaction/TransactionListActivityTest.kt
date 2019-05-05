@@ -11,6 +11,7 @@ import com.system.moneycontrol.data.Transaction
 import com.system.moneycontrol.infrastructure.BaseRoboletricTest
 import com.system.moneycontrol.infrastructure.functions.AppFunctions
 import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.TRANSAC_SAVED
+import com.system.moneycontrol.view.GenericAdapter
 import io.mockk.coVerifySequence
 import io.mockk.every
 import io.mockk.mockkObject
@@ -87,9 +88,9 @@ class TransactionListActivityTest : BaseRoboletricTest() {
         val recyclerView = activity.findViewById<RecyclerView>(R.id.recyclerview)
         Assert.assertEquals(View.VISIBLE, recyclerView.visibility)
 
-        val vh0 = recyclerView.findViewHolderForAdapterPosition(0) as TransactionListActivity.TransactionVH
+        val vh0 = recyclerView.findViewHolderForAdapterPosition(0) as GenericAdapter.TransactionVH
         Assert.assertNotNull(vh0)
-        Assert.assertEquals(transaction, vh0.transaction)
+        Assert.assertEquals(transaction, vh0.data)
 
         val emptyState = activity.findViewById<LinearLayout>(R.id.emptyState)
         Assert.assertEquals(View.GONE, emptyState.visibility)

@@ -16,7 +16,7 @@ open class KoinApplication : Application() {
                 KoinModule.firebaseModule,
                 KoinModule.repositoryModule,
                 KoinModule.business,
-                KoinModule.presenterModule
+                KoinModule.presenter
         ))
     }
 

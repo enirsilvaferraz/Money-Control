@@ -35,11 +35,11 @@ class TransactionBusiness(
         return transactions
     }
 
-    suspend fun save(model: Transaction) = if (model.key.isNotBlank()) {
+    suspend fun save(model: Transaction) = if (!model.key.isNullOrBlank()) {
         transactionRepository.update(model.key, model)
     } else {
         transactionRepository.save(model)
     }
 
-    suspend fun delete(param: Transaction): Transaction = transactionRepository.delete(param.key, param)
+    suspend fun delete(param: Transaction): Transaction = transactionRepository.delete(param.key!!, param)
 }

@@ -89,24 +89,24 @@ class TransactionBusinessTest : KoinTest {
     @Test
     fun `Save - Deve enviar e retornar o mesmo modelo do repository quando estiver editando`() = runBlocking {
 
-        val param = get<Transaction>(KoinModuleTest.TRANSAC_SAVED)
-        coEvery { transactionRep.update(param.key, param) } returns param
+        val param = get<Transaction>(TRANSAC_SAVED)
+        coEvery { transactionRep.update(param.key!!, param) } returns param
 
         val retorno = business.save(param)
 
-        coVerify { transactionRep.update(param.key, param) }
+        coVerify { transactionRep.update(param.key!!, param) }
         Assert.assertEquals(param, retorno)
     }
 
     @Test
     fun `Delete - Deve enviar e retornar o modelo do repository`() = runBlocking {
 
-        val param = get<Transaction>(KoinModuleTest.TRANSAC_SAVED)
-        coEvery { transactionRep.delete(param.key, param) } returns param
+        val param = get<Transaction>(TRANSAC_SAVED)
+        coEvery { transactionRep.delete(param.key!!, param) } returns param
 
         val retorno = business.delete(param)
 
-        coVerify { transactionRep.delete(param.key, param) }
+        coVerify { transactionRep.delete(param.key!!, param) }
         Assert.assertEquals(param, retorno)
     }
 }

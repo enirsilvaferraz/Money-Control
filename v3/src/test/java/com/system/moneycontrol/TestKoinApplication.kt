@@ -1,7 +1,10 @@
 package com.system.moneycontrol
 
 import android.app.Application
-import com.system.moneycontrol.infrastructure.koin.KoinModuleTest
+import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.business
+import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.model
+import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.presenter
+import com.system.moneycontrol.infrastructure.koin.KoinModuleTest.view
 import org.koin.android.ext.android.startKoin
 
 class TestKoinApplication : Application() {
@@ -13,6 +16,6 @@ class TestKoinApplication : Application() {
     }
 
     fun initDI() {
-        startKoin(this, listOf(KoinModuleTest.model, KoinModuleTest.view, KoinModuleTest.business))
+        startKoin(this, listOf(model, view, presenter, business))
     }
 }

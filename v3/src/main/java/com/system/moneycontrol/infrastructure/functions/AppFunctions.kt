@@ -1,5 +1,6 @@
 package com.system.moneycontrol.infrastructure.functions
 
+import java.text.SimpleDateFormat
 import java.util.*
 
 object AppFunctions {
@@ -25,4 +26,7 @@ object AppFunctions {
     }.time
 
     fun getActualDate(field: Int): Int = Calendar.getInstance().get(field)
+
+    fun getDate(source: String, pattern: String = "dd/MM/yyyy") =
+            SimpleDateFormat(pattern, Locale("pt", "BR")).parse(source)
 }

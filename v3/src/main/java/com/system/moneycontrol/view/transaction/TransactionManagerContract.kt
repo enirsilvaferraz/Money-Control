@@ -1,6 +1,7 @@
 package com.system.moneycontrol.view.transaction
 
-import com.system.moneycontrol.data.Transaction
+import com.system.moneycontrol.data.Account
+import com.system.moneycontrol.data.Tag
 
 interface TransactionManagerContract {
 
@@ -9,10 +10,19 @@ interface TransactionManagerContract {
         fun showLoading()
         fun hideLoading()
         fun showFailure()
-
+        fun showRequiredMessageValue()
+        fun showRequiredMessageDate()
+        fun showRequiredMessageTag()
+        fun showRequiredMessageAccount()
+        fun showListPicker(data: List<Any>)
     }
 
     interface Presenter {
-        suspend fun save(model: Transaction)
+        fun start()
+        suspend fun onSelectTagClicked()
+        suspend fun onSelectAccountClicked()
+        fun onTagSelected(tag: Tag)
+        fun onAccountSelected(account: Account)
+        suspend fun onSaveClicked(key: String?, value: String?, date: String?, description: String?, tag: String?, account: String?, type: String)
     }
 }
