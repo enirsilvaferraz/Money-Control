@@ -1,3 +1,3 @@
 package com.system.moneycontrol.data
 
-data class Tag(val key: String = "", val name: String = "")
+data class Tag(val key: String? = null, val name: String = "")

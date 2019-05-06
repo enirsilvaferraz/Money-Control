@@ -70,7 +70,7 @@ class TransactionManagerPresenter(
 
             // Temporario
             val enum = TransactionType.values().filter { it.key == type }[0]
-            save(Transaction(key, value.toDouble(), getDate(date), description, Tag(key = tag), Account(key = account), enum))
+            save(Transaction(key, value.toDouble(), getDate(date), description, Tag(name = tag), Account(name = account), enum))
         }
     }
 
@@ -79,11 +79,21 @@ class TransactionManagerPresenter(
         try {
 
             view.showLoading()
+
+            model.tag = tagBusiness.getByName(model.tag.name)
+            if (model.tag.key.isNullOrBlank()) {
+                model.tag = tagBusiness.save(model.tag)
+            }
+
+            model.account = accountBusiness.getByName(model.account.name)
+            if (model.account.key.isNullOrBlank()) {
+                model.account = accountBusiness.save(model.account)
+            }
+
             transacBusiness.save(model)
             view.showSuccess()
 
         } catch (e: Exception) {
-
             view.showFailure()
 
         } finally {

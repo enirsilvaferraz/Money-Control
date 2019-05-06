@@ -151,4 +151,24 @@ class TransactionManagerActivityTest : BaseRoboletricTest() {
         }
 
     }
+
+    @Test
+    fun `Deve exibir o loading`() {
+        Assert.fail()
+    }
+
+    @Test
+    fun `Deve esconder o loading`() {
+        Assert.fail()
+    }
+
+    @Test
+    fun `Deve mostrar uma mensagem de sucesso`() {
+        Assert.fail()
+    }
+
+    @Test
+    fun `Deve mostrar uma mensagem de falha`() {
+        Assert.fail()
+    }
 }

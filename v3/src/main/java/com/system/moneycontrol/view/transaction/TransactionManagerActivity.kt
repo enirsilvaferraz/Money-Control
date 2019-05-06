@@ -46,8 +46,8 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
                         valueField.text.toString(),
                         dateField.text.toString(),
                         descriptionField.text.toString(),
-                        tagField.contentDescription.toString(),
-                        accountField.contentDescription.toString(),
+                        tagField.text.toString(),
+                        accountField.text.toString(),
                         typeField.text.toString()
                 )
             }
@@ -60,8 +60,8 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
         recycler.layoutManager = LinearLayoutManager(bottomSheet.context)
         recycler.adapter = GenericAdapter {
             when (it) {
-                is Tag -> presenter.onTagSelected(it)
-                is Account -> presenter.onAccountSelected(it)
+                is Tag -> tagField.setText(it.name)
+                is Account -> tagField.setText(it.name)
             }
         }
 
