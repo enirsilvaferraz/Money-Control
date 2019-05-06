@@ -40,14 +40,6 @@ class TransactionManagerPresenter(
         }
     }
 
-    override fun onTagSelected(tag: Tag) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onAccountSelected(account: Account) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override suspend fun onSaveClicked(key: String?, value: String?, date: String?, description: String?, tag: String?, account: String?, type: String) {
 
         if (value.isNullOrBlank()) {

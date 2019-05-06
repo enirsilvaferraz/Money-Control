@@ -1,6 +1,7 @@
 package com.system.moneycontrol.view.transaction
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -69,7 +70,7 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
     }
 
     override fun showSuccess() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show()
     }
 
     override fun showLoading() {
@@ -81,7 +82,7 @@ class TransactionManagerActivity : AppCompatActivity(), TransactionManagerContra
     }
 
     override fun showFailure() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(this, "Something goes wrong!", Toast.LENGTH_SHORT).show()
     }
 
     override fun showRequiredMessageValue() {

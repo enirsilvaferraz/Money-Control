@@ -1,8 +1,5 @@
 package com.system.moneycontrol.view.transaction
 
-import com.system.moneycontrol.data.Account
-import com.system.moneycontrol.data.Tag
-
 interface TransactionManagerContract {
 
     interface View {
@@ -21,8 +18,6 @@ interface TransactionManagerContract {
         fun start()
         suspend fun onSelectTagClicked()
         suspend fun onSelectAccountClicked()
-        fun onTagSelected(tag: Tag)
-        fun onAccountSelected(account: Account)
         suspend fun onSaveClicked(key: String?, value: String?, date: String?, description: String?, tag: String?, account: String?, type: String)
     }
 }
